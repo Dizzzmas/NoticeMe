@@ -1,15 +1,22 @@
 {
-  "name": "fullstack_app",
+  "name": "reactexpress",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Starter kit for creating React and Express apps",
+  "main": "server.js",
   "scripts": {
-    "start": "concurrently \"cd backend && node server.js\" \"cd client && npm start\""
+    "client-install": "cd client && npm install",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Brad Traversy",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.14.6"
+  },
   "dependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^3.5.1",
+    "express": "^4.16.2"
   }
 }
