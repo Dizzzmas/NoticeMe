@@ -5,13 +5,13 @@
   "main": "server.js",
   "scripts": {
     "client-install": "cd client && npm install",
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "node ./server/server.js",
+    "server": "nodemon ./server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Brad Traversy",
-  "license": "MIT",
+  "author": "Dizzzmas",
+  "license": "",
   "devDependencies": {
     "nodemon": "^1.14.6"
   },
@@ -23,6 +23,7 @@
     "express": "^4.16.2",
     "morgan": "^1.9.1",
     "pg": "^7.12.1",
-    "sequelize": "^5.18.4"
+    "sequelize": "^5.18.4",
+    "sequelize-cli": "^5.5.1"
   }
 }
