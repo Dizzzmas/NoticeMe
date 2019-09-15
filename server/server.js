@@ -21,6 +21,11 @@ app.use((req, res, next) => {
     next();
 });
 
+require('./routes')(app);
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './index.html'));
+});
+
 
 
 const port = 5000;

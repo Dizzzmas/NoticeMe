@@ -16,14 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     about_me: {
       type: DataTypes.STRING(140),
-    }
+    },
   }, {});
   Users.associate = (models) => {
     // associations can be defined here
     Users.hasMany(models.Posts, {
       foreignKey: 'user_id',
       as: 'posts',
-    })
+    });
   };
   return Users;
 };
