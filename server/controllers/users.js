@@ -1,5 +1,6 @@
 const User = require('../models').Users;
 const Posts = require('../models').Posts;
+const jwt = require('jsonwebtoken');
 
 
 module.exports = {
@@ -7,7 +8,7 @@ module.exports = {
         return User
             .create({
                 username: req.body.username,
-                password_hash: req.body.password_hash,
+                password_hash: req.body.password,
                 email: req.body.email,
             })
             .then(user => res.status(201).send(user))
@@ -79,4 +80,40 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error));
     },
-};
+    authenticate(req, res) {
+        const {email, password} = req.body;
+        return User
+            .findOne({
+                where: {
+                    email: email,
+                },
+            })
+            .then(function (user) {
+                if (!user) {
+                    // Query user from database
+                    res.status(401).send.json({
+                        error: 'Incorrect email or password'
+                    });
+                }
+                // Check if password is correct
+                if (!user.check_password(password)) {
+                    res.status(401).send.json({
+                        error: 'Incorrect email or password'
+                    });
+                } else {
+                    // Issue token to the user
+                    const payload = {email};
+                    const token = jwt.sign(payload, process.env.SECRET, {
+                        expiresIn: '1h'
+                    });
+                    
+
+                    res.cookie('token', token, {httpOnly: true}).sendStatus(200);
+                    console.log('cookie created successfully');
+                }
+            })
+            .catch(error => res.send(error));
+    }
+
+}
+;

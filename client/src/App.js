@@ -5,6 +5,9 @@ import {Switch} from 'react-router-dom';
 import "./App.css";
 import NotFound from "./pages/404";
 import Posts from "./components/posts";
+import Secret from "./components/secret";
+import Login from "./components/login";
+import withAuth from "./components/with_auth";
 
 const users = [
   {
@@ -63,16 +66,13 @@ const App = () => {
       <Router>
 
         <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/users">Users</Link>
-        <Link to='/posts'>Posts</Link>
+        <Link to="/secret">Secret</Link>
+        <Link to='/login'>Login</Link>
+
         <Switch>
         <Route exact path="/" component={IndexPage} />
-        <Route exact path="/users" component={UsersPage} />
-        <Route exact path="/user/:userId" component={UserPage} />
-        <Route exact path='/posts' component={Posts}/>
-        <Route exact path="/about" component={AboutPage} />
-        <Route path='*' component={NotFound}/>
+        <Route exact path="/secret" component={withAuth(Secret)} />
+        <Route path='/login' component={Login}/>
         </Switch>
       </Router>
 
