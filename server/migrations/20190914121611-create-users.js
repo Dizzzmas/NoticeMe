@@ -19,11 +19,11 @@ module.exports = {
       email: {
         type: Sequelize.STRING(128),
         allowNull: false,
-        unique: true,
       },
       about_me: {
         type: Sequelize.STRING(140),
       },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

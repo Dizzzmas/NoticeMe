@@ -101,12 +101,15 @@ module.exports = {
                         error: 'Incorrect email or password'
                     });
                 } else {
+                    console.log(user.role);
                     // Issue token to the user
-                    const payload = {email};
+                    const payload = {
+                        email: email,
+                        role: user.role
+                    };
                     const token = jwt.sign(payload, process.env.SECRET, {
                         expiresIn: '1h'
                     });
-                    
 
                     res.cookie('token', token, {httpOnly: true}).sendStatus(200);
                     console.log('cookie created successfully');

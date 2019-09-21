@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         about_me: {
             type: DataTypes.STRING(140),
         },
+        role: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            allowNull: false,
+        },
     }, {
         hooks: {
             beforeCreate(user, options) {
@@ -26,16 +31,7 @@ module.exports = (sequelize, DataTypes) => {
                 user.password_hash = bcrypt.hashSync(user.password_hash, salt);
             }
         },
-        // instanceMethods: {
-        //     check_password: function(password, error)  {
-        //         console.log(this.password_hash);
-        //         console.log(password);
-        //         if(error){
-        //             throw error;
-        //         }
-        //         return bcrypt.compareSync(password, this.password_hash);
-        //     }
-        // }
+
     });
     Users.associate = (models) => {
         // associations can be defined here
@@ -45,14 +41,14 @@ module.exports = (sequelize, DataTypes) => {
         });
     };
 
-   // Users.prototype.check_password =
+
     Users.prototype.check_password = function (password, error) {
-         console.log(this.password_hash);
-                console.log(password);
-                if(error){
-                    throw error;
-                }
-                return bcrypt.compareSync(password, this.password_hash);
+        console.log(this.password_hash);
+        console.log(password);
+        if (error) {
+            throw error;
+        }
+        return bcrypt.compareSync(password, this.password_hash);
     };
 
     return Users;
