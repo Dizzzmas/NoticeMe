@@ -1,0 +1,9 @@
+<p class="text-xl-center"><b>New Comment</b></p>
+<p>
+<form method="POST" action="/tmp/users/{{currentUser.id}}/posts/{{postId}}/comments/new"
+      enctype="application/x-www-form-urlencoded">
+    <label for="content">Content: </label><br>
+    <input type="text" name="content" id="content" required="required" placeholder="Input post content"/><br>
+    <input type="submit" value="Submit"/>
+</form>
+</p>

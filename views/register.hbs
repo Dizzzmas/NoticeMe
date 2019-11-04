@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="col-sm-6 col-sm-offset=3">
+        <h1><span class="fa fa-sign-in"></span> Register</h1>
+        {{#if message}}
+            <div class="alert alert-danger">{{message}}</div>
+        {{/if}}
+
+        <form method="POST" action="/auth/register" enctype="application/x-www-form-urlencoded">
+            <div class="form-group">
+                <label for="username">Username: </label><br>
+                <input type="text" name="username" id="username" required="required" placeholder="Username"/><br>
+            </div>
+            <div class="form-group">
+                <label for="email">Email: </label><br>
+                <input type="email" id="email" name="email" required="required" placeholder="Email"><br>
+            </div>
+            <div class="form-group">
+                <label for="password">Password: </label><br>
+                <input type="password" name="password" id="password" required="required" placeholder="Password"/><br>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password: </label><br>
+                <input type="password" name="confirm_password" id="confirm_password" required="required"
+                       placeholder="Confirm Password"/><br>
+            </div>
+
+
+            <button type="submit" class="btn btn-warning btn-lg">Register</button>
+        </form>
+        <hr>
+
+        <p>Already have an account? <a href="/login">Login</a></p>
+        <p>Or return to <a href="/">home</a></p>
+    </div>
+</div>
+

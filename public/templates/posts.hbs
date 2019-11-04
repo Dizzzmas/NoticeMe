@@ -1,0 +1,10 @@
+<tbody>
+{{#each posts.rows}}
+    <tr>
+        <td>
+            <a href="/posts/{{id}}">post_{{id}}: {{content}}</a>
+        </td>
+    </tr>
+{{/each}}
+</tbody>
+<p>Page {{page}} of {{pageCount}}</p>

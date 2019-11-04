@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span>Profile Page</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><img class="img-circle" src="/images/585e4bf3cb11b227491c339a.png"/><span
+                        class="fa fa-user"></span>{{user.username}}</h3>
+            <p>
+                <strong>email</strong>: {{user.email}}<br>
+                <strong>bio</strong>: {{user.aboutMe}}<br>
+                <strong>registeredAt</strong>: {{user.createdAt}}<br>
+                {{#if_not_eq currentUser.username user.username}}
+                {{#if currentUser.role}}
+                    {{#if user.role}}
+                        <form method="POST" action="/tmp/users/{{user.id}}/revokeadmin">
+                            <input type="submit" value="Revoke admin"/>
+                        </form>
+                    {{else}}
+                        <form method="POST"action="/tmp/users/{{user.id}}/giveadmin">
+                            <input type="submit" value="Grant admin"/>
+                        </form>
+                    {{/if}}
+                {{/if}}
+                {{/if_not_eq}}
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>

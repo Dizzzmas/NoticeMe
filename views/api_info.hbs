@@ -1,0 +1,162 @@
+<p><strong>NoticeMe API v1</strong></p>
+
+<p>Note: to access the API you must be authorized with BasicAuth</p>
+<p>401 error gets returned if the credentials are invalid</p>
+<p>403 error gets returned if a non-admin user tries to access admin-only api</p>
+<div class="row">
+    <div class="span12">
+        <div class="inside">
+            <hgroup>
+                <h5>USERS API</h5>
+            </hgroup>
+            <ul class="entry-content" style="list-style-type: square;">
+                <li>GET '/api/v1/users?page=:page_num'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Returns a page of users if the request was made by the admin</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>POST '/api/v1/users'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Creates user in the database</li>
+                            <li>Required parameters: username, email, password; Optional: aboutMe</li>
+                        </ul>
+                    </div>
+                </li>
+                 <li>GET '/api/v1/users/:userId'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Retrieves user with provided id from the database</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>PUT '/api/v1/users/:userId'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Updates user with provided parameters</li>
+                            <li>Can update: username, email, aboutMe</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>DELETE '/api/v1/users/:userId'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Deletes the user with provided id from the database</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>POST '/api/v1/users/:userId/giveadmin'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Gives admin rights to the user with provided id if the request was made by the admin</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>POST '/api/v1/users/:userId/revokeadmin'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Revokes admin rights from the user with provided id if the request was made by the admin</li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="span12">
+        <div class="inside">
+            <hgroup>
+                <h5>POSTS API</h5>
+            </hgroup>
+            <ul class="entry-content" style="list-style-type: square;">
+                <li>GET '/api/v1/posts?page=:page_num'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Returns a page of posts</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>POST '/api/v1/users/:userId/posts'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Creates post in the database, post's author is specified in request parameters</li>
+                            <li>Required request body parameters: content; File with name 'image' required</li>
+                        </ul>
+                    </div>
+                </li>
+                 <li>GET '/api/v1/posts/:postId'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Retrieves post with provided id from the database</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>PUT '/api/v1/users/:userId/posts/:postId'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Updates post with provided parameters</li>
+                            <li>Must update: content, image</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>DELETE '/api/v1/users/:userId/posts/:postId'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Deletes the post with provided user_id and post_id from the database</li>
+                        </ul>
+                    </div>
+                </li>
+               <li>GET '/api/v1/posts/search?search=:search_str'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Runs full-text search in the posts table based on the value of 'search' in request query and returns matched posts</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="span12">
+        <div class="inside">
+            <hgroup>
+                <h5>COMMENTS API</h5>
+            </hgroup>
+            <ul class="entry-content" style="list-style-type: square;">
+                <li>POST '/api/v1/users/:userId/posts/:postId/comments'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Creates a comment assigned to specified user and post</li>
+                            <li>Required parameters in request body: content</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>PUT '/api/v1/users/:userId/posts/:postId/comments/:commentId'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Updates comment of a specified user under a specified post</li>
+                            <li>Required request body parameters: content; File with name 'image' required</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>DELETE '/api/v1/users/:userId/posts/:postId/comments/:commentId'
+                    <div class="inside">
+                        <ul class="entry-content" style="list-style-type: circle;">
+                            <li>Deletes the comment with provided user_id, comment_id and post_id from the database</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

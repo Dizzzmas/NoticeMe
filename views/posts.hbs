@@ -1,0 +1,41 @@
+
+<div class="container">
+    <table class="table table-bordered table-sm col-md-6">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Posts</th>
+        </tr>
+        </thead>
+        <tbody id="Posts">
+
+        </tbody>
+    </table>
+    <div id="test">
+
+    </div>
+    <nav aria-label="Pagination">
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item">
+                <button id="PrevPage" onclick="turnPage('prev')" class="page-link btn-disabled">Previous</button>
+            </li>
+
+            <li>
+                <button id="NextPage" onclick="turnPage('next')" class="page-link">Next</button>
+            </li>
+
+
+        </ul>
+    </nav>
+
+    <p>
+    <p>
+    <form method="GET" action="/posts/new" style="text-align: right">
+        <input type="submit" value="Create New"/>
+    </form>
+    </p>
+
+</div>
+
+<script type='text/javascript' src='/javascripts/on_page_change.js'></script>
+<script src="/templates/posts.tpl.js"></script>

@@ -1,0 +1,13 @@
+<p>
+    Search results of <b>{{search_str}}</b>: <br/>
+<div>
+    {{#if search_str}}
+        {{#each search_res}}
+            <li>
+                <a href="/posts/{{id}}">post_{{id}}: {{content}}</a>
+            </li>
+        {{/each}}
+    {{else}}
+        <b>No results</b>
+    {{/if}}
+</div>

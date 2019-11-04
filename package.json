@@ -1,0 +1,61 @@
+{
+  "name": "lab3",
+  "version": "0.0.0",
+  "private": true,
+  "main": "app.js",
+  "nodemonConfig": {
+    "ignore": [
+      "/data/*.json"
+    ]
+  },
+  "scripts": {
+    "start": "node ./app.js",
+    "server": "node ./app.js",
+    "nodemon": "nodemon ./app.js"
+  },
+  "dependencies": {
+    "async-request": "^1.2.0",
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "bootstrap": "^4.3.1",
+    "cloudinary": "^1.16.0",
+    "concurrently": "^4.1.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-basic-auth": "^1.2.0",
+    "express-handlebars": "^3.1.0",
+    "express-method-override": "0.0.3",
+    "express-session": "^1.17.0",
+    "flash": "^1.1.0",
+    "fs-extra": "^8.1.0",
+    "fs-promise": "^2.0.3",
+    "handlebars": "^4.4.5",
+    "hbs": "~4.0.4",
+    "heroku": "^7.33.3",
+    "http-errors": "~1.6.3",
+    "jquery": "^3.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.2",
+    "multer-storage-cloudinary": "^2.2.1",
+    "mustache": "^3.1.0",
+    "node-fetch": "^2.6.0",
+    "passport": "^0.4.0",
+    "passport-http": "^0.3.0",
+    "passport-jwt": "^4.0.0",
+    "passport-jwt-cookiecombo": "^1.0.5",
+    "passport-local": "^1.0.0",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "request": "^2.88.0",
+    "sequelize": "^5.19.3",
+    "sequelize-cli": "^5.5.1",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}

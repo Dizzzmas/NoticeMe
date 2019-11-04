@@ -1,0 +1,47 @@
+
+
+
+#wrapper {
+	width: 960px;
+	height: 100vh;
+	margin: auto;
+}
+
+#logo\&SiteName, nav {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	text-align: right;
+}
+
+.table {
+   margin: auto;
+   margin-top: 10px;
+   width: 50%;
+}
+
+.img-circle {
+    border-radius: 50%;
+	width: 128px;
+	height: 128px;
+	 display: flex;
+  	margin-left: auto;
+  	margin-right: auto;
+
+}
+#bio_wrapper {
+	border: 1px solid #000;
+	width: 930px;
+	height: 20vh;
+	margin: auto;
+}
+
+
+th, td {
+        border: 1px solid black;
+        }
+
+.current {
+
+	color: gray;
+}

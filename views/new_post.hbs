@@ -1,0 +1,10 @@
+<p class="text-xl-center"><b>New Post</b></p>
+<p>
+<form method="POST" action="/tmp/users/{{currentUser.id}}/posts/new" enctype="multipart/form-data">
+    <label for="content">Content: </label><br>
+    <input type="text" name="content" id="content" required="required" placeholder="Input post content"/><br>
+    <label for="image">Choose a picture to attach: </label><br>
+    <input type="file" id="image" name="image" required="required" accept="image/png, image/jpeg">
+    <input type="submit" value="Submit"/>
+</form>
+</p>
