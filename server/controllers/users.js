@@ -158,6 +158,7 @@ module.exports = {
     },
     async jwt_authenticate(req, res) {
         try {
+            console.log(req.body.email, req.body.password, req.body);
             const {email, password} = req.body;
             let user = await Users.findOne({where: {email: email}});
             if (!user) {
@@ -177,7 +178,7 @@ module.exports = {
                 httpOnly: true, maxAge: 900000, sameSite: true,
                 signed: true,
             });
-            res.end('Authorization to api successful');
+            res.send(user);
         } catch (error) {
             return res.status(500).send({message: 'Something went wrong', error: error})
         }

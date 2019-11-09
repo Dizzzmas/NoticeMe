@@ -22,7 +22,7 @@ router.post('/users/:userId/revokeadmin', UsersController.revokeAdmin);
 // Posts api
 router.post('/users/:userId/posts', parser.single('image'), PostsController.create);
 router.delete('/users/:userId/posts/:postId', PostsController.deleteById);
-routerProtected.get('/posts', PostsController.getAll);
+router.get('/posts', PostsController.getAll);
 router.get('/posts/search', PostsController.search);
 router.get('/posts/:postId', PostsController.getById);
 router.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);
@@ -42,7 +42,4 @@ router.get('/developer/v1', async(req, res) => {
 router.post('/users-sign-in', UsersController.jwt_authenticate);
 
 
-module.exports = {
-    protected: routerProtected,
-    unprotected: router,
-};
+module.exports = router;

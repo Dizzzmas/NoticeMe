@@ -7,6 +7,7 @@ module.exports = function (passport, user) {
     passport.use('jwt-signin', new JwtCookieComboStrategy({
         secretOrPublicKey: process.env.SECRET_KEY
     }, (payload, done) => {
+        console.log(payload);
         return done(null, payload.user, {});
     }));
 

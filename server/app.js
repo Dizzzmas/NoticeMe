@@ -46,17 +46,16 @@ app.use(express.static('public'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 
-let authRoute = require('./routes/auth')(app, passport);
+//let authRoute = require('./routes/auth')(app, passport);
 require('./auth/passport')(passport, User);
 app.use('/', indexRouter);
-app.use('/api/v1', apiRouter.unprotected);
 app.use('/api/v1', passport.authenticate('jwt-signin', {
     session: false,
     failureFlash: true,
 
 }), (req, res, next) => {
     return next();
-}, apiRouter.protected);
+}, apiRouter);
 
 
 app.use('/developer/v1', developerRouter);

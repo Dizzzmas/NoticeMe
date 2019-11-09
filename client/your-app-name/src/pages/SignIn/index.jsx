@@ -26,24 +26,20 @@ export default function SignIn() {
                     <Formik
                         initialValues={{email: "", password: ""}}
                         validationSchema={LoginSchema}
-                        onSubmit={(values, {setSubmitting}) => {
+                        onSubmit={async (values, {setSubmitting}) => {
                             // alert("Submitting"); // Submit to server here
-                            fetch('api/v1/users-sign-in', {
+
+                            let res = await fetch('api/v1/users-sign-in', {
                                 method: 'POST',
-                                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                                body: {
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({
                                     "email": values.email,
                                     "password": values.password
-                                }
+                                })
 
-                            }).then(res => {
-                                alert(res);
-                                console.log(res);
-                            })
-                                .catch(error => {
-                                    console.log(error);
-                                    alert(error)
-                                });
+                            });
+                            let json = await res.text();
+                            console.log(json);
                             setSubmitting(false);
                         }}
                     >
