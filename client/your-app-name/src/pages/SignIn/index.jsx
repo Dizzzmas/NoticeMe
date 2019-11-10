@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Formik, Form, Field, ErrorMessage} from "formik";
 import * as Yup from 'yup';
+import {AuthContext} from "../../services/auth";
 
 
 const LoginSchema = Yup.object().shape({
@@ -14,6 +15,7 @@ const LoginSchema = Yup.object().shape({
 
 
 export default function SignIn(props) {
+    const user = useContext(AuthContext);
     return (
         <div className="container">
             <div className="row mb-5">
@@ -29,8 +31,8 @@ export default function SignIn(props) {
                         onSubmit={async (values, {setSubmitting}) => {
                             // alert("Submitting"); // Submit to server here
 
-                            let res = await fetch('api/v1/users-sign-in', {
-                                method: 'POST',
+                            let res = await fetch('/api/v1/users-sign-in', {
+                                method: 'GET',
                                 headers: {'Content-Type': 'application/json'},
                                 body: JSON.stringify({
                                     "email": values.email,
@@ -40,6 +42,7 @@ export default function SignIn(props) {
                             });
                             let json = await res.text();
                             console.log(json);
+                            // await user.handleSignIn(values);
                             setSubmitting(false);
                         }}
                     >
