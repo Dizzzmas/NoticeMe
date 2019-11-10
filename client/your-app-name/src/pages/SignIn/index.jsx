@@ -13,7 +13,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 
-export default function SignIn() {
+export default function SignIn(props) {
     return (
         <div className="container">
             <div className="row mb-5">

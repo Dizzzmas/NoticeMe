@@ -3,6 +3,7 @@ import React from "react";
 
 
 export default function MyNavBar(props) {
+    console.log(props.currentUser);
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand href="#home">NoticeMe</Navbar.Brand>
@@ -27,6 +28,8 @@ export default function MyNavBar(props) {
                 </Nav>
 
             </Navbar.Collapse>
+            <div><p><b></b></p></div>
         </Navbar>
+
     )
 }
