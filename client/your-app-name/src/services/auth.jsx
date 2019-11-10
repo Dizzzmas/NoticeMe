@@ -14,7 +14,7 @@ const guest = {
 
 const AuthContext = React.createContext();
 const reducer = (state, action) => {
-    console.log(action.payload);
+    console.log("AAAAAa", action.payload);
     switch (action.type) {
         case 'signInUser':
             return {
@@ -33,7 +33,7 @@ const reducer = (state, action) => {
     }
 };
 
-const AuthContextProvider = ({user, ...props}) => {
+const AuthContextProvider = props => {
     console.log(props.email);
     const [state, dispatch] = useReducer(reducer, initialState);
     return (
@@ -53,17 +53,17 @@ const AuthContextProvider = ({user, ...props}) => {
                         })
 
                     });
-                    let txt = await res.text();
+                    let txt = await res.json();
                     console.log(txt);
                     if (res.ok) {
-                        dispatch({type: 'signInUser', payload: res})
+                        dispatch({type: 'signInUser', payload: txt})
                     } else {
                         // dispatch({type: 'signInUser', payload: guest})
                         console.log('Wrong email or password');
                     }
 
                 },
-                handleLogOut: () => dispatch({type: 'logoutUser', payload: user})
+                // handleLogOut: () => dispatch({type: 'logoutUser', payload: user})
             }}
         >
             {props.children}

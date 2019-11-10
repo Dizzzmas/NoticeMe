@@ -1,9 +1,11 @@
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
-import React from "react";
+import React, {useContext} from "react";
+import {AuthContext} from "../services/auth";
 
 
 export default function MyNavBar(props) {
-    console.log(props.currentUser);
+    const user = useContext(AuthContext);
+    console.log("Nav", user.currentUser);
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand href="#home">NoticeMe</Navbar.Brand>
@@ -26,7 +28,7 @@ export default function MyNavBar(props) {
                         Login
                     </Nav.Link>
                 </Nav>
-
+                <p><b>{user.currentUser.username}</b></p>
             </Navbar.Collapse>
             <div><p><b></b></p></div>
         </Navbar>

@@ -16,6 +16,7 @@ const LoginSchema = Yup.object().shape({
 
 export default function SignIn(props) {
     const user = useContext(AuthContext);
+
     return (
         <div className="container">
             <div className="row mb-5">
@@ -29,20 +30,8 @@ export default function SignIn(props) {
                         initialValues={{email: "", password: ""}}
                         validationSchema={LoginSchema}
                         onSubmit={async (values, {setSubmitting}) => {
-                            // alert("Submitting"); // Submit to server here
 
-                            let res = await fetch('/api/v1/users-sign-in', {
-                                method: 'GET',
-                                headers: {'Content-Type': 'application/json'},
-                                body: JSON.stringify({
-                                    "email": values.email,
-                                    "password": values.password
-                                })
-
-                            });
-                            let json = await res.text();
-                            console.log(json);
-                            // await user.handleSignIn(values);
+                             await user.handleSignIn(values);
                             setSubmitting(false);
                         }}
                     >

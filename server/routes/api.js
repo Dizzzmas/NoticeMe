@@ -11,27 +11,27 @@ const authHelpers = require('../auth/_helpers');
 
 
 // Users api
-router.post('/users', UsersController.create);
-router.get('/users', authHelpers.adminRequired, UsersController.getAll);
-router.get('/users/:userId', UsersController.getById);
-router.put('/users/:userId', UsersController.updateById);
-router.delete('/users/:userId', UsersController.deleteById);
-router.post('/users/:userId/giveadmin', UsersController.setAdmin);
-router.post('/users/:userId/revokeadmin', UsersController.revokeAdmin);
+routerProtected.post('/users', UsersController.create);
+routerProtected.get('/users', authHelpers.adminRequired, UsersController.getAll);
+routerProtected.get('/users/:userId', UsersController.getById);
+routerProtected.put('/users/:userId', UsersController.updateById);
+routerProtected.delete('/users/:userId', UsersController.deleteById);
+routerProtected.post('/users/:userId/giveadmin', UsersController.setAdmin);
+routerProtected.post('/users/:userId/revokeadmin', UsersController.revokeAdmin);
 //
 // Posts api
-router.post('/users/:userId/posts', parser.single('image'), PostsController.create);
-router.delete('/users/:userId/posts/:postId', PostsController.deleteById);
-router.get('/posts', PostsController.getAll);
-router.get('/posts/search', PostsController.search);
-router.get('/posts/:postId', PostsController.getById);
-router.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);
+routerProtected.post('/users/:userId/posts', parser.single('image'), PostsController.create);
+routerProtected.delete('/users/:userId/posts/:postId', PostsController.deleteById);
+routerProtected.get('/posts', PostsController.getAll);
+routerProtected.get('/posts/search', PostsController.search);
+routerProtected.get('/posts/:postId', PostsController.getById);
+routerProtected.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);
 //Comments api
-router.post('/users/:userId/posts/:postId/comments', CommentsController.create);
-router.put('/users/:userId/posts/:postId/comments/:commentId', CommentsController.updateById);
-router.delete('/users/:userId/posts/:postId/comments/:commentId', CommentsController.deleteById);
+routerProtected.post('/users/:userId/posts/:postId/comments', CommentsController.create);
+routerProtected.put('/users/:userId/posts/:postId/comments/:commentId', CommentsController.updateById);
+routerProtected.delete('/users/:userId/posts/:postId/comments/:commentId', CommentsController.deleteById);
 
-router.get('/me', async(req, res) => {
+routerProtected.get('/me', async(req, res) => {
     return res.status(200).send(req.user);
 });
 
@@ -42,4 +42,7 @@ router.get('/developer/v1', async(req, res) => {
 router.post('/users-sign-in', UsersController.jwt_authenticate);
 
 
-module.exports = router;
+module.exports = {
+    unprotected: router,
+    protected: routerProtected
+};
