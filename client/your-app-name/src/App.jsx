@@ -11,14 +11,6 @@ import {AuthContextProvider} from "./services/auth";
 
 // const AuthContext = React.createContext();
 
-const initialState = {
-    currentUser: {
-        username: "Billy",
-        email: 'Password'
-    },
-    signed: false
-};
-
 
 function App() {
 

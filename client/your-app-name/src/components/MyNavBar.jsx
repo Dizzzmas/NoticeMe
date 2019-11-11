@@ -1,6 +1,7 @@
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import React, {useContext} from "react";
 import {AuthContext} from "../services/auth";
+import {Redirect} from 'react-router-dom';
 
 
 export default function MyNavBar(props) {
@@ -14,7 +15,9 @@ export default function MyNavBar(props) {
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/posts">Posts</Nav.Link>
-                    <Nav.Link href="#users">Users</Nav.Link>
+                    {user.currentUser.role &&
+                    < Nav.Link href="#users">Users</Nav.Link>
+                    }
                     <Nav.Link href="#explore">Explore</Nav.Link>
                     <Nav.Link href="#about">About</Nav.Link>
                      <Form inline>
@@ -22,11 +25,16 @@ export default function MyNavBar(props) {
                     <Button variant="outline-success">Search</Button>
                 </Form>
                 </Nav>
-                <Nav>
-                    <Nav.Link href="#register">Register</Nav.Link>
-                    <Nav.Link eventKey={2} href="/signIn">
-                        Login
+
+                <Nav onSelect={selectedKey => {if(selectedKey === 'logout'){
+                    localStorage.removeItem('currentUser');
+                    return <Redirect to='/'/>
+                }}}>
+                    {user.currentUser.signed ?
+                    <Nav.Link eventKey='logout' href="/logout">
+                        LogOut
                     </Nav.Link>
+                        :<Nav.Link href="/signIn">LogIn</Nav.Link>}
                 </Nav>
                 <p><b>{user.currentUser.username}</b></p>
             </Navbar.Collapse>

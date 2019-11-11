@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {AuthContext} from "../services/auth";
 
 
 export default function RouteWrapper({
@@ -8,9 +9,10 @@ export default function RouteWrapper({
                                          isPrivate,
                                          ...rest
                                      }) {
-    const signed = true;
+    const user = useContext(AuthContext);
+    const signed = user.currentUser.signed;
     if (isPrivate && !signed) {
-        return <Redirect to='/'/>;
+        return <Redirect to='/signIn'/>;
     }
     if (!isPrivate && signed) {
         return <Redirect to='/posts'/>;
@@ -20,10 +22,10 @@ export default function RouteWrapper({
 }
 
 RouteWrapper.propTypes = {
-  isPrivate: PropTypes.bool,
-  component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired
+    isPrivate: PropTypes.bool,
+    component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired
 };
 
 RouteWrapper.defaultProps = {
-  isPrivate: true
+    isPrivate: false
 };
