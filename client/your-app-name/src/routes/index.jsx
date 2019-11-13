@@ -14,7 +14,7 @@ export default function Routes(){
             <Route path ='/signUp' component={SignUp}/>
             <Route path='/posts' component={Posts} isPrivate/>
             <Route path ='/signIn' exact component={SignIn}/>
-            <Route component={SignIn}/>// Later refactor to redirecting to Home by default
+            <Route component={SignIn}/>
         </Switch>
     )
 }

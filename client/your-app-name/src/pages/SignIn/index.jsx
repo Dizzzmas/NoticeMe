@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {Formik, Form, Field, ErrorMessage} from "formik";
 import * as Yup from 'yup';
 import {AuthContext} from "../../services/auth";
-
+import {Alert} from "react-bootstrap";
 
 
 const LoginSchema = Yup.object().shape({
@@ -28,18 +28,37 @@ export default function SignIn(props) {
             <div className="row">
                 <div className="col-lg-12">
                     <Formik
-                        initialValues={{email: "", password: ""}}
+                        initialValues={{email: "", password: "", remember_me: false}}
                         validationSchema={LoginSchema}
-                        onSubmit={async (values, {setSubmitting}) => {
+                        onSubmit={async (values, actions) => {
 
-                             await user.handleSignIn(values);
-                            setSubmitting(false);
+                            await user.handleSignIn(values);
+                            console.log(user.currentUser.username);
+                            console.log("betrayer1", JSON.parse(localStorage.getItem('currentUser')));
+                            setTimeout(function () {
+                                if (!localStorage.getItem('currentUser')) {
+                                    if (!sessionStorage.getItem('currentUser')) {
+                                        actions.setStatus({message: 'Wrong email or password'});
+                                    }
+                                }
+
+                            }, 500);
+                            // if (!localStorage.getItem('currentUser')) {
+                            //     if (!sessionStorage.getItem('currentUser')) {
+                            //         actions.setStatus({message: 'Wrong email or password'});
+                            //     }
+                            // }
+
+
+                            actions.setSubmitting(false);
 
                         }}
                     >
-                        {({touched, errors, isSubmitting}) => (
+                        {({touched, errors, isSubmitting, status}) => (
+
                             <Form>
                                 <div className="form-group">
+
                                     <label htmlFor="email">Email</label>
                                     <Field
                                         type="email"
@@ -55,6 +74,7 @@ export default function SignIn(props) {
                                         className="invalid-feedback"
                                     />
                                 </div>
+
 
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
@@ -72,7 +92,14 @@ export default function SignIn(props) {
                                         className="invalid-feedback"
                                     />
                                 </div>
+                                <div className='form-group'>
+                                    <label htmlFor='checkbox'>Remember me?</label>
+                                    <Field type="checkbox" name="remember_me"/>
+                                </div>
 
+                                {status && <Alert variant='danger'>
+                                    {status.message}
+                                </Alert>}
                                 <button
                                     type="submit"
                                     className="btn btn-primary btn-block"
@@ -80,6 +107,7 @@ export default function SignIn(props) {
                                 >
                                     {isSubmitting ? "Please wait..." : "Submit"}
                                 </button>
+
                             </Form>
                         )}
                     </Formik>

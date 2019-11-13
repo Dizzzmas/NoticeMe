@@ -182,5 +182,14 @@ module.exports = {
         } catch (error) {
             return res.status(500).send({message: 'Something went wrong', error: error})
         }
+    },
+    async jwt_logout(req, res){
+        try{
+            res.clearCookie('jwt');
+            res.send({message: 'Cookie successfully destroyed'})
+        }
+        catch{
+            return res.status(400).send({message: 'Something went wrong, could not destroy cookie', error: error})
+        }
     }
 };

@@ -1,7 +1,6 @@
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import React, {useContext} from "react";
 import {AuthContext} from "../services/auth";
-import {Redirect} from 'react-router-dom';
 
 
 export default function MyNavBar(props) {
@@ -20,26 +19,32 @@ export default function MyNavBar(props) {
                     }
                     <Nav.Link href="#explore">Explore</Nav.Link>
                     <Nav.Link href="#about">About</Nav.Link>
-                     <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
-                    <Button variant="outline-success">Search</Button>
-                </Form>
+                    <Form inline>
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
+                        <Button variant="outline-success">Search</Button>
+                    </Form>
                 </Nav>
 
-                <Nav onSelect={selectedKey => {if(selectedKey === 'logout'){
-                    localStorage.removeItem('currentUser');
-                    return <Redirect to='/'/>
-                }}}>
-                    {user.currentUser.signed ?
+                <Nav onSelect={async selectedKey => {
+                    if (selectedKey === 'logout') {
+                        try {
+                            await user.handleLogOut();
+                        } catch (error) {
+                            console.log("AAAAA", error);
+                           // return <Redirect to='/'/>;
+                        }
+                    }
+                }}>
+                {user.currentUser.signed ?
                     <Nav.Link eventKey='logout' href="/logout">
-                        LogOut
+                    LogOut
                     </Nav.Link>
-                        :<Nav.Link href="/signIn">LogIn</Nav.Link>}
-                </Nav>
-                <p><b>{user.currentUser.username}</b></p>
-            </Navbar.Collapse>
-            <div><p><b></b></p></div>
-        </Navbar>
+                    :<Nav.Link href="/signIn">LogIn</Nav.Link>}
+                    </Nav>
+                    <p><b>{user.currentUser.username}</b></p>
+                    </Navbar.Collapse>
+                    <div><p><b></b></p></div>
+                    </Navbar>
 
-    )
-}
+                    )
+                    }

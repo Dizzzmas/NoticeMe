@@ -26,6 +26,8 @@ routerProtected.get('/posts', PostsController.getAll);
 routerProtected.get('/posts/search', PostsController.search);
 routerProtected.get('/posts/:postId', PostsController.getById);
 routerProtected.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);
+routerProtected.post('/users-log-out', UsersController.jwt_logout);
+router.post('/users-sign-in', UsersController.jwt_authenticate);
 //Comments api
 routerProtected.post('/users/:userId/posts/:postId/comments', CommentsController.create);
 routerProtected.put('/users/:userId/posts/:postId/comments/:commentId', CommentsController.updateById);
@@ -39,7 +41,7 @@ router.get('/developer/v1', async(req, res) => {
    return res.render('api_info', {layout: 'layout'})
 });
 
-router.post('/users-sign-in', UsersController.jwt_authenticate);
+
 
 
 module.exports = {
