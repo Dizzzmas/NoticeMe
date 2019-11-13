@@ -28,23 +28,45 @@ export default function MyNavBar(props) {
                 <Nav onSelect={async selectedKey => {
                     if (selectedKey === 'logout') {
                         try {
-                            await user.handleLogOut();
+                            await fetchLogOut();
+                            user.handleLogOut();
                         } catch (error) {
                             console.log("AAAAA", error);
-                           // return <Redirect to='/'/>;
+                            // return <Redirect to='/'/>;
                         }
                     }
                 }}>
-                {user.currentUser.signed ?
-                    <Nav.Link eventKey='logout' href="/logout">
-                    LogOut
-                    </Nav.Link>
-                    :<Nav.Link href="/signIn">LogIn</Nav.Link>}
-                    </Nav>
-                    <p><b>{user.currentUser.username}</b></p>
-                    </Navbar.Collapse>
-                    <div><p><b></b></p></div>
-                    </Navbar>
+                    {user.currentUser.signed ?
+                        <Nav.Link eventKey='logout' href="/logout">
+                            LogOut
+                        </Nav.Link>
+                        : <Nav.Link href="/signIn">LogIn</Nav.Link>}
+                </Nav>
+                <p><b>{user.currentUser.username}</b></p>
+            </Navbar.Collapse>
+            <div><p><b></b></p></div>
+        </Navbar>
 
-                    )
-                    }
+    )
+}
+
+let fetchLogOut = async () => {
+    try {
+        await fetch('/api/v1/users-log-out', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!sessionStorage.getItem('currentUser')) {
+            await localStorage.removeItem('currentUser');
+        } else {
+            await sessionStorage.removeItem('currentUser');
+        }
+        return ({message: 'Logout successful'});
+
+    } catch (error) {
+        console.log("Err", error);
+        return ({message: 'Logut failed'});
+    }
+};

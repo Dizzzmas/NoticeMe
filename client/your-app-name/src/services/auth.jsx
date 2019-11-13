@@ -24,7 +24,7 @@ const reducer = (state, action) => {
         case 'logoutUser':
             return {
                 ...state,
-                currentUser: {username: "Guest"},
+                currentUser: action.payload,
             };
         default:
             return state;
@@ -34,69 +34,18 @@ const reducer = (state, action) => {
 const AuthContextProvider = props => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    let fetchUser = async (values) => {
-        console.log(values.remember_me);
-        let res = await fetch('/api/v1/users-sign-in', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "email": values.email,
-                "password": values.password
-            })
 
-        });
-        let txt = await res.json();
-        console.log(txt);
-        if (res.ok) {
-            let stored_user = {
-                username: txt.username,
-                email: txt.email,
-                aboutMe: txt.aboutMe,
-                role: txt.role,
-                createdAt: txt.createdAt,
-                updatedAt: txt.updatedAt,
-                signed: true
-            };
-            dispatch({type: 'signInUser', payload: stored_user});
-            if(values.remember_me) {
-                localStorage.setItem('currentUser', JSON.stringify(stored_user));
-            }
-            else{
-                sessionStorage.setItem('currentUser', JSON.stringify(stored_user));
-            }
-
-        } else {
-            console.log("Login failed");
-            dispatch({type: 'signInUser', payload: guest});
-        }
-    };
-
-    let fetchLogOut = async () => {
-        try {
-            await fetch('/api/v1/users-log-out', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            localStorage.removeItem('currentUser');
-            sessionStorage.removeItem('currentUser');
-            dispatch({type: 'logoutUser', payload: guest});
-
-        } catch (error) {
-            console.log("Err", error);
-
-        }
-    };
 
     return (
         <AuthContext.Provider
             value={{
                 ...state,
-                handleSignIn: async(values) => {await fetchUser(values)},
-                handleLogOut: async() => {await fetchLogOut()}
+                handleSignIn: (stored_user) => {
+                    dispatch({type: 'signInUser', payload: stored_user});
+                },
+                handleLogOut: () => {
+                    dispatch({type: 'logoutUser', payload: guest});
+                }
             }
             }
         >
