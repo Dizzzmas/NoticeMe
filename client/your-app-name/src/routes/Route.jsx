@@ -10,13 +10,13 @@ export default function RouteWrapper({
                                          ...rest
                                      }) {
     const user = useContext(AuthContext);
-    const signed = user.currentUser.signed;
+    let signed = user.currentUser.signed;
+
+    console.log("RouterWrapper changed: ", isPrivate, signed);
     if (isPrivate && !signed) {
         return <Redirect to='/signIn'/>;
     }
-    if (!isPrivate && signed) {
-        return <Redirect to='/posts'/>;
-    }
+
     return <Route {...rest} component={Component}/>;
 
 }

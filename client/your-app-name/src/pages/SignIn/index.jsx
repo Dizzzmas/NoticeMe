@@ -3,9 +3,10 @@ import {Formik, Form, Field, ErrorMessage} from "formik";
 import * as Yup from 'yup';
 import {AuthContext} from "../../services/auth";
 import {Alert} from "react-bootstrap";
+import {NavLink} from "react-router-dom";
 
 
-const LoginSchema = Yup.object().shape({
+const SignInSchema = Yup.object().shape({
     email: Yup.string()
         .email("Invalid email address format")
         .required("Email is required"),
@@ -29,15 +30,18 @@ export default function SignIn(props) {
                 <div className="col-lg-12">
                     <Formik
                         initialValues={{email: "", password: "", remember_me: false}}
-                        validationSchema={LoginSchema}
+                        validationSchema={SignInSchema}
                         onSubmit={async (values, actions) => {
                             let stored_user = await fetchUser(values);
                             console.log(stored_user);
                             user.handleSignIn(stored_user);
-                            if (!localStorage.getItem('currentUser')) {
-                                if (!sessionStorage.getItem('currentUser')) {
-                                    actions.setStatus({message: 'Wrong email or password'});
-                                }
+                            if (stored_user) {
+                                props.history.push('/profile');
+                            }
+                            if (!localStorage.getItem('currentUser') && !sessionStorage.getItem('currentUser')) {
+
+                                actions.setStatus({message: 'Wrong email or password'});
+
                             }
 
 
@@ -98,10 +102,10 @@ export default function SignIn(props) {
                                 >
                                     {isSubmitting ? "Please wait..." : "Submit"}
                                 </button>
-
                             </Form>
                         )}
                     </Formik>
+                    <p>Need an account? <NavLink to='/signUp'>Sign Up</NavLink></p>
                 </div>
             </div>
         </div>

@@ -6,7 +6,26 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     async create(req, res) {
+        console.log(req.body.email, req.body.password, req.body.username);
         try {
+             let invalid_email_user = await Users.findOne({
+                    where: {
+                        email: req.body.email
+                    }
+                });
+                if (invalid_email_user) {
+                    console.log('Repeated email');
+                    return res.status(400).send({message: 'Account with such email already exists'});
+                }
+                 let invalid_nickname_user = await Users.findOne({
+                        where: {
+                            username: req.body.username
+                        }
+                    });
+                    if (invalid_nickname_user) {
+                        console.log('Repeated username');
+                        return res.status(400).send({message: 'Account with such username already exists'});
+                    }
             let user = await Users
                 .create({
                     username: req.body.username,
@@ -14,9 +33,11 @@ module.exports = {
                     email: req.body.email,
                     aboutMe: req.body.aboutMe,
                 });
+
             return res.status(201).send(user);
         } catch (error) {
-            res.status(400).send({message: 'creating user failed', error: error});
+            console.log('Sign up error');
+            return res.status(400).send({message: 'creating user failed', error: error});
         }
     },
     async getAll(req, res, next) {

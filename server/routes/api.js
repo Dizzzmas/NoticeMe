@@ -11,7 +11,7 @@ const authHelpers = require('../auth/_helpers');
 
 
 // Users api
-routerProtected.post('/users', UsersController.create);
+router.post('/users', UsersController.create);
 routerProtected.get('/users', authHelpers.adminRequired, UsersController.getAll);
 routerProtected.get('/users/:userId', UsersController.getById);
 routerProtected.put('/users/:userId', UsersController.updateById);

@@ -5,7 +5,6 @@ import {AuthContext} from "../services/auth";
 
 export default function MyNavBar(props) {
     const user = useContext(AuthContext);
-    console.log("Nav", user.currentUser);
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand href="#home">NoticeMe</Navbar.Brand>
@@ -28,8 +27,9 @@ export default function MyNavBar(props) {
                 <Nav onSelect={async selectedKey => {
                     if (selectedKey === 'logout') {
                         try {
-                            await fetchLogOut();
+                            let res = await fetchLogOut();
                             user.handleLogOut();
+                             // props.history.push('/signIn');
                         } catch (error) {
                             console.log("AAAAA", error);
                             // return <Redirect to='/'/>;
@@ -37,7 +37,7 @@ export default function MyNavBar(props) {
                     }
                 }}>
                     {user.currentUser.signed ?
-                        <Nav.Link eventKey='logout' href="/logout">
+                        <Nav.Link eventKey='logout' href="/signIn">
                             LogOut
                         </Nav.Link>
                         : <Nav.Link href="/signIn">LogIn</Nav.Link>}
@@ -52,21 +52,29 @@ export default function MyNavBar(props) {
 
 let fetchLogOut = async () => {
     try {
-        await fetch('/api/v1/users-log-out', {
+        let res = await fetch('/api/v1/users-log-out', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
+        let txt = await res.json();
+        console.log('Txt: ', txt);
         if (!sessionStorage.getItem('currentUser')) {
             await localStorage.removeItem('currentUser');
         } else {
             await sessionStorage.removeItem('currentUser');
         }
+        console.log('All must be deleted');
         return ({message: 'Logout successful'});
 
     } catch (error) {
         console.log("Err", error);
+        if (!sessionStorage.getItem('currentUser')) {
+            await localStorage.removeItem('currentUser');
+        } else {
+            await sessionStorage.removeItem('currentUser');
+        }
         return ({message: 'Logut failed'});
     }
 };
