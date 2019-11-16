@@ -7,6 +7,10 @@ const initialState = {
     }
 };
 
+// let fetchCurrentUser = async() => {
+//     let currentUser = await fetch('/api/v1/me')
+// }
+
 const guest = {
     username: 'Guest',
     signed: false
@@ -53,7 +57,6 @@ const AuthContextProvider = props => {
     )
 };
 
-//
 // let fetchUser = async (values) => {
 //     console.log(values.remember_me);
 //     let res = await fetch('/api/v1/users-sign-in', {

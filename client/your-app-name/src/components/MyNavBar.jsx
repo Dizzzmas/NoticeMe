@@ -74,8 +74,10 @@ let fetchLogOut = async () => {
         console.log("Err", error);
         if (!sessionStorage.getItem('currentUser')) {
             await localStorage.removeItem('currentUser');
+            await localStorage.removeItem('token');
         } else {
             await sessionStorage.removeItem('currentUser');
+            await sessionStorage.removeItem('token');
         }
         return ({message: 'Logut failed'});
     }

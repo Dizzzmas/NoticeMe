@@ -30,23 +30,26 @@ export default function SignIn(props) {
             let r = await fetch('/auth/google', options);
             console.log('r: ', r);
             const token = r.headers.get('x-auth-token');
-            let user = await r.json();
+            let google_user = await r.json();
             if (token) {
-                console.log(user);
+                console.log(google_user);
                 let stored_user = {
-                    username: user.username,
-                    email: user.email,
-                    aboutMe: user.aboutMe,
-                    role: user.role,
-                    createdAt: user.createdAt,
-                    updatedAt: user.updatedAt,
+                    username: google_user.username,
+                    email: google_user.email,
+                    aboutMe: google_user.aboutMe,
+                    role: google_user.role,
+                    createdAt: google_user.createdAt,
+                    updatedAt: google_user.updatedAt,
                     signed: true,
                 };
                 let payload = {
                     user: stored_user,
-                    token: user.googleToken
+                    token: google_user.googleToken
                 };
+                localStorage.setItem('currentUser', JSON.stringify(stored_user));
+                localStorage.setItem('token', JSON.stringify(google_user.googleToken));
                 user.handleSignIn(payload);
+                props.history.push('/profile');
             }
         } catch (error) {
             console.log("Google auth failed");
