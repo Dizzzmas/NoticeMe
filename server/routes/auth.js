@@ -31,6 +31,20 @@ module.exports = function (app, passport) {
         });
         return res.status(200).redirect(`/users/${req.user.id}`);
     });
+
+    app.post('/auth/google', passport.authenticate('google-signin', {session: false}), function (req, res, next) {
+        if (!req.user) {
+            return res.send(401, 'User Not Authenticated');
+        }
+        const token = jwt.sign({
+                id: req.user.id
+            }, process.env.SECRET_KEY,
+            {
+                expiresIn: 60 * 120
+            });
+        res.setHeader('x-auth-token', token);
+        return res.status(200).send(JSON.stringify(req.user));
+    });
     app.get('/auth/profile', authHelpers.loginRequired, (req, res) => {
         res.render('profile', {layout: 'layout', title: 'Profile', user: req.user, currentUser: req.user})
     });

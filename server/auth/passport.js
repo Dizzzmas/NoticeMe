@@ -3,6 +3,28 @@ module.exports = function (passport, user) {
     let LocalStrategy = require('passport-local').Strategy;
     let BasicStrategy = require('passport-http').BasicStrategy;
     let JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
+    let GoogleTokenStrategy = require('passport-google-token').Strategy;
+    let UsersController = require('../controllers/users');
+
+
+    passport.use('google-signin', new GoogleTokenStrategy({
+            clientID: "301902583432-1c95g8eich19cd94lhu0g13bbolp5n9a.apps.googleusercontent.com" ,
+            clientSecret: "uAED35OifWfPu_ejTiXik_A2"
+        }, async function (accessToken, refreshToken, profile, done) {
+            console.log(profile);
+            console.log(accessToken);
+            try {
+                await UsersController.authGoogleUser(accessToken, refreshToken, profile, function (err, user) {
+                    return done(err, user);
+                });
+            }
+            catch (error) {
+                console.log('Auth google user failed');
+                console.error(error);
+            }
+        }
+    ));
+
 
     passport.use('jwt-signin', new JwtCookieComboStrategy({
         secretOrPublicKey: process.env.SECRET_KEY

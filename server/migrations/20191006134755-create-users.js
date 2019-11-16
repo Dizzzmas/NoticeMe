@@ -15,7 +15,6 @@ module.exports = {
             },
             passwordHash: {
                 type: Sequelize.STRING(164),
-                allowNull: false
             },
             email: {
                 type: Sequelize.STRING(128),
@@ -29,6 +28,16 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 defaultValue: 0,
                 allowNull: false
+            },
+            avaUrl: {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
+            googleId: {
+                type: Sequelize.STRING
+            },
+            googleToken: {
+                type: Sequelize.STRING
             },
             createdAt: {
                 allowNull: false,

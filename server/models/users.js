@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         passwordHash: {
             type: DataTypes.STRING(164),
-            allowNull: false
         },
         email: {
             type: DataTypes.STRING(128),
@@ -21,16 +20,28 @@ module.exports = (sequelize, DataTypes) => {
         aboutMe: {
             type: DataTypes.TEXT(140),
         },
+        avaUrl: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         role: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
             allowNull: false
-        }
+        },
+        googleId: {
+            type: DataTypes.STRING
+        },
+        googleToken: {
+            type: DataTypes.STRING
+        },
     }, {
         hooks: {
             beforeCreate(user, options) {
-                const salt = bcrypt.genSaltSync();
-                user.passwordHash = bcrypt.hashSync(user.passwordHash, salt);
+                if (user.passwordHash) {
+                    const salt = bcrypt.genSaltSync();
+                    user.passwordHash = bcrypt.hashSync(user.passwordHash, salt);
+                }
             }
         }
     });

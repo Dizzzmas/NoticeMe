@@ -62,8 +62,10 @@ let fetchLogOut = async () => {
         console.log('Txt: ', txt);
         if (!sessionStorage.getItem('currentUser')) {
             await localStorage.removeItem('currentUser');
+            await localStorage.removeItem('token');
         } else {
             await sessionStorage.removeItem('currentUser');
+            await sessionStorage.removeItem('token');
         }
         console.log('All must be deleted');
         return ({message: 'Logout successful'});

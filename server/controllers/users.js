@@ -32,6 +32,7 @@ module.exports = {
                     passwordHash: req.body.password,
                     email: req.body.email,
                     aboutMe: req.body.aboutMe,
+                    avaUrl: 'test',
                 });
 
             return res.status(201).send(user);
@@ -206,11 +207,42 @@ module.exports = {
     },
     async jwt_logout(req, res){
         try{
-            res.clearCookie('jwt');
-            res.send({message: 'Cookie successfully destroyed'})
+
+            if(res.clearCookie('jwt')){
+            res.send({message: 'Cookie successfully destroyed'})}
+            else{
+                res.send({message: 'No jwt cookies set, maybe user authorized with google'});
+            }
         }
         catch{
             return res.status(400).send({message: 'Something went wrong, could not destroy cookie', error: error})
+        }
+    },
+    async authGoogleUser(accessToken, refreshToken, profile, done) {
+        try{
+            let existing_user = await Users
+                .findOne({where: {
+                    googleId: profile.id
+                    }});
+            if(!existing_user){
+                let new_user = await Users
+                .create({
+                    username: profile.displayName,
+                    email: profile.emails[0].value,
+                    googleId: profile.id,
+                    googleToken: accessToken,
+                    avaUrl: 'test'
+                });
+                return done(null, new_user)
+            }
+            else{
+                return done(null, existing_user);
+            }
+
+        }
+        catch (error){
+            console.log('Could not add google user');
+            return done(null, false);
         }
     }
 };

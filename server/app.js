@@ -46,11 +46,11 @@ app.use(express.static('public'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 
-//let authRoute = require('./routes/auth')(app, passport);
+let authRoute = require('./routes/auth')(app, passport);
 require('./auth/passport')(passport, User);
 app.use('/', indexRouter);
 app.use('/api/v1', apiRouter.unprotected);
-app.use('/api/v1', passport.authenticate('jwt-signin', {
+app.use('/api/v1', passport.authenticate(['jwt-signin', 'google-signin'], {
     session: false,
     failureFlash: true,
 
@@ -80,15 +80,15 @@ app.use(function (req, res, next) {
 app.get('/hey', (req, res) => res.send('ho!'));
 
 // error handler
-app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-    console.log(err);
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error', {layout: 'layout'});
-});
+// app.use(function (err, req, res, next) {
+//     // set locals, only providing error in development
+//     res.locals.message = err.message;
+//     res.locals.error = req.app.get('env') === 'development' ? err : {};
+//     console.log(err);
+//     // render the error page
+//     res.status(err.status || 500);
+//     res.render('error', {layout: 'layout'});
+// });
 
 app.listen(process.env.PORT, () => `Server running on port ${process.env.PORT}`);
 
