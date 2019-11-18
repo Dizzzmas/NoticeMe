@@ -236,7 +236,7 @@ module.exports = {
                         email: profile.emails[0].value,
                         googleId: profile.id,
                         googleToken: accessToken,
-                        avaUrl: 'https://www.gravatar.com/avatar/' + md5(profile.emails[0].value)
+                        avaUrl: `https://www.gravatar.com/avatar/${md5(utf8.encode(profile.emails[0].value.toLowerCase()))}?d=identicon`,
                     });
                 return done(null, new_user)
             } else {

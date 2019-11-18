@@ -20,9 +20,9 @@ routerProtected.post('/users/:userId/giveadmin', UsersController.setAdmin);
 routerProtected.post('/users/:userId/revokeadmin', UsersController.revokeAdmin);
 //
 // Posts api
-routerProtected.post('/users/:userId/posts', parser.single('image'), PostsController.create);
+router.post('/users/:userId/posts', PostsController.create);
 routerProtected.delete('/users/:userId/posts/:postId', PostsController.deleteById);
-routerProtected.get('/posts', PostsController.getAll);
+router.get('/posts', PostsController.getAll);
 routerProtected.get('/posts/search', PostsController.search);
 routerProtected.get('/posts/:postId', PostsController.getById);
 routerProtected.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);

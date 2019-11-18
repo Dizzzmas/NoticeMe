@@ -1,5 +1,6 @@
 const Posts = require('../models').posts;
 const Comments = require('../models').comments;
+const Users = require('../models').users;
 let fs = require('fs');
 
 
@@ -9,7 +10,7 @@ module.exports = {
             let post = await Posts
                 .create({
                     content: req.body.content,
-                    imageUri: req.file.url,
+                    imageUri: 'test',
                     userId: req.params.userId
                 });
             return res.status(201).send(post);
@@ -28,10 +29,12 @@ module.exports = {
                 .findAndCountAll({
                     offset,
                     limit,
+
                     include: [{
-                        model: Comments,
-                        as: 'comments'
-                    }],
+                        model: Users,
+                    },
+                        {model: Comments,
+                        as:'comments'}],
                     order: [
                         ['createdAt', 'DESC'],
                     ],

@@ -6,6 +6,8 @@ import Routes from "./routes";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyNavBar from "./components/MyNavBar";
 import {AuthContextProvider} from "./services/auth";
+import './App.css';
+
 
 
 // const AuthContext = React.createContext();
