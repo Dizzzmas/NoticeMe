@@ -2,37 +2,39 @@ const Users = require('../models').users;
 const Posts = require('../models').posts;
 const Comments = require('../models').comments;
 const jwt = require('jsonwebtoken');
+const md5 = require('md5');
+const utf8 = require('utf8');
 
 
 module.exports = {
     async create(req, res) {
         console.log(req.body.email, req.body.password, req.body.username);
         try {
-             let invalid_email_user = await Users.findOne({
-                    where: {
-                        email: req.body.email
-                    }
-                });
-                if (invalid_email_user) {
-                    console.log('Repeated email');
-                    return res.status(400).send({message: 'Account with such email already exists'});
+            let invalid_email_user = await Users.findOne({
+                where: {
+                    email: req.body.email
                 }
-                 let invalid_nickname_user = await Users.findOne({
-                        where: {
-                            username: req.body.username
-                        }
-                    });
-                    if (invalid_nickname_user) {
-                        console.log('Repeated username');
-                        return res.status(400).send({message: 'Account with such username already exists'});
-                    }
+            });
+            if (invalid_email_user) {
+                console.log('Repeated email');
+                return res.status(400).send({message: 'Account with such email already exists'});
+            }
+            let invalid_nickname_user = await Users.findOne({
+                where: {
+                    username: req.body.username
+                }
+            });
+            if (invalid_nickname_user) {
+                console.log('Repeated username');
+                return res.status(400).send({message: 'Account with such username already exists'});
+            }
             let user = await Users
                 .create({
                     username: req.body.username,
                     passwordHash: req.body.password,
                     email: req.body.email,
                     aboutMe: req.body.aboutMe,
-                    avaUrl: 'test',
+                    avaUrl: `https://www.gravatar.com/avatar/${md5(utf8.encode(req.body.email.toLowerCase()))}?d=identicon`,
                 });
 
             return res.status(201).send(user);
@@ -187,17 +189,19 @@ module.exports = {
                 return res.status(401).send({message: 'Wrong email or password'});
             }
             if (!user.check_password(password)) {
-                return res.status(401).send.json({
-                    error: 'Incorrect email or password'
+                return res.status(401).send({
+                    error: 'Wrong email or password'
                 });
             }
             const payload = {
                 user: user
             };
-            const token = jwt.sign(payload, process.env.SECRET_KEY);
+            const token = jwt.sign(payload, process.env.SECRET_KEY, {
+                expiresIn: 60 * 120
+            });
             res.setHeader('Cache-Control', 'private');
             res.cookie('jwt', token, {
-                httpOnly: true, maxAge: 900000, sameSite: true,
+                httpOnly: true, maxAge: 60 * 120, sameSite: true,
                 signed: true,
             });
             res.send(user);
@@ -205,42 +209,41 @@ module.exports = {
             return res.status(500).send({message: 'Something went wrong', error: error})
         }
     },
-    async jwt_logout(req, res){
-        try{
+    async jwt_logout(req, res) {
+        try {
 
-            if(res.clearCookie('jwt')){
-            res.send({message: 'Cookie successfully destroyed'})}
-            else{
+            if (res.clearCookie('jwt')) {
+                res.send({message: 'Cookie successfully destroyed'})
+            } else {
                 res.send({message: 'No jwt cookies set, maybe user authorized with google'});
             }
-        }
-        catch{
+        } catch {
             return res.status(400).send({message: 'Something went wrong, could not destroy cookie', error: error})
         }
     },
     async authGoogleUser(accessToken, refreshToken, profile, done) {
-        try{
+        try {
             let existing_user = await Users
-                .findOne({where: {
-                    googleId: profile.id
-                    }});
-            if(!existing_user){
-                let new_user = await Users
-                .create({
-                    username: profile.displayName,
-                    email: profile.emails[0].value,
-                    googleId: profile.id,
-                    googleToken: accessToken,
-                    avaUrl: 'test'
+                .findOne({
+                    where: {
+                        googleId: profile.id
+                    }
                 });
+            if (!existing_user) {
+                let new_user = await Users
+                    .create({
+                        username: profile.displayName,
+                        email: profile.emails[0].value,
+                        googleId: profile.id,
+                        googleToken: accessToken,
+                        avaUrl: 'https://www.gravatar.com/avatar/' + md5(profile.emails[0].value)
+                    });
                 return done(null, new_user)
-            }
-            else{
+            } else {
                 return done(null, existing_user);
             }
 
-        }
-        catch (error){
+        } catch (error) {
             console.log('Could not add google user');
             return done(null, false);
         }

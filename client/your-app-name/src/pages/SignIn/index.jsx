@@ -44,17 +44,15 @@ export default function SignIn(props) {
                 };
                 let payload = {
                     user: stored_user,
-                    token: google_user.googleToken
+                    token: token
                 };
                 localStorage.setItem('currentUser', JSON.stringify(stored_user));
-                localStorage.setItem('token', JSON.stringify(google_user.googleToken));
                 user.handleSignIn(payload);
                 props.history.push('/profile');
             }
         } catch (error) {
             console.log("Google auth failed");
             console.error(error);
-
         }
 
     };
@@ -71,20 +69,17 @@ export default function SignIn(props) {
             </div>
             <div className="row">
                 <div className="col-lg-12">
+
                     <Formik
                         initialValues={{email: "", password: "", remember_me: false}}
                         validationSchema={SignInSchema}
                         onSubmit={async (values, actions) => {
                             let payload = await fetchUser(values);
-                            console.log(payload);
-                            user.handleSignIn(payload);
-                            if (payload) {
-                                props.history.push('/profile');
-                            }
-                            if (!localStorage.getItem('currentUser') && !sessionStorage.getItem('currentUser')) {
-
+                            if (!payload) {
                                 actions.setStatus({message: 'Wrong email or password'});
-
+                            } else {
+                                user.handleSignIn(payload);
+                                props.history.push('/profile');
                             }
 
 
@@ -94,7 +89,11 @@ export default function SignIn(props) {
                     >
                         {({touched, errors, isSubmitting, status}) => (
 
+
                             <Form>
+                                {status && <Alert variant='danger'>
+                                    {status.message}
+                                </Alert>}
                                 <div className="form-group">
 
                                     <label htmlFor="email">Email</label>
@@ -135,9 +134,7 @@ export default function SignIn(props) {
                                     <Field type="checkbox" name="remember_me"/>
                                 </div>
 
-                                {status && <Alert variant='danger'>
-                                    {status.message}
-                                </Alert>}
+
                                 <button
                                     type="submit"
                                     className="btn btn-primary btn-block"
@@ -176,13 +173,14 @@ let fetchUser = async (values) => {
 
     });
     let txt = await res.json();
-    console.log(txt);
-    if (res.ok) {
+    console.log('Sign in response: ', txt);
+    if (res.ok || res.status === 200) {
         let stored_user = {
             username: txt.username,
             email: txt.email,
             aboutMe: txt.aboutMe,
             role: txt.role,
+            avaUrl: txt.avaUrl,
             createdAt: txt.createdAt,
             updatedAt: txt.updatedAt,
             signed: true,
@@ -200,6 +198,6 @@ let fetchUser = async (values) => {
 
     } else {
         console.log("Login failed");
-        return ({message: 'Log In failed'});
+        return undefined;
     }
 };

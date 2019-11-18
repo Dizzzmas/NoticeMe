@@ -13,8 +13,8 @@ export default function MyNavBar(props) {
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/posts">Posts</Nav.Link>
-                    {user.currentUser.role &&
-                    < Nav.Link href="#users">Users</Nav.Link>
+                    {user.currentUser.role ?
+                    <Nav.Link href="#users">Users</Nav.Link>: ''
                     }
                     <Nav.Link href="#explore">Explore</Nav.Link>
                     <Nav.Link href="#about">About</Nav.Link>
@@ -62,10 +62,8 @@ let fetchLogOut = async () => {
         console.log('Txt: ', txt);
         if (!sessionStorage.getItem('currentUser')) {
             await localStorage.removeItem('currentUser');
-            await localStorage.removeItem('token');
         } else {
             await sessionStorage.removeItem('currentUser');
-            await sessionStorage.removeItem('token');
         }
         console.log('All must be deleted');
         return ({message: 'Logout successful'});
@@ -74,10 +72,8 @@ let fetchLogOut = async () => {
         console.log("Err", error);
         if (!sessionStorage.getItem('currentUser')) {
             await localStorage.removeItem('currentUser');
-            await localStorage.removeItem('token');
         } else {
             await sessionStorage.removeItem('currentUser');
-            await sessionStorage.removeItem('token');
         }
         return ({message: 'Logut failed'});
     }

@@ -34,14 +34,23 @@ module.exports = function (app, passport) {
 
     app.post('/auth/google', passport.authenticate('google-signin', {session: false}), function (req, res, next) {
         if (!req.user) {
-            return res.send(401, 'User Not Authenticated');
+            return res.status(401).send({message: 'User Not Authenticated'});
         }
-        const token = jwt.sign({
-                id: req.user.id
-            }, process.env.SECRET_KEY,
-            {
+
+        const payload = {
+            user: req.user
+        };
+        const token = jwt.sign(payload, process.env.SECRET_KEY, {
                 expiresIn: 60 * 120
             });
+        res.setHeader('Cache-Control', 'private');
+        res.cookie('jwt', token, {
+            httpOnly: true, maxAge: 60 * 120,
+            sameSite: true,
+            signed: true,
+        });
+
+        console.log(req.user);
         res.setHeader('x-auth-token', token);
         return res.status(200).send(JSON.stringify(req.user));
     });

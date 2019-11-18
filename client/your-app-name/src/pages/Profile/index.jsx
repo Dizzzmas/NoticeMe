@@ -1,5 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
+import {AuthContext} from "../../services/auth";
 
 export default function Profile() {
-  return <h1>Dashboard</h1>;
+  let authCont = useContext(AuthContext);
+    return (
+        <div>
+        <p>Username: {authCont.currentUser.username}</p>
+        <img src={authCont.currentUser.avaUrl}/>
+        </div>
+
+    );
 }

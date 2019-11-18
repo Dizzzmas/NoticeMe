@@ -11,6 +11,7 @@ module.exports = function (passport, user) {
             clientID: "301902583432-1c95g8eich19cd94lhu0g13bbolp5n9a.apps.googleusercontent.com" ,
             clientSecret: "uAED35OifWfPu_ejTiXik_A2"
         }, async function (accessToken, refreshToken, profile, done) {
+        console.log('Here I am');
             console.log(profile);
             console.log(accessToken);
             try {
