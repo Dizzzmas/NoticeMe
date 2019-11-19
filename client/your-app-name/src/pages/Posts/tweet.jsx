@@ -23,6 +23,14 @@ const Handle = (props) => {
   )
 };
 
+const PostedOn = (props) => {
+  return(
+      <div className="posted_on">
+        {props.posted_on}
+      </div>
+  )
+};
+
 const Name = (props) => {
   return(
     <div className="name">
@@ -48,6 +56,7 @@ const TweetBody = (props) => {
           <div className="inner-body">
             <Name name={props.name}/>
             <Handle handle={props.handle}/>
+            <PostedOn posted_on={props.posted_on}/>
           </div>
           <Tweet tweet={props.tweet}/>
         </div>

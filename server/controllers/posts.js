@@ -21,15 +21,15 @@ module.exports = {
     },
     async getAll(req, res) {
 
-        const pageSize = process.env.PAGE_SIZE || 2;
+        const pageSize = process.env.PAGE_SIZE || 4;
+         const limit = pageSize;
         const offset = parseInt(req.query.page) * pageSize - pageSize;
-        const limit = pageSize;
+
         try {
             let posts = await Posts
                 .findAndCountAll({
                     offset,
                     limit,
-
                     include: [{
                         model: Users,
                     },

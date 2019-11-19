@@ -44,7 +44,7 @@ module.exports = {
         }
     },
     async getAll(req, res, next) {
-        const pageSize = process.env.PAGE_SIZE || 2;
+        const pageSize = process.env.PAGE_SIZE || 4;
         const offset = parseInt(req.query.page) * pageSize - pageSize;
         const limit = pageSize;
         try {
