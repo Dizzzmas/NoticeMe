@@ -71,11 +71,11 @@ function Feed(props) {
                         liked = true;
                     }
                 }
-                let id = post.id;
+                let post_id = post.id;
                 return (
                     <PostBody
                         key={index}
-                        id={id}
+                        post_id={post_id}
                         username={username}
                         handle={handle}
                         content={content}

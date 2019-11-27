@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
+import {AuthContext} from "../../services/auth";
 
-// TODO: Add comments and likes to posts, allow users follow each other
+// TODO: Add comments to posts, allow users follow each other
 
 const PostBox = (props) => {
     return (
@@ -50,16 +51,34 @@ const Content = (props) => {
 };
 
 const Likes = (props) => {
+    let userContext = useContext(AuthContext);
     const [liked, setLiked] = useState(props.liked);
-    const [likes_count, setLikesCount] = useState(props.likes_count);
+    const [likes_count, setLikesCount] = useState(parseInt(props.likes_count));
 
-    let update_likes = () => {
+    let update_likes = async () => {
         if (liked) {
-            setLikesCount(likes_count - 1);
-            setLiked(false);
+            let res = await fetch(`api/v1/users/${userContext.currentUser.id}/posts/${props.post_id}/unlike`, {
+                method: 'DELETE'
+            });
+            if (res.ok && res.status === 204) {
+                setLikesCount(likes_count - 1);
+                setLiked(false);
+            }
+            else{
+              console.log('could not unlike');
+            }
+
         } else {
-            setLikesCount(likes_count + 1);
-            setLiked(true);
+            let res = await fetch(`api/v1/users/${userContext.currentUser.id}/posts/${props.post_id}/like`, {
+                method: 'POST'
+            });
+            if (res.ok && res.status === 201) {
+                setLikesCount(likes_count + 1);
+                setLiked(true);
+            }
+            else{
+              console.log('could not like');
+            }
         }
     };
 
@@ -85,7 +104,7 @@ const PostBody = (props) => {
                         <PostedOn posted_on={props.posted_on}/>
                     </div>
                     <Content content={props.content}/>
-                    <Likes liked={props.liked} likes_count={props.likes_count}/>
+                    <Likes post_id={props.post_id} liked={props.liked} likes_count={props.likes_count}/>
                 </div>
 
             </div>

@@ -36,6 +36,7 @@ routerProtected.delete('/users/:userId/posts/:postId/comments/:commentId', Comme
 
 //Likes api
 router.post('/users/:userId/posts/:postId/like', LikesController.create);
+router.delete('/users/:userId/posts/:postId/unlike', LikesController.deleteById);
 
 
 routerProtected.get('/me', async(req, res) => {
