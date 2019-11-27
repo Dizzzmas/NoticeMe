@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {TweetBody} from './tweet';
+import {PostBody} from './post';
 import moment from 'moment';
-import {Button} from 'react-bootstrap';
 import debounce from "lodash.debounce";
 
 
@@ -34,12 +33,10 @@ function Feed(props) {
             .then(response => response.json())
             .then(loaded_posts => {
                 console.log(page);
-
                 setHasMore(posts.length < loaded_posts.count);
                 setIsLoading(false);
                 setPosts(posts.concat(loaded_posts.rows));
                 setCurrentPage(page + 1);
-
             })
             .catch((err) => {
                 setError(err.message);
@@ -59,18 +56,18 @@ function Feed(props) {
     return (
         <div className="main-body">
             {[...posts].map((post, index) => {
-                let name = `${post.user.username}`;
+                let username = `${post.user.username}`;
                 let handle = `@${post.user.username}`;
-                let image = post.user.avaUrl;
-                let tweet = post.content;
+                let avatar = post.user.avaUrl;
+                let content = post.content;
                 let posted_on = moment(post.createdAt).fromNow();
                 return (
-                    <TweetBody
+                    <PostBody
                         key={index}
-                        name={name}
+                        username={username}
                         handle={handle}
-                        tweet={tweet}
-                        image={image}
+                        content={content}
+                        avatar={avatar}
                         posted_on={posted_on}/>
                 )
             })}
