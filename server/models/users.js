@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'userId',
             as: 'comments'
         });
+
     };
     users.prototype.check_password = function (password, error) {
         if (error) {

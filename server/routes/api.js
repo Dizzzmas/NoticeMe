@@ -4,6 +4,7 @@ let routerProtected = express.Router();
 let UsersController = require('../controllers/users');
 let PostsController = require('../controllers/posts');
 let CommentsController = require('../controllers/comments');
+let LikesController = require('../controllers/likes');
 let parser = require('../data/config');
 const authHelpers = require('../auth/_helpers');
 
@@ -24,7 +25,7 @@ router.post('/users/:userId/posts', PostsController.create);
 routerProtected.delete('/users/:userId/posts/:postId', PostsController.deleteById);
 router.get('/posts', PostsController.getAll);
 routerProtected.get('/posts/search', PostsController.search);
-routerProtected.get('/posts/:postId', PostsController.getById);
+router.get('/posts/:postId', PostsController.getById);
 routerProtected.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);
 routerProtected.post('/users-log-out', UsersController.jwt_logout);
 router.post('/users-sign-in', UsersController.jwt_authenticate);
@@ -32,6 +33,10 @@ router.post('/users-sign-in', UsersController.jwt_authenticate);
 routerProtected.post('/users/:userId/posts/:postId/comments', CommentsController.create);
 routerProtected.put('/users/:userId/posts/:postId/comments/:commentId', CommentsController.updateById);
 routerProtected.delete('/users/:userId/posts/:postId/comments/:commentId', CommentsController.deleteById);
+
+//Likes api
+router.post('/users/:userId/posts/:postId/like', LikesController.create);
+
 
 routerProtected.get('/me', async(req, res) => {
     return res.status(200).send(req.user);

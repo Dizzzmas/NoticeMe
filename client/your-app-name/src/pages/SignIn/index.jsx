@@ -34,6 +34,7 @@ export default function SignIn(props) {
             if (token) {
                 console.log(google_user);
                 let stored_user = {
+                    id: google_user.id,
                     username: google_user.username,
                     email: google_user.email,
                     aboutMe: google_user.aboutMe,
@@ -176,6 +177,7 @@ let fetchUser = async (values) => {
     console.log('Sign in response: ', txt);
     if (res.ok || res.status === 200) {
         let stored_user = {
+            id: txt.id,
             username: txt.username,
             email: txt.email,
             aboutMe: txt.aboutMe,

@@ -1,7 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {PostBody} from './post';
 import moment from 'moment';
 import debounce from "lodash.debounce";
+import {AuthContext} from "../../services/auth";
 
 
 const usePrevious = current => {
@@ -14,7 +15,7 @@ const usePrevious = current => {
 
 
 function Feed(props) {
-
+    let userContext = useContext(AuthContext);
     const [posts, setPosts] = useState([]);
     const [page, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
@@ -32,7 +33,7 @@ function Feed(props) {
         fetch(`/api/v1/posts?page=${page}`)
             .then(response => response.json())
             .then(loaded_posts => {
-                console.log(page);
+                console.log('page: ', page);
                 setHasMore(posts.length < loaded_posts.count);
                 setIsLoading(false);
                 setPosts(posts.concat(loaded_posts.rows));
@@ -59,16 +60,30 @@ function Feed(props) {
                 let username = `${post.user.username}`;
                 let handle = `@${post.user.username}`;
                 let avatar = post.user.avaUrl;
-                let content = post.content;
+                let content = `${post.content}`;
                 let posted_on = moment(post.createdAt).fromNow();
+                let likes_count = `${post.likes.length}`;
+                let liked = false;
+                for (const like of post.likes) {
+                    console.log(like);
+                    console.log('curr: ', userContext.currentUser.id);
+                    if (like.userId == userContext.currentUser.id) {
+                        liked = true;
+                    }
+                }
+                let id = post.id;
                 return (
                     <PostBody
                         key={index}
+                        id={id}
                         username={username}
                         handle={handle}
                         content={content}
                         avatar={avatar}
-                        posted_on={posted_on}/>
+                        posted_on={posted_on}
+                        likes_count={likes_count}
+                        liked={liked}
+                        />
                 )
             })}
             {error &&
