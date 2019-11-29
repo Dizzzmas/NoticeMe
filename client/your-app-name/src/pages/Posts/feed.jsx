@@ -64,6 +64,7 @@ function Feed(props) {
                 let posted_on = moment(post.createdAt).fromNow();
                 let likes_count = `${post.likes.length}`;
                 let liked = false;
+                let userId = post.userId;
                 for (const like of post.likes) {
                     console.log(like);
                     console.log('curr: ', userContext.currentUser.id);
@@ -83,6 +84,7 @@ function Feed(props) {
                         posted_on={posted_on}
                         likes_count={likes_count}
                         liked={liked}
+                        userId={userId}
                         />
                 )
             })}

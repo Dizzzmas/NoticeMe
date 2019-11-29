@@ -1,6 +1,8 @@
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import React, {useContext} from "react";
 import {AuthContext} from "../services/auth";
+import NavLink from "react-bootstrap/NavLink";
+import {Link} from "react-router-dom";
 
 
 export default function MyNavBar(props) {
@@ -41,6 +43,7 @@ export default function MyNavBar(props) {
                             LogOut
                         </Nav.Link>
                         : <Nav.Link href="/signIn">LogIn</Nav.Link>}
+                    <Link to={{ pathname: `/${user.currentUser.username}`, user: user.currentUser }}>Profile</Link>
                 </Nav>
                 <p><b>{user.currentUser.username}</b></p>
             </Navbar.Collapse>

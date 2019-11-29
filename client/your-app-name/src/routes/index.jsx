@@ -6,7 +6,8 @@ import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Posts from '../pages/Posts';
 import Home from '../pages/Home';
-import Profile from "../pages/Profile";
+import UserPage from "../pages/UserPage";
+
 
 export default function Routes(){
     return(
@@ -15,7 +16,8 @@ export default function Routes(){
             <Route path ='/signIn' component={SignIn}/>
             <Route path ='/signUp' component={SignUp}/>
             <Route path='/posts' component={Posts} />
-            <Route path='/profile' component={Profile} isPrivate/>
+            <Route path='/profile' component={UserPage} isPrivate/>
+            <Route path='/:username' component={UserPage}/>
 
             <Route component={SignIn}/>
         </Switch>

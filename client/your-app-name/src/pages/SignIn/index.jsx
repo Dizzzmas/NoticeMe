@@ -49,13 +49,15 @@ export default function SignIn(props) {
                 };
                 localStorage.setItem('currentUser', JSON.stringify(stored_user));
                 user.handleSignIn(payload);
-                props.history.push('/profile');
+                console.log('us', JSON.stringify(stored_user));
+                props.history.push({
+                    pathname: `/${stored_user.username}`
+                });
             }
         } catch (error) {
             console.log("Google auth failed");
             console.error(error);
         }
-
     };
     let onFailure = (error) => {
         alert(error);
@@ -80,7 +82,9 @@ export default function SignIn(props) {
                                 actions.setStatus({message: 'Wrong email or password'});
                             } else {
                                 user.handleSignIn(payload);
-                                props.history.push('/profile');
+                                props.history.push({
+                                    pathname: `/${payload.user.username}`, state: {user: payload.user}
+                                });
                             }
 
 

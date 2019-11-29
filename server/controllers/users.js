@@ -94,6 +94,30 @@ module.exports = {
             return res.status(400).send({message: 'GetById user failed', error: error})
         }
     },
+    async getByUsername(req, res) {
+        try {
+            let user = await Users
+                .findOne({
+                    where: {username: req.params.username}, include: [{
+                        model: Posts,
+                        as: 'posts',
+                        include: [{
+                            model: Comments,
+                            as: 'comments'
+                        }]
+                    }]
+                });
+            if (!user) {
+                return res.status(404).send({
+                    message: 'User Not Found',
+                });
+            }
+            return res.status(200).send(user);
+
+        } catch (error) {
+            return res.status(400).send({message: 'GetByUsername user failed', error: error})
+        }
+    },
     async updateById(req, res) {
         try {
             let user = await Users
@@ -178,7 +202,6 @@ module.exports = {
         } catch (error) {
             return res.status(400).send({message: 'RevokeAdmin user failed', error: error});
         }
-
     },
     async jwt_authenticate(req, res) {
         try {

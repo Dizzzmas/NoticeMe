@@ -15,6 +15,7 @@ const authHelpers = require('../auth/_helpers');
 router.post('/users', UsersController.create);
 routerProtected.get('/users', authHelpers.adminRequired, UsersController.getAll);
 routerProtected.get('/users/:userId', UsersController.getById);
+router.get('/users/getByUsername/:username', UsersController.getByUsername);
 routerProtected.put('/users/:userId', UsersController.updateById);
 routerProtected.delete('/users/:userId', UsersController.deleteById);
 routerProtected.post('/users/:userId/giveadmin', UsersController.setAdmin);
@@ -29,6 +30,7 @@ router.get('/posts/:postId', PostsController.getById);
 routerProtected.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);
 routerProtected.post('/users-log-out', UsersController.jwt_logout);
 router.post('/users-sign-in', UsersController.jwt_authenticate);
+
 //Comments api
 routerProtected.post('/users/:userId/posts/:postId/comments', CommentsController.create);
 routerProtected.put('/users/:userId/posts/:postId/comments/:commentId', CommentsController.updateById);

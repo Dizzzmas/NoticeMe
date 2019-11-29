@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../services/auth";
+import {Link} from "react-router-dom";
 
 // TODO: Add comments to posts, allow users follow each other
 
@@ -36,8 +37,8 @@ const PostedOn = (props) => {
 
 const UserName = (props) => {
     return (
-        <div className="username">
-            {props.username}
+        <div className="username" onClick={(e) => {e.stopPropagation();}}>
+          <Link to={{ pathname: `/${props.username}`}}>{props.username}</Link>
         </div>
     )
 };
@@ -86,7 +87,7 @@ const Likes = (props) => {
     return (
         <div className='likes'>
             Likes: {likes_count}
-            {liked ? <button onClick={update_likes}>Unlike</button> : <button onClick={update_likes}>Like</button>}
+            {liked ? <button onClick={(e) => {e.stopPropagation();update_likes();}}>Unlike</button> : <button onClick={(e) => {e.stopPropagation();update_likes();}}>Like</button>}
         </div>
     )
 };
@@ -95,11 +96,11 @@ const PostBody = (props) => {
 
     return (
         <PostBox>
-            <div className="inner-body">
+            <div className="inner-body" onClick={() => {alert('asdas')}}>
                 <Avatar image={props.avatar}/>
                 <div className="body">
-                    <div className="inner-body" onClick={() => alert('asdas')}>
-                        <UserName username={props.username}/>
+                    <div className="inner-body">
+                        <UserName username={props.username} userId={props.userId}/>
                         <Handle handle={props.handle}/>
                         <PostedOn posted_on={props.posted_on}/>
                     </div>
