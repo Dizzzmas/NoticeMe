@@ -54,6 +54,16 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'userId',
             as: 'comments'
         });
+        users.belongsToMany(models.users, {
+            as: 'following',
+            foreignKey: 'followerId',
+            through: 'followers'
+        });
+        users.belongsToMany(models.users, {
+            as: 'followed_by',
+            foreignKey: 'followedId',
+            through: 'followers'
+        })
 
     };
     users.prototype.check_password = function (password, error) {

@@ -5,6 +5,7 @@ let UsersController = require('../controllers/users');
 let PostsController = require('../controllers/posts');
 let CommentsController = require('../controllers/comments');
 let LikesController = require('../controllers/likes');
+let FollowersController = require('../controllers/followers');
 let parser = require('../data/config');
 const authHelpers = require('../auth/_helpers');
 
@@ -14,7 +15,7 @@ const authHelpers = require('../auth/_helpers');
 // Users api
 router.post('/users', UsersController.create);
 routerProtected.get('/users', authHelpers.adminRequired, UsersController.getAll);
-routerProtected.get('/users/:userId', UsersController.getById);
+router.get('/users/:userId', UsersController.getById);
 router.get('/users/getByUsername/:username', UsersController.getByUsername);
 routerProtected.put('/users/:userId', UsersController.updateById);
 routerProtected.delete('/users/:userId', UsersController.deleteById);
@@ -41,6 +42,11 @@ router.get('/posts/GetAllComments/:postId', CommentsController.getAll);
 router.post('/users/:userId/posts/:postId/like', LikesController.create);
 router.delete('/users/:userId/posts/:postId/unlike', LikesController.deleteById);
 
+// Followers Api
+router.post('/users/:userId/follow/:followId', FollowersController.followUser);
+router.get('/users/:userId/followers', FollowersController.getFollowers);
+router.get('/users/:userId/followed', FollowersController.getFollowed);
+router.delete('/users/:userId/unfollow/:followedId', FollowersController.unFollowUser);
 
 routerProtected.get('/me', async(req, res) => {
     return res.status(200).send(req.user);
