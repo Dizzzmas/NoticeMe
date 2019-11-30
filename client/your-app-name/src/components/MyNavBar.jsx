@@ -3,6 +3,7 @@ import React, {useContext} from "react";
 import {AuthContext} from "../services/auth";
 import NavLink from "react-bootstrap/NavLink";
 import {Link} from "react-router-dom";
+import PostModal from "../pages/Post/post_modal";
 
 
 export default function MyNavBar(props) {
@@ -16,7 +17,7 @@ export default function MyNavBar(props) {
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/posts">Posts</Nav.Link>
                     {user.currentUser.role ?
-                    <Nav.Link href="#users">Users</Nav.Link>: ''
+                        <Nav.Link href="#users">Users</Nav.Link> : ''
                     }
                     <Nav.Link href="#explore">Explore</Nav.Link>
                     <Nav.Link href="#about">About</Nav.Link>
@@ -24,6 +25,7 @@ export default function MyNavBar(props) {
                         <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
                         <Button variant="outline-success">Search</Button>
                     </Form>
+                    <PostModal history={props.history}/>
                 </Nav>
 
                 <Nav onSelect={async selectedKey => {
@@ -31,7 +33,7 @@ export default function MyNavBar(props) {
                         try {
                             let res = await fetchLogOut();
                             user.handleLogOut();
-                             // props.history.push('/signIn');
+                            // props.history.push('/signIn');
                         } catch (error) {
                             console.log("AAAAA", error);
                             // return <Redirect to='/'/>;
@@ -39,11 +41,14 @@ export default function MyNavBar(props) {
                     }
                 }}>
                     {user.currentUser.signed ?
-                        <Nav.Link eventKey='logout' href="/signIn">
-                            LogOut
-                        </Nav.Link>
+                        <React.Fragment>
+                            <Nav.Link eventKey='logout' href="/signIn">
+                                LogOut
+                            </Nav.Link>
+                            <Link
+                                to={{pathname: `/${user.currentUser.username}`, user: user.currentUser}}>Profile</Link>
+                        </React.Fragment>
                         : <Nav.Link href="/signIn">LogIn</Nav.Link>}
-                    <Link to={{ pathname: `/${user.currentUser.username}`, user: user.currentUser }}>Profile</Link>
                 </Nav>
                 <p><b>{user.currentUser.username}</b></p>
             </Navbar.Collapse>

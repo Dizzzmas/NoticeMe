@@ -1,4 +1,6 @@
 const Comments = require('../models').comments;
+const Users = require('../models').users;
+const Posts = require('../models').posts;
 
 
 module.exports = {
@@ -7,7 +9,7 @@ module.exports = {
             let comment = await Comments
                 .create({
                     content: req.body.content,
-                    commenterUsername: req.user.username,
+                    commenterUsername: 'test',
                     userId: req.params.userId,
                     postId: req.params.postId,
                 });
@@ -37,8 +39,7 @@ module.exports = {
         } catch (error) {
             return res.status(400).send({message:'Updating comment failed', error: error});
         }
-    }
-    ,
+    },
     async deleteById(req, res) {
         try {
             let comment = await Comments
@@ -58,6 +59,30 @@ module.exports = {
             return res.status(204).send({message: 'Deleted successfully'});
         } catch (error) {
             return res.status(400).send({message:'Deleting comment failed', error: error});
+        }
+    },
+    async getAll(req, res){
+        const pageSize = process.env.PAGE_SIZE || 4;
+        const limit = pageSize;
+        const offset = parseInt(req.query.page) * pageSize - pageSize;
+        try{
+            let comments = await Comments.findAndCountAll({
+                offset,
+                limit,
+                include: [{
+                    model: Users
+                },{
+                    model: Posts
+                }],
+                order: [
+                        ['createdAt', 'DESC'],
+                    ],
+                where:{postId: req.params.postId}
+            });
+            return res.status(200).send(comments);
+        }
+        catch (error) {
+            return res.status(400).send({message: 'GetAll comments failed', error: error})
         }
     }
 

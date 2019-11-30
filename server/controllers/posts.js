@@ -7,6 +7,7 @@ let fs = require('fs');
 
 module.exports = {
     async create(req, res) {
+        console.log('jnjlnsdf');
         try {
             let post = await Posts
                 .create({
@@ -124,7 +125,7 @@ module.exports = {
                         model: Likes,
                         as: 'likes',
                         required: false,
-                    }],
+                    }, {model: Users}],
 
                 });
             if (!post) {

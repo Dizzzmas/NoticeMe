@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {PostBody} from './post';
-import moment from 'moment';
 import debounce from "lodash.debounce";
 import {AuthContext} from "../../services/auth";
+import {CommentBody} from "../Posts/post";
 
 
 const usePrevious = current => {
@@ -14,9 +13,9 @@ const usePrevious = current => {
 };
 
 
-function Feed(props) {
+function CommentFeed(props) {
     let userContext = useContext(AuthContext);
-    const [posts, setPosts] = useState([]);
+    const [comments, setComments] = useState([]);
     const [page, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [error, setError] = useState(false);
@@ -25,18 +24,20 @@ function Feed(props) {
 
     useEffect(() => {
 
-        loadPosts();
+        loadComments();
 
     }, []);
-    let loadPosts = () => {
+
+
+    let loadComments = () => {
         setIsLoading(true);
-        fetch(`/api/v1/posts?page=${page}`)
+        fetch(`/api/v1/posts/GetAllComments/${props.post_id}?page=${page}`)
             .then(response => response.json())
-            .then(loaded_posts => {
+            .then(loaded_comments => {
                 console.log('page: ', page);
-                setHasMore(posts.length < loaded_posts.count);
+                setHasMore(comments.length < loaded_comments.count);
                 setIsLoading(false);
-                setPosts(posts.concat(loaded_posts.rows));
+                setComments(comments.concat(loaded_comments.rows));
                 setCurrentPage(page + 1);
             })
             .catch((err) => {
@@ -49,43 +50,45 @@ function Feed(props) {
         if (error || isLoading || !hasMore) return;
 
         if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-            loadPosts()
+            loadComments()
         }
     }, 100);
 
-
     return (
+
         <div className="main-body">
-            {[...posts].map((post, index) => {
-                let username = `${post.user.username}`;
-                let handle = `@${post.user.username}`;
-                let avatar = post.user.avaUrl;
-                let content = `${post.content}`;
-                let posted_on = moment(post.createdAt).fromNow();
-                let likes_count = `${post.likes.length}`;
-                let liked = false;
-                let userId = post.userId;
-                for (const like of post.likes) {
-                    console.log(like);
-                    console.log('curr: ', userContext.currentUser.id);
-                    if (like.userId == userContext.currentUser.id) {
-                        liked = true;
-                    }
-                }
-                let post_id = post.id;
+            {[...comments].map((comment, index) => {
+
+                let handle = `@${comment.user.username}`;
+
+                // let liked = false;
+                let styles = {
+                    postBox: 'post-body',
+                    avatar: 'avatar',
+                    handle: 'handle',
+                    postedOn: 'posted_on',
+                    userName: 'username',
+                    content: 'post',
+                    likes: 'likes',
+                };
+                // for (const like of post.likes) {
+                //     console.log(like);
+                //     console.log('curr: ', userContext.currentUser.id);
+                //     if (like.userId == userContext.currentUser.id) {
+                //         liked = true;
+                //     }
+                // }
+
+
                 return (
-                    <PostBody
+                    <CommentBody
                         key={index}
-                        post_id={post_id}
-                        username={username}
+                        post={comment.post}
+                        user={comment.user}
+                        content={comment.content}
                         handle={handle}
-                        content={content}
-                        avatar={avatar}
-                        posted_on={posted_on}
-                        likes_count={likes_count}
-                        liked={liked}
-                        userId={userId}
-                        />
+                        history={props.history}
+                    />
                 )
             })}
             {error &&
@@ -106,4 +109,4 @@ function Feed(props) {
 
 }
 
-export default Feed
+export default CommentFeed

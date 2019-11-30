@@ -18,6 +18,7 @@ export default function UserPage(props) {
         fetch(`/api/v1/users/getByUsername/${user.username}`)
             .then(response => response.json())
             .then(loaded_user => {
+                console.log('buisaboudasd');
                     let stored_user = {
                         id: loaded_user.id,
                         username: loaded_user.username,

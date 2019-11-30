@@ -22,7 +22,7 @@ routerProtected.post('/users/:userId/giveadmin', UsersController.setAdmin);
 routerProtected.post('/users/:userId/revokeadmin', UsersController.revokeAdmin);
 //
 // Posts api
-router.post('/users/:userId/posts', PostsController.create);
+router.post('/users/:userId/posts/new', PostsController.create);
 routerProtected.delete('/users/:userId/posts/:postId', PostsController.deleteById);
 router.get('/posts', PostsController.getAll);
 routerProtected.get('/posts/search', PostsController.search);
@@ -32,9 +32,10 @@ routerProtected.post('/users-log-out', UsersController.jwt_logout);
 router.post('/users-sign-in', UsersController.jwt_authenticate);
 
 //Comments api
-routerProtected.post('/users/:userId/posts/:postId/comments', CommentsController.create);
+router.post('/users/:userId/posts/:postId/comments', CommentsController.create);
 routerProtected.put('/users/:userId/posts/:postId/comments/:commentId', CommentsController.updateById);
 routerProtected.delete('/users/:userId/posts/:postId/comments/:commentId', CommentsController.deleteById);
+router.get('/posts/GetAllComments/:postId', CommentsController.getAll);
 
 //Likes api
 router.post('/users/:userId/posts/:postId/like', LikesController.create);

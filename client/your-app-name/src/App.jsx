@@ -19,7 +19,7 @@ function App() {
     return (
         <AuthContextProvider>
             <Router history={history}>
-                <MyNavBar/>
+                <MyNavBar history={history}/>
                 <Routes/>
             </Router>
         </AuthContextProvider>
