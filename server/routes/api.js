@@ -47,6 +47,8 @@ router.post('/users/:userId/follow/:followId', FollowersController.followUser);
 router.get('/users/:userId/followers', FollowersController.getFollowers);
 router.get('/users/:userId/followed', FollowersController.getFollowed);
 router.delete('/users/:userId/unfollow/:followedId', FollowersController.unFollowUser);
+router.get('/users/:userId/isfollowing/:followedId', FollowersController.isFollowing);
+router.get('/users/:userId/followedPosts', FollowersController.getFollowedPosts);
 
 routerProtected.get('/me', async(req, res) => {
     return res.status(200).send(req.user);

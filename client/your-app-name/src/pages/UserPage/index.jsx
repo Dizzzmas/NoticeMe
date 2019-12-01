@@ -1,6 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../services/auth";
 import {useParams} from "react-router";
+import {Button} from "react-bootstrap";
+import Followers from "./followers";
 
 export default function UserPage(props) {
     let slug = useParams();
@@ -18,7 +20,7 @@ export default function UserPage(props) {
         fetch(`/api/v1/users/getByUsername/${user.username}`)
             .then(response => response.json())
             .then(loaded_user => {
-                console.log('buisaboudasd');
+                    console.log(loaded_user);
                     let stored_user = {
                         id: loaded_user.id,
                         username: loaded_user.username,
@@ -26,6 +28,8 @@ export default function UserPage(props) {
                         aboutMe: loaded_user.aboutMe,
                         role: loaded_user.role,
                         avaUrl: loaded_user.avaUrl,
+                        followers_count: loaded_user.followed_by.length,
+                        following_count: loaded_user.following.length,
                         createdAt: loaded_user.createdAt,
                         updatedAt: loaded_user.updatedAt,
                     };
@@ -39,10 +43,14 @@ export default function UserPage(props) {
     };
 
     return (
+
         <div>
             <p>Username: {user.username}</p>
             <img src={user.avaUrl}/>
+            {user.id &&
+            <Followers followers_count={user.followers_count} followed_count={user.following_count} userId={user.id}/>}
         </div>
+
     );
 }
 

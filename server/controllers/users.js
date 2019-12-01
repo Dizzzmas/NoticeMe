@@ -105,7 +105,7 @@ module.exports = {
                             model: Comments,
                             as: 'comments'
                         }]
-                    }]
+                    }, {model: Users, as: 'followed_by', through: {attributes: []}}, {model: Users, as: 'following', through: {attributes: []}}]
                 });
             if (!user) {
                 return res.status(404).send({
@@ -129,7 +129,7 @@ module.exports = {
                             model: Comments,
                             as: 'comments'
                         }]
-                    }]
+                    }, ]
                 });
             if (!user) {
                 return res.status(404).send({
