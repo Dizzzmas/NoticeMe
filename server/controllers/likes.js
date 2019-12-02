@@ -7,7 +7,7 @@ module.exports = {
     async create(req, res) {
         try {
             let existing_like = await Likes
-                .findOne({where: {userId: req.params.userId, postId: req.params.postId}});
+                .findOne({where: {user_id: req.params.userId, post_id: req.params.postId}});
             if(existing_like){
                 return res.status(500).send({
                     message: 'This post was already liked'
@@ -15,8 +15,8 @@ module.exports = {
             }
             let like = await Likes.create({
                 like: true,
-                userId: req.params.userId,
-                postId: req.params.postId
+                user_id: req.params.userId,
+                post_id: req.params.postId
             });
             return res.status(201).send(like);
         } catch (error) {
@@ -26,7 +26,7 @@ module.exports = {
     async deleteById(req, res) {
         try {
             let like = await Likes
-                .findOne({where: {userId: req.params.userId, postId: req.params.postId}});
+                .findOne({where: {user_id: req.params.userId, post_id: req.params.postId}});
             if(!like){
                 return res.status(404).send({
                     message: 'Like not found'

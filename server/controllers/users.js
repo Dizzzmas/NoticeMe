@@ -31,10 +31,11 @@ module.exports = {
             let user = await Users
                 .create({
                     username: req.body.username,
-                    passwordHash: req.body.password,
+                    password_hash: req.body.password,
+                    handle: '@' + req.body.username,
                     email: req.body.email,
-                    aboutMe: req.body.aboutMe,
-                    avaUrl: `https://www.gravatar.com/avatar/${md5(utf8.encode(req.body.email.toLowerCase()))}?d=identicon`,
+                    about_me: req.body.aboutMe,
+                    ava_url: `https://www.gravatar.com/avatar/${md5(utf8.encode(req.body.email.toLowerCase()))}?d=identicon`,
                 });
 
             return res.status(201).send(user);
@@ -249,7 +250,7 @@ module.exports = {
             let existing_user = await Users
                 .findOne({
                     where: {
-                        googleId: profile.id
+                        google_id: profile.id
                     }
                 });
             if (!existing_user) {
@@ -257,8 +258,8 @@ module.exports = {
                     .create({
                         username: profile.displayName,
                         email: profile.emails[0].value,
-                        googleId: profile.id,
-                        googleToken: accessToken,
+                        google_id: profile.id,
+                        google_token: accessToken,
                         avaUrl: `https://www.gravatar.com/avatar/${md5(utf8.encode(profile.emails[0].value.toLowerCase()))}?d=identicon`,
                     });
                 return done(null, new_user)

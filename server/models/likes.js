@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
         likes.belongsTo(models.users, {
             through: 'likes',
             onDelete: 'CASCADE',
-            foreignKey: 'userId'
+            foreignKey: 'user_id'
         });
         likes.belongsTo(models.posts, {
             through: 'likes',
             onDelete: 'CASCADE',
-            foreignKey: 'postId'
+            foreignKey: 'post_id'
         });
     };
     return likes;

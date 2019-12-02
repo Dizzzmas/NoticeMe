@@ -12,10 +12,6 @@ module.exports = {
         type: Sequelize.TEXT(400),
         allowNull: false
       },
-      commenterUsername: {
-        type: Sequelize.STRING(64),
-        allowNull: false,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -24,22 +20,22 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      postId: {
+      post_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
           model: 'posts',
           key: 'id',
-          as: 'postId'
+          as: 'post_id'
         }
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
           model: 'users',
           key: 'id',
-          as: 'userId'
+          as: 'user_id'
         }
       }
     });

@@ -27,7 +27,7 @@ function Post(props) {
                     liked = false;
                     for (const like of loaded_post.likes) {
                         console.log(like);
-                        if (like.userId == userContext.currentUser.id) {
+                        if (like.user_id == userContext.currentUser.id) {
                             liked = true;
                         }
                     }

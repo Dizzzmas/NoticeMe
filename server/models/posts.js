@@ -5,24 +5,19 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT(400),
             allowNull: false,
         },
-        imageUri: {
-            type: DataTypes.STRING(100),
-            defaultValue: '/data/fs/no_file_available.png',
-            allowNull: false
-        }
     }, {});
     posts.associate = function (models) {
         // associations can be defined here
         posts.belongsTo(models.users, {
-            foreignKey: 'userId',
+            foreignKey: 'user_id',
             onDelete: 'CASCADE'
         });
         posts.hasMany(models.comments, {
-            foreignKey: 'postId',
+            foreignKey: 'post_id',
             as: 'comments'
         });
          posts.hasMany(models.likes, {
-            foreignKey: 'postId',
+            foreignKey: 'post_id',
             as: 'likes'
         });
 

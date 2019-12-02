@@ -9,7 +9,12 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             allowNull: false
         },
-        passwordHash: {
+        handle: {
+            type: DataTypes.STRING(64),
+            unique: true,
+            allowNull: false
+        },
+        password_hash: {
             type: DataTypes.STRING(164),
         },
         email: {
@@ -17,10 +22,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
         },
-        aboutMe: {
+        about_me: {
             type: DataTypes.TEXT(140),
         },
-        avaUrl: {
+        ava_url: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -29,29 +34,29 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 0,
             allowNull: false
         },
-        googleId: {
+        google_id: {
             type: DataTypes.STRING
         },
-        googleToken: {
+        google_token: {
             type: DataTypes.STRING
         },
     }, {
         hooks: {
             beforeCreate(user, options) {
-                if (user.passwordHash) {
+                if (user.password_hash) {
                     const salt = bcrypt.genSaltSync();
-                    user.passwordHash = bcrypt.hashSync(user.passwordHash, salt);
+                    user.password_hash = bcrypt.hashSync(user.password_hash, salt);
                 }
             }
         }
     });
     users.associate = function (models) {
         users.hasMany(models.posts, {
-            foreignKey: 'userId',
+            foreignKey: 'user_id',
             as: 'posts',
         });
         users.hasMany(models.comments, {
-            foreignKey: 'userId',
+            foreignKey: 'user_id',
             as: 'comments'
         });
         users.belongsToMany(models.users, {
@@ -70,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
         if (error) {
             throw error;
         }
-        return bcrypt.compareSync(password, this.passwordHash);
+        return bcrypt.compareSync(password, this.password_hash);
     };
     return users;
 };

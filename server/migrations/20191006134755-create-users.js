@@ -13,7 +13,12 @@ module.exports = {
                 unique: true,
                 allowNull: false
             },
-            passwordHash: {
+            handle: {
+                type: Sequelize.STRING(64),
+                unique: true,
+                allowNull: false
+            },
+            password_hash: {
                 type: Sequelize.STRING(164),
             },
             email: {
@@ -21,7 +26,7 @@ module.exports = {
                 allowNull: false,
                 unique: true,
             },
-            aboutMe: {
+            about_me: {
                 type: Sequelize.TEXT(140)
             },
             role: {
@@ -29,14 +34,14 @@ module.exports = {
                 defaultValue: 0,
                 allowNull: false
             },
-            avaUrl: {
+            ava_url: {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-            googleId: {
+            google_id: {
                 type: Sequelize.STRING
             },
-            googleToken: {
+            google_token: {
                 type: Sequelize.STRING
             },
             createdAt: {

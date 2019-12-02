@@ -115,11 +115,11 @@ const PostBody = (props) => {
             <div className="inner-body" onClick={() => {
                 props.history.push({pathname: `/${props.post.user.username}/posts/${props.post.id}`});
             }}>
-                <Avatar image={props.post.user.avaUrl}/>
+                <Avatar image={props.post.user.ava_url}/>
                 <div className="body">
 
                     <div className="inner-body">
-                        <UserName username={props.post.user.username} userId={props.post.userId}/>
+                        <UserName username={props.post.user.username} userId={props.post.user_id}/>
                         <Handle handle={props.handle}/>
                         <PostedOn posted_on={moment(props.post.createdAt).fromNow()}/>
                         <Comments comments_count={props.post.comments.length}/>
@@ -127,7 +127,7 @@ const PostBody = (props) => {
                                       post_author={props.post.username}/>
                     </div>
                     <Content content={props.post.content}/>
-                    <Likes post_id={props.post.id} liked={props.liked} likes_count={props.post.likes.length}/>
+                    <Likes post_id={props.post.id} liked={props.liked} likes_count={props.post.likesCount}/>
 
                 </div>
             </div>
@@ -139,10 +139,10 @@ const CommentBody = (props) => {
     return (
         <PostBox>
             <div className="inner-body">
-                <Avatar image={props.user.avaUrl}/>
+                <Avatar image={props.user.ava_url}/>
                 <div className="body">
                     <div className="inner-body">
-                        <UserName username={props.user.username} userId={props.post.userId}/>
+                        <UserName username={props.user.username} userId={props.post.user_id}/>
                         <Handle handle={props.handle}/>
                         <PostedOn posted_on={moment(props.post.createdAt).fromNow()}/>
                     </div>
@@ -153,7 +153,7 @@ const CommentBody = (props) => {
             </div>
         </PostBox>
     )
-}
+};
 
 export {
     PostBody,

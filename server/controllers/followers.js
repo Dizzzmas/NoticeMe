@@ -1,8 +1,10 @@
 const Likes = require('../models').likes;
 const Posts = require('../models').posts;
 const Users = require('../models').users;
+const Comments = require('../models').comments;
 const Followers = require('../models').followers;
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 module.exports = {
@@ -64,8 +66,6 @@ module.exports = {
     },
     async unFollowUser(req, res) {
         try {
-
-
             let userId = req.params.userId;
             let followedId = req.params.followedId;
             if (userId === followedId) {
@@ -102,16 +102,55 @@ module.exports = {
         const limit = pageSize;
         const offset = parseInt(req.query.page) * pageSize - pageSize;
         const userId = req.params.userId;
-console.log(Sequelize.col('followers:followedId'));
 
         try {
+
+            let followedIds = await Followers.findAll({
+                attributes: ['followed_id'],
+                where: {follower_id: userId}
+            });
+
+            followedIds = followedIds.map(result => result.followed_id);
+            console.log(followedIds);
+
+
             let posts = await Posts
                 .findAndCountAll({
 
-                    // include:[{model:Users, where:{id: userId}}]
+                    offset,
+                    limit,
 
-                    where: {userId: Sequelize.col('followers.followedId')}
+                    where: {
+                        user_id: {
+                            [Op.or]: [
+                                {[Op.in]: followedIds},
+                                {[Op.in]: [userId]}
+                            ]
+                        }
+                    },
+                    include: [{
+                        model: Users,
+                    },
+                        {
+                            model: Comments,
+                            as: 'comments'
+                        },
+                        {
+                            model: Likes,
+                            as: 'likes',
+                            required: false,
 
+                        }],
+                    attributes: [
+                        'id', 'content', 'createdAt', 'updatedAt', 'user_id',
+                        [Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id)'), 'likesCount'],
+                    ],
+                    order: [
+                        ['createdAt', 'DESC'],
+                        [Sequelize.literal("\"likesCount\""), 'DESC']
+
+
+                    ],
 
                 });
             return res.status(200).send(posts);

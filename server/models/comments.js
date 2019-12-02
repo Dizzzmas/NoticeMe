@@ -5,19 +5,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT(400),
             allowNull: false
         },
-        commenterUsername: {
-            type: DataTypes.STRING(64),
-            allowNull: false
-        },
     }, {});
     comments.associate = function (models) {
         // associations can be defined here
         comments.belongsTo(models.posts, {
-            foreignKey: 'postId',
+            foreignKey: 'post_id',
             onDelete: 'CASCADE',
         });
         comments.belongsTo(models.users, {
-            foreignKey: 'userId',
+            foreignKey: 'user_id',
             onDelete: 'CASCADE',
         })
     };

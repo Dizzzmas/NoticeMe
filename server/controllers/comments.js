@@ -10,8 +10,8 @@ module.exports = {
                 .create({
                     content: req.body.content,
                     commenterUsername: 'test',
-                    userId: req.params.userId,
-                    postId: req.params.postId,
+                    user_id: req.params.userId,
+                    post_id: req.params.postId,
                 });
             return res.status(201).send(comment);
         } catch (error) {
@@ -24,8 +24,8 @@ module.exports = {
                 .findOne({
                     where: {
                         id: req.params.commentId,
-                        postId: req.params.postId,
-                        userId: req.params.userId,
+                        post_id: req.params.postId,
+                        user_id: req.params.userId,
                     }
                 });
             if (!comment) {
@@ -46,8 +46,8 @@ module.exports = {
                 .findOne({
                     where: {
                         id: req.params.commentId,
-                        postId: req.params.postId,
-                        userId: req.params.userId
+                        post_id: req.params.postId,
+                        user_id: req.params.userId
                     }
                 });
             if (!comment) {
@@ -77,7 +77,7 @@ module.exports = {
                 order: [
                         ['createdAt', 'DESC'],
                     ],
-                where:{postId: req.params.postId}
+                where:{post_id: req.params.postId}
             });
             return res.status(200).send(comments);
         }

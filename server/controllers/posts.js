@@ -12,8 +12,7 @@ module.exports = {
             let post = await Posts
                 .create({
                     content: req.body.content,
-                    imageUri: 'test',
-                    userId: req.params.userId
+                    user_id: req.params.userId
                 });
             return res.status(201).send(post);
         } catch (error) {
@@ -60,7 +59,7 @@ module.exports = {
                 .findOne({
                     where: {
                         id: req.params.postId,
-                        userId: req.params.userId
+                        user_id: req.params.userId
                     }
                 });
             if (!post) {
@@ -72,7 +71,6 @@ module.exports = {
             let updated_post = await post
                 .update({
                     content: req.body.content,
-                    imageUri: req.file.url || post.imageUri
                 });
 
             return res.status(200).send(updated_post);
@@ -89,7 +87,7 @@ module.exports = {
                 .findOne({
                     where: {
                         id: req.params.postId,
-                        userId: req.params.userId
+                        user_id: req.params.userId
                     }
                 });
             if (!post) {

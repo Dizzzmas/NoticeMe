@@ -19,24 +19,24 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            userId: {
+            user_id: {
                 type: Sequelize.INTEGER,
                 onDelete: 'CASCADE',
                 references: {
                     model: 'users',
                     key: 'id',
-                    as: 'userId'
+                    as: 'user_id'
                 }
             },
-          postId: {
-            type: Sequelize.INTEGER,
-            onDelete: 'CASCADE',
-            references: {
-              model: 'posts',
-              key: 'id',
-              as: 'postId'
+            post_id: {
+                type: Sequelize.INTEGER,
+                onDelete: 'CASCADE',
+                references: {
+                    model: 'posts',
+                    key: 'id',
+                    as: 'post_id'
+                }
             }
-          }
         });
     },
     down: (queryInterface, Sequelize) => {

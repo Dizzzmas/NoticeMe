@@ -28,7 +28,7 @@ function PostFeed(props) {
     }, []);
     let loadPosts = () => {
         setIsLoading(true);
-        fetch(`/api/v1/posts?page=${page}`)
+        fetch(`/api/v1/users/${userContext.currentUser.id}/followedPosts?page=${page}`)
             .then(response => response.json())
             .then(loaded_posts => {
                 console.log('page: ', page);
@@ -54,11 +54,10 @@ function PostFeed(props) {
 
 
     return (
-
         <div className="main-body">
             {[...posts].map((post, index) => {
 
-                let handle = `@${post.user.username}`;
+                let handle = `${post.user.handle}`;
 
                 let liked = false;
                 let styles = {
@@ -73,7 +72,7 @@ function PostFeed(props) {
                 for (const like of post.likes) {
                     console.log(like);
                     console.log('curr: ', userContext.currentUser.id);
-                    if (like.userId == userContext.currentUser.id) {
+                    if (like.user_id == userContext.currentUser.id) {
                         liked = true;
                     }
                 }
