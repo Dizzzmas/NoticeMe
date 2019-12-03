@@ -63,6 +63,34 @@ const Content = (props) => {
     )
 };
 
+const Images = (props) => {
+    console.log(props.images);
+    return (
+
+        <div className='post_images'>
+            {[props.images].map((image, index) => {
+                console.log('img: ', image);
+                // if (image[0]) {
+                //     let url = image[0].image_url;
+                //     console.log('img_url: ', url);
+                // }
+                return (
+                    image.map((actual_image, index) => {
+                        return (<div className='post_image'><img key={index} src={actual_image.image_url} width={15}
+                                                                 height={15}/><br/></div>)
+                    })
+                )
+                // return (
+
+                // TODO: Adjust pics size here
+                // )
+
+            })
+            }
+        </div>
+    )
+}
+
 const Likes = (props) => {
     let userContext = useContext(AuthContext);
     const [liked, setLiked] = useState(props.liked);
@@ -126,8 +154,8 @@ const PostBody = (props) => {
                         <CommentModal history={props.history} post_id={props.post.id}
                                       post_author={props.post.username}/>
                     </div>
+                    <Images images={props.post.images}/>
                     <Content content={props.post.content}/>
-                    <Likes post_id={props.post.id} liked={props.liked} likes_count={props.post.likesCount}/>
 
                 </div>
             </div>
