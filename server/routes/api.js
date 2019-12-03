@@ -24,7 +24,7 @@ routerProtected.post('/users/:userId/revokeadmin', UsersController.revokeAdmin);
 //
 // Posts api
 router.post('/users/:userId/posts/new', PostsController.create);
-routerProtected.delete('/users/:userId/posts/:postId', PostsController.deleteById);
+router.delete('/posts/:postId', PostsController.deleteById);
 router.get('/posts', PostsController.getAll);
 routerProtected.get('/posts/search', PostsController.search);
 routerProtected.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);

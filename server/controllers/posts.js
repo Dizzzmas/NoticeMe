@@ -115,17 +115,24 @@ module.exports = {
     async deleteById(req, res) {
         try {
             let post = await Posts
-                .findOne({
-                    where: {
-                        id: req.params.postId,
-                        user_id: req.params.userId
-                    }
+                .findByPk(req.params.postId, {
+                    include: [{model: PostImages, as: 'images'}]
                 });
             if (!post) {
                 return res.status(404).send({
                     message: 'Post Not Found',
                 });
             }
+            if (post.images) {
+                let images = Object.values(post.images);
+                console.log('images: ', images);
+                let destroy_images_promises = images.map(image => {
+                    console.log(image);
+                    cloudinary.v2.uploader.destroy(image.public_id);
+                });
+                await Promise.all(destroy_images_promises);
+            }
+
             await post.destroy();
             return res.status(204).send({message: 'Deleted successfully'});
         } catch (error) {
