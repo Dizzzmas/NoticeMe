@@ -12,7 +12,8 @@ let cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
 let User = require('./models').users;
-let basicAuth = require('express-basic-auth');
+const formData = require('express-form-data');
+
 
 
 let app = express();
@@ -34,6 +35,7 @@ app.engine('hbs', hbs({
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(formData.parse());
 app.use(express.static(path.join(__dirname, 'public')));
 
 

@@ -11,7 +11,7 @@ const authHelpers = require('../auth/_helpers');
 
 /* GET users listing. */
 
-
+router.get('/posts/:postId', PostsController.getById);
 // Users api
 router.post('/users', UsersController.create);
 routerProtected.get('/users', authHelpers.adminRequired, UsersController.getAll);
@@ -27,7 +27,6 @@ router.post('/users/:userId/posts/new', PostsController.create);
 routerProtected.delete('/users/:userId/posts/:postId', PostsController.deleteById);
 router.get('/posts', PostsController.getAll);
 routerProtected.get('/posts/search', PostsController.search);
-router.get('/posts/:postId', PostsController.getById);
 routerProtected.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);
 routerProtected.post('/users-log-out', UsersController.jwt_logout);
 router.post('/users-sign-in', UsersController.jwt_authenticate);

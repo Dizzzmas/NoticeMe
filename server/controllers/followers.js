@@ -3,6 +3,7 @@ const Posts = require('../models').posts;
 const Users = require('../models').users;
 const Comments = require('../models').comments;
 const Followers = require('../models').followers;
+const PostImages = require('../models').post_images;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -139,8 +140,7 @@ module.exports = {
                             model: Likes,
                             as: 'likes',
                             required: false,
-
-                        }],
+                        }, {model: PostImages, as: 'images'}],
                     attributes: [
                         'id', 'content', 'createdAt', 'updatedAt', 'user_id',
                         [Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id)'), 'likesCount'],
@@ -148,8 +148,6 @@ module.exports = {
                     order: [
                         ['createdAt', 'DESC'],
                         [Sequelize.literal("\"likesCount\""), 'DESC']
-
-
                     ],
 
                 });

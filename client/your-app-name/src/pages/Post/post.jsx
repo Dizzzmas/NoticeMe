@@ -31,7 +31,7 @@ function Post(props) {
                             liked = true;
                         }
                     }
-                    handle = `@${loaded_post.user.username}`;
+                    handle = `${loaded_post.user.handle}`;
                     setPost(loaded_post);
                 }
             ).catch((err) => {

@@ -2,19 +2,50 @@ const Posts = require('../models').posts;
 const Comments = require('../models').comments;
 const Users = require('../models').users;
 const Likes = require('../models').likes;
+const PostImages = require('../models').post_images;
 let fs = require('fs');
+const Sequelize = require('sequelize');
+const cloudinary = require('cloudinary');
+
+
+cloudinary.config({
+    cloud_name: 'dv0smnf2u',
+    api_key: '262969138672994',
+    api_secret: 'U-EdTEBagFF-1UqYO2RrmJeykFQ'
+});
 
 
 module.exports = {
     async create(req, res) {
-        console.log('jnjlnsdf');
         try {
+
+
             let post = await Posts
                 .create({
                     content: req.body.content,
                     user_id: req.params.userId
                 });
+
+            let images = Object.values(req.files);
+            if (images) {
+                let upload_promises = images.map(image => cloudinary.v2.uploader.upload(image.path,
+                    // {
+                    //   transformation: [{ width: 500, height: 500, crop: "limit" }]                 // Uncomment to crop images on upload
+                    // },
+                ));
+                console.log('Promises: ', upload_promises);
+                let upload_results = await Promise.all(upload_promises);
+                console.log('Upload_result', upload_results);
+                let insert_images_promises = upload_results.map(image => PostImages.create({
+                    image_url: image.secure_url,
+                    public_id: image.public_id,
+                    post_id: post.id
+                }));
+                await Promise.all(insert_images_promises);
+            }
+
             return res.status(201).send(post);
+
         } catch (error) {
             console.error(error);
             return res.status(400).send({message: 'creating post failed', error: error});
@@ -42,7 +73,7 @@ module.exports = {
                             model: Likes,
                             as: 'likes',
                             required: false,
-                        }],
+                        }, {model: PostImages, as: 'images'}],
                     order: [
                         ['createdAt', 'DESC'],
                     ],
@@ -123,8 +154,11 @@ module.exports = {
                         model: Likes,
                         as: 'likes',
                         required: false,
-                    }, {model: Users}],
-
+                    }, {model: Users}, {model: PostImages, as: 'images'}],
+                    attributes: [
+                        'id', 'content', 'createdAt', 'updatedAt', 'user_id',
+                        [Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id)'), 'likesCount'],
+                    ]
                 });
             if (!post) {
                 return res.status(404).send({

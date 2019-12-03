@@ -3,10 +3,15 @@ import {Alert, Button, Modal} from "react-bootstrap";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {AuthContext} from "../../services/auth";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faImages} from "@fortawesome/free-solid-svg-icons";
+import Images_Preview from "../../components/images_preview";
 
 
 export default function PostModal(props) {
     const [show, setShow] = useState(false);
+    const [images, setImages] = useState();
+    const [too_many_images, setTooManyImages] = useState(false);
     const userContext = useContext(AuthContext);
     const CreatePostSchema = Yup.object().shape({
         content: Yup.string()
@@ -15,11 +20,16 @@ export default function PostModal(props) {
 
 
     const handleClose = () => {
-
-
+        setImages();
+        setTooManyImages(false);
+        setImages();
         setShow(false)
     };
     const handleShow = () => setShow(true);
+
+    let removeImagePreview = (name) => {
+        setImages(images.filter(image => image.name !== name))
+    };
 
     return (
         <React.Fragment>
@@ -41,27 +51,34 @@ export default function PostModal(props) {
                                 validationSchema={CreatePostSchema}
                                 onSubmit={async (values, actions) => {
                                     console.log('Val: ', values);
+                                    const formData = new FormData();
+
+                                    if (values.files) {
+                                        values.files.forEach((file, i) => {
+                                            formData.append(i, file)
+                                        });
+                                    }
+
+                                    formData.append('content', values.content);
                                     let res = await fetch(`/api/v1/users/${userContext.currentUser.id}/posts/new`, {
                                         method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({
-                                            "content": values.content
-                                        })
+                                        headers: {},
+                                        body: formData
                                     });
+
+
                                     if (res.ok && res.status === 201) {
-                                      console.log(props.history);
+                                        console.log(props.history);
                                         props.history.push('/');
                                         props.history.push('/posts');
                                         actions.setSubmitting(false);
-                                        handleClose();
 
+                                        handleClose();
                                     }
                                 }
                                 }
                             >
-                                {({touched, errors, isSubmitting, status}) => (
+                                {({touched, errors, isSubmitting, status, setFieldValue}) => (
 
 
                                     <Form>
@@ -85,6 +102,32 @@ export default function PostModal(props) {
                                                 name="post"
                                                 className="invalid-feedback"
                                             />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <div className='buttons fadein'>
+                                                <div className='button'>
+                                                    <label htmlFor='multi'>
+                                                        <FontAwesomeIcon icon={faImages} color='#6d84b4' size='3x'/>
+                                                    </label>
+                                                    <input hidden={true} type='file' id='multi' accept="image/*"
+                                                           onChange={(e) => {
+                                                               if (e.target.files.length > 2) {
+                                                                   status = {message: 'You are allowed to upload a maximum of 2 images'};
+                                                                   setTooManyImages(true);
+                                                                   return;
+                                                               }
+                                                               const files = Array.from(e.target.files);
+                                                               console.log('Files count: ', e.target.files.length);
+                                                               setFieldValue("files", files);
+                                                               setImages(files);
+                                                           }} multiple/>
+                                                    {images && <Images_Preview images={images}
+                                                                               removeImagePreview={removeImagePreview}/>}
+                                                    {too_many_images && <Alert variant='danger'>
+                                                        You are allowed to upload a maximum of 2 images</Alert>}
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <Modal.Footer>

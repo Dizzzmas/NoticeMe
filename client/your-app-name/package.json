@@ -36,6 +36,9 @@
     ]
   },
   "devDependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.7",
+    "express-form-data": "^2.0.10",
     "history": "^4.10.1",
     "lodash.debounce": "^4.0.8",
     "mdbreact": "^4.22.1",
