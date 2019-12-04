@@ -4,10 +4,15 @@ import {AuthContext} from "../services/auth";
 import NavLink from "react-bootstrap/NavLink";
 import {Link} from "react-router-dom";
 import PostModal from "../pages/Post/post_modal";
+import {Dropdown} from "semantic-ui-react";
+import UserSearch from "./users_search";
+
+
 
 
 export default function MyNavBar(props) {
     const user = useContext(AuthContext);
+
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand href="#home">NoticeMe</Navbar.Brand>
@@ -21,10 +26,9 @@ export default function MyNavBar(props) {
                     }
                     <Nav.Link href="#explore">Explore</Nav.Link>
                     <Nav.Link href="#about">About</Nav.Link>
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
-                        <Button variant="outline-success">Search</Button>
-                    </Form>
+
+
+                    <UserSearch history={props.history}/>
                     <PostModal history={props.history}/>
                 </Nav>
 
@@ -33,10 +37,8 @@ export default function MyNavBar(props) {
                         try {
                             let res = await fetchLogOut();
                             user.handleLogOut();
-                            // props.history.push('/signIn');
                         } catch (error) {
                             console.log("AAAAA", error);
-                            // return <Redirect to='/'/>;
                         }
                     }
                 }}>

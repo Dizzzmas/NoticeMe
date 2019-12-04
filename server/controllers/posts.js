@@ -151,8 +151,7 @@ module.exports = {
         } catch (error) {
             return res.status(400).send({message: 'Searching for posts failed', error: error});
         }
-    }
-    ,
+    },
     async getById(req, res) {
         try {
             let post = await Posts

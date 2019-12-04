@@ -15,7 +15,7 @@ module.exports = {
                 });
             return res.status(201).send(comment);
         } catch (error) {
-            return res.status(400).send({message:'Creating comment failed', error: error});
+            return res.status(400).send({message: 'Creating comment failed', error: error});
         }
     },
     async updateById(req, res) {
@@ -37,19 +37,13 @@ module.exports = {
                 .update(req.body, {fields: Object.keys(req.body)});
             return res.status(200).send(updated_comment);
         } catch (error) {
-            return res.status(400).send({message:'Updating comment failed', error: error});
+            return res.status(400).send({message: 'Updating comment failed', error: error});
         }
     },
     async deleteById(req, res) {
         try {
             let comment = await Comments
-                .findOne({
-                    where: {
-                        id: req.params.commentId,
-                        post_id: req.params.postId,
-                        user_id: req.params.userId
-                    }
-                });
+                .findByPk(req.params.commentId);
             if (!comment) {
                 return res.status(404).send({
                     message: 'Comment Not Found',
@@ -58,30 +52,29 @@ module.exports = {
             await comment.destroy();
             return res.status(204).send({message: 'Deleted successfully'});
         } catch (error) {
-            return res.status(400).send({message:'Deleting comment failed', error: error});
+            return res.status(400).send({message: 'Deleting comment failed', error: error});
         }
     },
-    async getAll(req, res){
+    async getAll(req, res) {
         const pageSize = process.env.PAGE_SIZE || 4;
         const limit = pageSize;
         const offset = parseInt(req.query.page) * pageSize - pageSize;
-        try{
+        try {
             let comments = await Comments.findAndCountAll({
                 offset,
                 limit,
                 include: [{
                     model: Users
-                },{
+                }, {
                     model: Posts
                 }],
                 order: [
-                        ['createdAt', 'DESC'],
-                    ],
-                where:{post_id: req.params.postId}
+                    ['createdAt', 'DESC'],
+                ],
+                where: {post_id: req.params.postId}
             });
             return res.status(200).send(comments);
-        }
-        catch (error) {
+        } catch (error) {
             return res.status(400).send({message: 'GetAll comments failed', error: error})
         }
     }

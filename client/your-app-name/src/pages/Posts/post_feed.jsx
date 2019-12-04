@@ -54,10 +54,10 @@ function PostFeed(props) {
 
 
     return (
+
         <div className="main-body">
             {[...posts].map((post, index) => {
 
-                let handle = `${post.user.handle}`;
 
                 let liked = false;
                 let styles = {
@@ -81,7 +81,6 @@ function PostFeed(props) {
                         key={index}
                         post={post}
                         liked={liked}
-                        handle={handle}
                         history={props.history}
                     />
                 )
@@ -97,8 +96,8 @@ function PostFeed(props) {
             {!hasMore &&
             <div>You did it! You reached the end!</div>
             }
-
         </div>
+
     );
 
 

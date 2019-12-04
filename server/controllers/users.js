@@ -82,7 +82,11 @@ module.exports = {
                             model: Comments,
                             as: 'comments'
                         }]
-                    }, {model: Users, as: 'followed_by', through: {attributes: []}}, {model: Users, as: 'following', through: {attributes: []}}]
+                    }, {model: Users, as: 'followed_by', through: {attributes: []}}, {
+                        model: Users,
+                        as: 'following',
+                        through: {attributes: []}
+                    }]
                 });
             if (!user) {
                 return res.status(404).send({
@@ -106,7 +110,11 @@ module.exports = {
                             model: Comments,
                             as: 'comments'
                         }]
-                    }, {model: Users, as: 'followed_by', through: {attributes: []}}, {model: Users, as: 'following', through: {attributes: []}}]
+                    }, {model: Users, as: 'followed_by', through: {attributes: []}}, {
+                        model: Users,
+                        as: 'following',
+                        through: {attributes: []}
+                    }]
                 });
             if (!user) {
                 return res.status(404).send({
@@ -130,7 +138,7 @@ module.exports = {
                             model: Comments,
                             as: 'comments'
                         }]
-                    }, ]
+                    },]
                 });
             if (!user) {
                 return res.status(404).send({
@@ -202,6 +210,17 @@ module.exports = {
             return res.status(200).send(normal_user);
         } catch (error) {
             return res.status(400).send({message: 'RevokeAdmin user failed', error: error});
+        }
+    },
+    async search(req, res) {
+        try {
+            let search_res = await Users.sequelize.query(`SELECT * FROM ${Users.tableName}  WHERE _search @@ plainto_tsquery('english', :query);`, {
+                model: Users,
+                replacements: {query: req.query.search},
+            });
+            return res.status(200).send(search_res);
+        } catch (error) {
+            return res.status(400).send({message: 'Searching for posts failed', error: error});
         }
     },
     async jwt_authenticate(req, res) {

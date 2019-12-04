@@ -2,9 +2,17 @@ import {PostBody} from "../Posts/post";
 import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router";
 import {AuthContext} from "../../services/auth";
+import {Container, Dropdown} from "semantic-ui-react";
+
+
+const countryOptions = [
+    {key: "af", value: "af", flag: "af", text: "Afghanistan"},
+    {key: "ax", value: "ax", flag: "ax", text: "Aland Islands"},
+];
 
 
 function Post(props) {
+    const [options, setOptions] = useState();
 
     let slug = useParams();
     let userContext = useContext(AuthContext);
@@ -51,7 +59,6 @@ function Post(props) {
                 handle={handle}
                 history={props.history}
             />}
-
         </div>
     )
 }

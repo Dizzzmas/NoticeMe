@@ -59,7 +59,6 @@ function CommentFeed(props) {
         <div className="main-body">
             {[...comments].map((comment, index) => {
 
-                let handle = `@${comment.user.username}`;
 
                 // let liked = false;
                 let styles = {
@@ -86,7 +85,7 @@ function CommentFeed(props) {
                         post={comment.post}
                         user={comment.user}
                         content={comment.content}
-                        handle={handle}
+                        id={comment.id}
                         history={props.history}
                     />
                 )

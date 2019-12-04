@@ -10,7 +10,7 @@ let parser = require('../data/config');
 const authHelpers = require('../auth/_helpers');
 
 /* GET users listing. */
-
+router.get('/users/search', UsersController.search);
 router.get('/posts/:postId', PostsController.getById);
 // Users api
 router.post('/users', UsersController.create);
@@ -21,7 +21,7 @@ routerProtected.put('/users/:userId', UsersController.updateById);
 routerProtected.delete('/users/:userId', UsersController.deleteById);
 routerProtected.post('/users/:userId/giveadmin', UsersController.setAdmin);
 routerProtected.post('/users/:userId/revokeadmin', UsersController.revokeAdmin);
-//
+
 // Posts api
 router.post('/users/:userId/posts/new', PostsController.create);
 router.delete('/posts/:postId', PostsController.deleteById);
@@ -34,7 +34,7 @@ router.post('/users-sign-in', UsersController.jwt_authenticate);
 //Comments api
 router.post('/users/:userId/posts/:postId/comments', CommentsController.create);
 routerProtected.put('/users/:userId/posts/:postId/comments/:commentId', CommentsController.updateById);
-routerProtected.delete('/users/:userId/posts/:postId/comments/:commentId', CommentsController.deleteById);
+router.delete('/comments/:commentId', CommentsController.deleteById);
 router.get('/posts/GetAllComments/:postId', CommentsController.getAll);
 
 //Likes api
@@ -49,15 +49,13 @@ router.delete('/users/:userId/unfollow/:followedId', FollowersController.unFollo
 router.get('/users/:userId/isfollowing/:followedId', FollowersController.isFollowing);
 router.get('/users/:userId/followedPosts', FollowersController.getFollowedPosts);
 
-routerProtected.get('/me', async(req, res) => {
+routerProtected.get('/me', async (req, res) => {
     return res.status(200).send(req.user);
 });
 
-router.get('/developer/v1', async(req, res) => {
-   return res.render('api_info', {layout: 'layout'})
+router.get('/developer/v1', async (req, res) => {
+    return res.render('api_info', {layout: 'layout'})
 });
-
-
 
 
 module.exports = {
