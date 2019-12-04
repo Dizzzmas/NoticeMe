@@ -1,11 +1,12 @@
 import {Dropdown} from "semantic-ui-react";
 import React, {useState} from "react";
-
+import 'semantic-ui-css/semantic.min.css';
 
 export default function UserSearch(props) {
     const [options, setOptions] = useState();
 
     return (
+
         <Dropdown
             icon={null}
             placeholder="Enter username"

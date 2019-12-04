@@ -13,6 +13,19 @@ const usePrevious = current => {
     return ref.current
 };
 
+function getDocumentHeight() {
+    const body = document.body;
+    const html = document.documentElement;
+
+    return Math.max(
+        body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight
+    );
+};
+
+function getScrollTop() {
+    return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+}
 
 function PostFeed(props) {
     let userContext = useContext(AuthContext);
@@ -47,9 +60,11 @@ function PostFeed(props) {
     window.onscroll = debounce(() => {
         if (error || isLoading || !hasMore) return;
 
-        if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-            loadPosts()
-        }
+        if (getScrollTop() < getDocumentHeight() - window.innerHeight) return;
+        loadPosts();
+        // if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+        //     loadPosts()
+        // }
     }, 100);
 
 
