@@ -130,16 +130,7 @@ module.exports = {
     async updateById(req, res) {
         try {
             let user = await Users
-                .findByPk(req.params.userId, {
-                    include: [{
-                        model: Posts,
-                        as: 'posts',
-                        include: [{
-                            model: Comments,
-                            as: 'comments'
-                        }]
-                    },]
-                });
+                .findByPk(req.params.userId);
             if (!user) {
                 return res.status(404).send({
                     message: 'User Not Found'

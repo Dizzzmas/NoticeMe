@@ -17,13 +17,14 @@ router.post('/users', UsersController.create);
 routerProtected.get('/users', authHelpers.adminRequired, UsersController.getAll);
 router.get('/users/:userId', UsersController.getById);
 router.get('/users/getByUsername/:username', UsersController.getByUsername);
-routerProtected.put('/users/:userId', UsersController.updateById);
+router.put('/users/:userId', UsersController.updateById);
 routerProtected.delete('/users/:userId', UsersController.deleteById);
 routerProtected.post('/users/:userId/giveadmin', UsersController.setAdmin);
 routerProtected.post('/users/:userId/revokeadmin', UsersController.revokeAdmin);
 
 // Posts api
 router.post('/users/:userId/posts/new', PostsController.create);
+router.get('/users/:userId/posts/userPosts', PostsController.userPosts);
 router.delete('/posts/:postId', PostsController.deleteById);
 router.get('/posts', PostsController.getAll);
 routerProtected.get('/posts/search', PostsController.search);

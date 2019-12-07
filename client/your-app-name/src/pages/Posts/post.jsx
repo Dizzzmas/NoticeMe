@@ -92,7 +92,7 @@ const DeletePostModal = (props) => {
             <Modal.Body>
                 Are you sure you want to delete this post ?
                 <Modal.Footer>
-                    <Button variant="secondary">Close</Button>
+                    <Button onClick={props.handleClose} variant="secondary">Close</Button>
                     <Button variant="danger" onClick={async () => {
                         let res = await fetch(`/api/v1/posts/${props.post_id}`, {
                             method: 'DELETE',
@@ -195,7 +195,8 @@ const DeleteCommentModal = (props) => {
             <Modal.Body>
                 Are you sure you want to delete this comment ?
                 <Modal.Footer>
-                    <Button variant="secondary">Close</Button>
+                    <Button variant="secondary" onClick={props.handleClose} >Close</Button>
+
                     <Button variant="danger" onClick={async () => {
                         let res = await fetch(`/api/v1/comments/${props.comment_id}`, {
                             method: 'DELETE',
@@ -278,7 +279,7 @@ const PostBody = (props) => {
 
                     <div className="inner-body">
                         <UserName username={props.post.user.username} userId={props.post.user_id}/>
-                        <Handle handle={props.handle}/>
+                        <Handle handle={props.post.user.handle}/>
                         <PostedOn posted_on={moment(props.post.createdAt).fromNow()}/>
                         <Comments comments_count={props.post.comments.length}/>
                         <CommentModal history={props.history} post_id={props.post.id}

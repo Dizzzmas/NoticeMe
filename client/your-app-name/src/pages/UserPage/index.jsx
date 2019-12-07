@@ -3,11 +3,13 @@ import {AuthContext} from "../../services/auth";
 import {useParams} from "react-router";
 import {Button} from "react-bootstrap";
 import Followers from "./followers";
+import UserPosts from "./user_posts";
+import EditModal from "./edit_modal";
 
 export default function UserPage(props) {
     let slug = useParams();
     let username_from_path = slug.username;
-    let authCont = useContext(AuthContext);
+    let userContext = useContext(AuthContext);
     const [user, setUser] = useState({username: username_from_path});
 
     useEffect(() => {
@@ -24,6 +26,7 @@ export default function UserPage(props) {
                     let stored_user = {
                         id: loaded_user.id,
                         username: loaded_user.username,
+                        handle: loaded_user.handle,
                         email: loaded_user.email,
                         aboutMe: loaded_user.about_me,
                         role: loaded_user.role,
@@ -45,10 +48,25 @@ export default function UserPage(props) {
     return (
 
         <div>
-            <p>Username: {user.username}</p>
-            <img src={user.avaUrl}/>
             {user.id &&
-            <Followers followers_count={user.followers_count} followed_count={user.following_count} userId={user.id}/>}
+            <div>
+                <p>Id: {user.id}</p>
+                <p>Username: {user.username}</p>
+                <p>{user.handle}</p>
+                <img src={user.avaUrl}/>
+
+                <Followers followers_count={user.followers_count} followed_count={user.following_count}
+                           userId={user.id}/>
+                <p>About_me: {user.aboutMe}</p>
+                {slug.username === userContext.currentUser.username &&
+                <EditModal history={props.history}/>}
+
+                <p>Posts: </p>
+
+                <UserPosts userId={user.id} history={props.history}/>
+
+
+            </div>}
         </div>
 
     );

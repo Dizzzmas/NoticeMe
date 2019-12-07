@@ -177,6 +177,46 @@ module.exports = {
             res.status(400).send({message: 'GetById post failed', error: error})
         }
     },
+    async userPosts(req, res) {
+         const pageSize = process.env.PAGE_SIZE || 4;
+        const limit = pageSize;
+        const offset = parseInt(req.query.page) * pageSize - pageSize;
+
+        try {
+            let posts = await Posts
+                .findAndCountAll({
+                    offset,
+                    limit,
+                    where:{
+                        user_id: req.params.userId
+                    },
+                    include: [{
+                        model: Users,
+                    },
+                        {
+                            model: Comments,
+                            as: 'comments'
+                        },
+                        {
+                            model: Likes,
+                            as: 'likes',
+                            required: false,
+                        }, {model: PostImages, as: 'images'}],
+                    attributes: [
+                        'id', 'content', 'createdAt', 'updatedAt', 'user_id',
+                        [Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id)'), 'likesCount'],
+                    ],
+                    order: [
+                        ['createdAt', 'DESC'],
+                        [Sequelize.literal("\"likesCount\""), 'DESC']
+                    ],
+
+                });
+            return res.status(200).send(posts);
+        } catch (error) {
+            return res.status(400).send({message: 'GetuserPosts failed', error: error})
+        }
+    }
 
 }
 ;
