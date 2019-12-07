@@ -11,14 +11,23 @@ let developerRouter = require('./routes/developer');
 let cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
+const cors = require('cors');
 let User = require('./models').users;
 const formData = require('express-form-data');
+require('dotenv').config({ path: '.env' });
+const Chatkit = require('@pusher/chatkit-server');
+const chatkit = new Chatkit.default({
+      instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
+      key: process.env.CHATKIT_SECRET_KEY,
+    });
+
+
 
 
 
 let app = express();
 app.use(cookieParser(process.env.SECRET_KEY));
-
+app.use(cors());
 // view engine setup
 app.use('views', express.static(path.join(__dirname, 'views')));
 app.set('view engine', 'hbs');
@@ -30,6 +39,9 @@ app.engine('hbs', hbs({
     partialsDir: __dirname + '/views/partials',
     helpers: require('./helpers/handlebars'),
 }));
+
+
+
 
 
 app.use(logger('dev'));
@@ -47,7 +59,7 @@ app.use(flash());
 app.use(express.static('public'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
-
+let chatkitRoute = require('./routes/chatkit')(app, chatkit);
 let authRoute = require('./routes/auth')(app, passport);
 require('./auth/passport')(passport, User);
 app.use('/', indexRouter);
