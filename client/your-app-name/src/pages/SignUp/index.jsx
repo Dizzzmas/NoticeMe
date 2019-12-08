@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {NavLink} from "react-router-dom";
 import {Alert} from "react-bootstrap";
+import axios from "axios";
 
 
 const SignUpSchema = Yup.object().shape({
@@ -17,7 +18,8 @@ const SignUpSchema = Yup.object().shape({
         .min(8, 'Password must be at least 8 characters long')
         .matches(/[a-z]/, 'Password must contain at least one lowercase char')
         .matches(/[A-Z]/, 'Password must contain at least one uppercase char')
-        .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, 'Password must contain at least 1 number or special char (@,!,#, etc).'),
+        .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, 'Password must contain at least 1 number or special char (@,!,#, etc).')
+        .required("Password is required"),
     confirm_password: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
@@ -41,6 +43,7 @@ export default function SignUp(props) {
                             try {
                                 let res = await fetchSignUp(values);
                                 console.log(res);
+
                                 props.history.push('/signIn');
                             } catch (error) {
                                 actions.setStatus({message: error.message});
@@ -160,6 +163,9 @@ let fetchSignUp = async (values) => {
         console.log('SignUp error: ', txt.message);
         if (res.ok) {
             console.log('SignUp successful');
+            let userId = txt.username;
+            await axios
+                .post('/chatkit/users', {userId});
         } else {
             throw new Error(txt.message.toString());
         }

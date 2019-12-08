@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MyNavBar from "./components/MyNavBar";
 import {AuthContextProvider} from "./services/auth";
 import './App.css';
-
+import {ChatContextProvider} from "./services/chat";
 
 
 // const AuthContext = React.createContext();
@@ -18,10 +18,12 @@ function App() {
 
     return (
         <AuthContextProvider>
-            <Router history={history}>
-                <MyNavBar history={history}/>
-                <Routes/>
-            </Router>
+            <ChatContextProvider>
+                <Router history={history}>
+                    <MyNavBar history={history}/>
+                    <Routes/>
+                </Router>
+            </ChatContextProvider>
         </AuthContextProvider>
 
     );
