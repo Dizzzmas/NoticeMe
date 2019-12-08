@@ -5,6 +5,7 @@ import {AuthContext} from "../../services/auth";
 import {Alert} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import {GoogleLogin} from 'react-google-login';
+import {ChatContext} from "../../services/chat";
 
 
 const SignInSchema = Yup.object().shape({
@@ -19,6 +20,7 @@ const SignInSchema = Yup.object().shape({
 
 export default function SignIn(props) {
     const user = useContext(AuthContext);
+    let chatContext = useContext(ChatContext);
     let googleResponse = async (response) => {
         const tokenBlob = new Blob([JSON.stringify({access_token: response.accessToken}, null, 2)], {type: 'application/json'});
         const options = {
@@ -82,6 +84,7 @@ export default function SignIn(props) {
                                 actions.setStatus({message: 'Wrong email or password'});
                             } else {
                                 user.handleSignIn(payload);
+                                chatContext.connectToChatkit(payload.user.username);
                                 props.history.push({
                                     pathname: `/${payload.user.username}`, state: {user: payload.user}
                                 });

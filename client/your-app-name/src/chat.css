@@ -232,3 +232,16 @@
       color: #5C8436;
       background-color: #222;
     }
+
+     .room-unread {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      border-radius: 50%;
+      font-size: 16px;
+      text-align: center;
+      padding: 5px;
+      background-color: greenyellow;
+      color: #222;
+    }

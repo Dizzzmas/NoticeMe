@@ -3,23 +3,21 @@ import axios from "axios";
 import Chatkit from "@pusher/chatkit-client";
 
 const initialState = {
-        userId: '',
-        currentUser: null,
-        currentRoom: null,
-        rooms: [],
-        roomUsers: [],
-        roomName: null,
-        messages: [],
-        newMessage: '',
-    }
-;
+    userId: '',
+    currentUser: null,
+    currentRoom: null,
+    rooms: [],
+    roomUsers: [],
+    roomName: null,
+    messages: [],
+    newMessage: '',
+};
 
 
 const ChatContext = React.createContext();
 
 
 const reducer = (state, action) => {
-    console.log("AAAAAa", action.payload);
     switch (action.type) {
         case 'setUserId':
             return {
@@ -117,12 +115,8 @@ const ChatContextProvider = props => {
                                         // setRooms(rooms => ([...rooms, room]));
                                     },
                                 })
-                                .then(async currentUser => {
+                                .then(currentUser => {
 
-                                    dispatch({
-                                        type: 'DisPatchConnectToChatkitUserAndRooms',
-                                        payload: {currentUser: currentUser, rooms: currentUser.rooms}
-                                    });
                                     dispatch({type: 'setCurrentUser', payload: currentUser});
                                     dispatch({type: 'setRooms', payload: currentUser.rooms});
                                     // setCurrentUser(currentUser);
@@ -136,11 +130,9 @@ const ChatContextProvider = props => {
 
                 },
                 createPrivateRoom: (id) => {
-
-
                     const roomName = `${state.currentUser.id}_${id}`;
 
-                    const isPrivateChatCreated = state.rooms.filter(room => {
+                    const isPrivateChatCreated = state.currentUser.rooms.filter(room => {
                         if (room.customData && room.customData.isDirectMessage) {
                             const arr = [state.currentUser.id, id];
                             const {userIds} = room.customData;
@@ -154,7 +146,10 @@ const ChatContextProvider = props => {
 
                         return false;
                     });
+
+                    console.log('Detterence: ', isPrivateChatCreated)
                     if (isPrivateChatCreated.length > 0) {
+                        console.log('detterence successful');
                         return Promise.resolve(isPrivateChatCreated[0]);
                     }
 
@@ -169,7 +164,7 @@ const ChatContextProvider = props => {
                     });
 
                 },
-                connectToRoom: (id = '68864027-8212-4e8f-a868-4a56f4c3c9f0') => {
+                connectToRoom: (id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') => {
 
 
                     dispatch({type: 'setMessages', payload: []});
@@ -206,7 +201,7 @@ const ChatContextProvider = props => {
                             const roomName =
                                 currentRoom.customData && currentRoom.customData.isDirectMessage
                                     ? currentRoom.customData.userIds.filter(
-                                    id => id !== currentUser.id
+                                    id => id !== state.currentUser.id
                                     )[0]
                                     : currentRoom.name;
                             dispatch({
@@ -256,11 +251,41 @@ const ChatContextProvider = props => {
 
 
                 },
-                // sendDM: (id) => {
-                //     createPrivateRoom(id).then(room => {
-                //         connectToRoom(room.id);
-                //     });
-                // }
+                setMessages: (messages) => {
+                    dispatch({type: 'setMessages', payload: messages});
+                },
+                addToMessages: (message) => {
+                    dispatch({type: 'addToMessages', payload: message});
+                },
+                setRoomUsers: (users) => {
+                    dispatch({type: 'setRoomUsers', payload: users});
+                },
+                setCurrentRoom: (room) => {
+                    dispatch({type: 'setCurrentRoom', payload: room});
+                },
+                setRooms: (rooms) => {
+                    dispatch({type: 'setRooms', payload: rooms});
+                },
+                setRoomName: (name) => {
+                    dispatch({type: 'setRoomName', payload: name})
+                },
+                setUserId: (userId) => {
+                    dispatch({type: 'setUserId', payload: userId});
+                },
+                setCurrentUser: (currentUser) => {
+                    dispatch({type: 'setCurrentUser', payload: currentUser});
+                },
+                addToRoom: (room) => {
+                    dispatch({type: 'addToRoom', payload: room});
+                },
+                setNewMessage: (message) => {
+                    dispatch({type: 'setNewMessage', payload: message});
+                },
+                sendDM: (id) => {
+                    this.createPrivateRoom(id).then(room => {
+                        this.connectToRoom(room.id);
+                    });
+                }
 
 
             }

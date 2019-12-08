@@ -9,6 +9,7 @@ import Home from '../pages/Home';
 import UserPage from "../pages/UserPage";
 import PostPage from "../pages/Post";
 import Chat from "../pages/Chat";
+import DirectChat from "../pages/Chat/direct_chat";
 
 
 export default function Routes() {
@@ -20,6 +21,7 @@ export default function Routes() {
             <Route path='/posts' component={Posts}/>
             <Route path='/profile' component={UserPage} isPrivate/>
             <Route path='/chat' component={Chat}/>
+            {/*<Route path='/chat/:username'  component={DirectChat}/>*/}
             <Route path='/:username/posts/:postId' component={PostPage}/>
             <Route path='/:username' component={UserPage}/>
 

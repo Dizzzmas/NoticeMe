@@ -44,6 +44,7 @@
     "lodash.debounce": "^4.0.8",
     "mdbreact": "^4.22.1",
     "prop-types": "^15.7.2",
+    "query-string": "^6.9.0",
     "react-js-pull-to-refresh": "^1.2.2",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",

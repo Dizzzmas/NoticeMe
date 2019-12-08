@@ -5,11 +5,13 @@ import {Button} from "react-bootstrap";
 import Followers from "./followers";
 import UserPosts from "./user_posts";
 import EditModal from "./edit_modal";
+import {ChatContext} from "../../services/chat";
 
 export default function UserPage(props) {
     let slug = useParams();
     let username_from_path = slug.username;
     let userContext = useContext(AuthContext);
+    let chatContext = useContext(ChatContext);
     const [user, setUser] = useState({username: username_from_path});
 
     useEffect(() => {
@@ -58,8 +60,14 @@ export default function UserPage(props) {
                 <Followers followers_count={user.followers_count} followed_count={user.following_count}
                            userId={user.id}/>
                 <p>About_me: {user.aboutMe}</p>
-                {slug.username === userContext.currentUser.username &&
+                {user.username === userContext.currentUser.username &&
                 <EditModal history={props.history}/>}
+                <Button variant='success' onClick={ () => {
+                    props.history.push({
+                        pathname: '/chat',
+                        search: `?user=${user.username}`
+                    })
+                }}>Message</Button>
 
                 <p>Posts: </p>
 
