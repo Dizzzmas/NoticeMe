@@ -50,15 +50,6 @@ class Chat extends Component {
         this.sendDM = sendDM.bind(this);
     }
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if(prevState.currentRoom !== this.state.currentRoom){
-    //         console.log('pizdec');
-    //         this.setState({
-    //             isLoaded: true
-    //         })
-    //     }
-    // }
-    //
 
     componentDidMount() {
 
@@ -115,7 +106,7 @@ class Chat extends Component {
                     <ul className="chat-messages">
                         <ChatSession messages={messages}/>
                     </ul>
-
+                    }
                     <footer className="chat-footer">
                         <form onSubmit={this.sendMessage} className="message-form">
                             <input

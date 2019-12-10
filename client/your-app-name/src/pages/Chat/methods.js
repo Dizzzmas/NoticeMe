@@ -32,7 +32,7 @@ function handleInput(event) {
 }
 
 function connectToRoom(id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
-    const {currentUser} = this.state;
+    let {currentUser} = this.state;
 
     this.setState({
         messages: [],
@@ -46,14 +46,14 @@ function connectToRoom(id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
                 onMessage: message => {
                     this.setState({
                         messages: [...this.state.messages, message],
-                    });
-                    if (this.state.isLoaded) {
-                        const {currentRoom} = this.state;
+                    }, () => this.showNotification(message));
+                    const {currentRoom} = this.state;
+                    if (currentRoom === null) return;
+                    if (id === currentRoom.id) {
 
-                        if (currentRoom === null) return;
-                        this.setState({
-                            isLoaded: false
-                        });
+                        console.log('OnMessageCurrRoom: ', currentRoom.name);
+
+
                         return currentUser.setReadCursor({
                             roomId: currentRoom.id,
                             position: message.id,
@@ -81,7 +81,6 @@ function connectToRoom(id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
                     : currentRoom.name;
 
             this.setState({
-                isLoaded: true,
                 currentRoom: currentRoom,
                 roomUsers: currentRoom.users,
                 rooms: currentUser.rooms,
@@ -106,10 +105,10 @@ function connectToChatkit(userId) {
     });
 
     axios
-        .post('http://localhost:3001/chatkit/users', {userId})
+        .post('/chatkit/users', {userId})
         .then(() => {
             const tokenProvider = new Chatkit.TokenProvider({
-                url: 'http://localhost:3001/chatkit/authenticate',
+                url: '/chatkit/authenticate',
             });
 
             const chatManager = new Chatkit.ChatManager({
@@ -127,10 +126,11 @@ function connectToChatkit(userId) {
                         });
                     },
                     onRoomUpdated: room => {
-                        console.log('CURSE', this.state);
+
                         const {rooms} = this.state;
                         const index = rooms.findIndex(r => r.id === room.id);
                         rooms[index] = room;
+                        console.log('OnRoomUpdated: ', room);
                         this.setState({
                             rooms,
                         });
@@ -197,4 +197,39 @@ function sendDM(id) {
     });
 }
 
-export {sendMessage, handleInput, connectToRoom, connectToChatkit, sendDM};
+function grantNotificationPermission() {
+    if (!('Notification' in window)) {
+        alert('This browser does not support system notifications');
+        return;
+    }
+
+    if (Notification.permission === 'granted') {
+        new Notification('You are already subscribed to message notifications');
+        return;
+    }
+
+    if (
+        Notification.permission !== 'denied' ||
+        Notification.permission === 'default'
+    ) {
+        Notification.requestPermission().then(result => {
+            if (result === 'granted') {
+                new Notification(
+                    'Awesome! You will start receiving notifications shortly'
+                );
+            }
+        });
+    }
+};
+
+function showNotification(message) {
+    const {username} = this.state;
+    if (message.senderId !== username) {
+        const title = message.senderId;
+        const body = message.text;
+
+        new Notification(title, {body});
+    }
+};
+
+export {sendMessage, handleInput, connectToRoom, connectToChatkit, sendDM, grantNotificationPermission, showNotification};

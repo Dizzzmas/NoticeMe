@@ -11,7 +11,14 @@ const RoomList = props => {
             <li
                 className={isRoomActive}
                 key={room.id}
-                onClick={() => connectToRoom(room.id)}
+                onClick={() => {
+                    connectToRoom(room.id);
+                    setTimeout(() => {
+                        connectToRoom(room.id);
+                    }, 600
+                    )
+
+                }}
             >
                 <span className="room-icon">{roomIcon}</span>
                 {room.customData && room.customData.isDirectMessage ? (
