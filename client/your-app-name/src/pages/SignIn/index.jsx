@@ -6,6 +6,11 @@ import {Alert} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import {GoogleLogin} from 'react-google-login';
 import {ChatContext} from "../../services/chat";
+// import '../../assets/css/main.css'
+// import '../../assets/css/Footer-Basic.css'
+// import '../../assets/css/Header-Blue.css'
+// import '../../assets/css/Registration-Form-with-Photo.css'
+// import '../../assets/css/util.css'
 
 
 const SignInSchema = Yup.object().shape({
@@ -79,6 +84,7 @@ export default function SignIn(props) {
                         initialValues={{email: "", password: "", remember_me: false}}
                         validationSchema={SignInSchema}
                         onSubmit={async (values, actions) => {
+                            console.log(values);
                             let payload = await fetchUser(values);
                             if (!payload) {
                                 actions.setStatus({message: 'Wrong email or password'});
@@ -97,60 +103,102 @@ export default function SignIn(props) {
                     >
                         {({touched, errors, isSubmitting, status}) => (
 
+                            <div className="limiter">
 
-                            <Form>
-                                {status && <Alert variant='danger'>
-                                    {status.message}
-                                </Alert>}
-                                <div className="form-group">
+                                <div className="slide-in-blurred-bottom">
+                                    <div className="wrap-login100 p-l-100 p-r-100 p-t-55 p-b-55">
+                                        <Form className="login100-form validate-form flex-sb flex-w">
+					                    <span className="login100-form-title p-b-34" id="login_text">
+						                    Login
+					                        </span>
 
-                                    <label htmlFor="email">Email</label>
-                                    <Field
-                                        type="email"
-                                        name="email"
-                                        placeholder="Enter email"
-                                        className={`form-control ${
-                                            touched.email && errors.email ? "is-invalid" : ""
-                                        }`}
-                                    />
-                                    <ErrorMessage
-                                        component="div"
-                                        name="email"
-                                        className="invalid-feedback"
-                                    />
+                                            <span className="txt1 p-b-11">
+						                    Username
+					                        </span>
+
+
+                                            <div className="wrap-input100 validate-input m-b-36"
+                                                 data-validate="Username is required">
+
+                                                <Field
+                                                    type="email"
+                                                    name="email"
+                                                    id="username"
+                                                    placeholder="Enter email"
+                                                    className={`input100 ${
+                                                        touched.email && errors.email ? "is-invalid" : ""
+                                                    }`}
+                                                />
+                                                <ErrorMessage
+                                                     component="div"
+                                                    name="email"
+                                                    className="invalid-feedback text-danger"
+                                                />
+
+                                                <span className="focus-input100"></span>
+
+                                            </div>
+
+
+                                            <span className="txt1 p-b-11">
+						                            Password
+					                                    </span>
+                                            <div className="wrap-input100 validate-input m-b-12"
+                                                 data-validate="Password is required">
+						                <span className="btn-show-pass" onClick="showPassword()">
+							                <i className="fa fa-eye"></i>
+						                </span>
+                                                <Field
+                                                    type="password"
+                                                    name="password"
+                                                    id="password"
+                                                    placeholder="Enter password"
+                                                    className={`input100 ${
+                                                        touched.password && errors.password ? "is-invalid" : ""
+                                                    }`}
+                                                />
+                                                <ErrorMessage
+                                                    component="div"
+                                                    name="password"
+                                                    className="invalid-feedback"
+                                                />
+                                                <span className="focus-input100"></span>
+                                            </div>
+
+                                            <div className="flex-sb-m w-full p-b-28">
+                                                <div className="contact100-form-checkbox">
+                                                    <input className="input-checkbox100" id="ckb1" type="checkbox"
+                                                           name="remember-me"/>
+                                                    <label className="label-checkbox100" htmlFor="ckb1">
+                                                        Remember me
+                                                    </label>
+
+                                                </div>
+
+                                                <div>
+                                                    <a href="#" className="txt3">
+                                                        Forgot Password?
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div className="container-login100-form-btn">
+                                                <button className="login100-form-btn">
+                                                    Login
+                                                </button>
+
+                                            </div>
+
+
+                                        </Form>
+                                        <button onClick="register()" className="text-center txt4">
+                                            New around here? Click here!
+                                        </button>
+                                    </div>
                                 </div>
+                            </div>
 
 
-                                <div className="form-group">
-                                    <label htmlFor="password">Password</label>
-                                    <Field
-                                        type="password"
-                                        name="password"
-                                        placeholder="Enter password"
-                                        className={`form-control ${
-                                            touched.password && errors.password ? "is-invalid" : ""
-                                        }`}
-                                    />
-                                    <ErrorMessage
-                                        component="div"
-                                        name="password"
-                                        className="invalid-feedback"
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlFor='checkbox'>Remember me?</label>
-                                    <Field type="checkbox" name="remember_me"/>
-                                </div>
-
-
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary btn-block"
-                                    disabled={isSubmitting}
-                                >
-                                    {isSubmitting ? "Please wait..." : "Submit"}
-                                </button>
-                            </Form>
                         )}
                     </Formik>
                     <p>Need an account? <NavLink to='/signUp'>Sign Up</NavLink></p>

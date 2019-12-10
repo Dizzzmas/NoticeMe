@@ -17,10 +17,17 @@ const RoomList = props => {
                 {room.customData && room.customData.isDirectMessage ? (
                     <span className="room-name">
             {room.customData.userIds.filter(id => id !== currentUser.id)[0]}
+
           </span>
                 ) : (
+
                     <span className="room-name">{room.name}</span>
+
+
                 )}
+                {room.unreadCount > 0 ? (
+                    <span className="room-unread">{room.unreadCount}</span>
+                ) : null}
             </li>
         );
     });

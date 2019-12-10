@@ -1,13 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Proptypes from 'prop-types';
-import {ChatContext} from "../../services/chat";
 
 const RoomUsers = props => {
-    let chatContext = useContext(ChatContext);
-    let {roomUsers, currentUser} = props;
-    if (chatContext.currentRoom.id === 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
-        console.log('rum: ', roomUsers);
-        console.log(currentUser);
+    const {roomUsers, sendDM, currentUser, currentRoom} = props;
+
+    if (currentRoom.id === 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
 
         let only_user = undefined;
         for (let i = 0; i < roomUsers.length; i++) {
@@ -31,6 +28,8 @@ const RoomUsers = props => {
         )
 
     }
+
+
     const users = roomUsers.map(user => {
         return (
             <li className="room-member" key={user.id}>
@@ -38,6 +37,15 @@ const RoomUsers = props => {
                     <span className={`presence ${user.presence.state}`}/>
                     <span>{user.name}</span>
                 </div>
+                {currentUser.id !== user.id ? (
+                    <button
+                        onClick={() => sendDM(user.id)}
+                        title={`Send ${user.name} a direct message`}
+                        className="send-dm"
+                    >
+                        +
+                    </button>
+                ) : null}
             </li>
         );
     });
@@ -51,6 +59,7 @@ const RoomUsers = props => {
 
 RoomUsers.propTypes = {
     roomUsers: Proptypes.array.isRequired,
+    sendDM: Proptypes.func.isRequired,
     currentUser: Proptypes.object.isRequired,
 };
 

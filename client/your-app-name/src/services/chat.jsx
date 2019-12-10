@@ -80,9 +80,42 @@ const reducer = (state, action) => {
 const ChatContextProvider = props => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    useEffect(() => {
 
-    }, []);
+    function grantNotificationPermission() {
+        if (!('Notification' in window)) {
+            alert('This browser does not support system notifications');
+            return;
+        }
+
+        if (Notification.permission === 'granted') {
+            new Notification('You are already subscribed to message notifications');
+            return;
+        }
+
+        if (
+            Notification.permission !== 'denied' ||
+            Notification.permission === 'default'
+        ) {
+            Notification.requestPermission().then(result => {
+                if (result === 'granted') {
+                    new Notification(
+                        'Awesome! You will start receiving notifications shortly'
+                    );
+                }
+            });
+        }
+    }
+
+    let showNotification = (message) => {
+        const username = state.currentUser.name;
+        if (message.senderId !== username) {
+            const title = message.senderId;
+            const body = message.text;
+
+            new Notification(title, {body});
+        }
+    };
+
 
     return (
         <ChatContext.Provider
@@ -119,6 +152,7 @@ const ChatContextProvider = props => {
 
                                     dispatch({type: 'setCurrentUser', payload: currentUser});
                                     dispatch({type: 'setRooms', payload: currentUser.rooms});
+
                                     // setCurrentUser(currentUser);
                                     // setRooms(currentUser.rooms);
 
@@ -178,6 +212,7 @@ const ChatContextProvider = props => {
                                 onMessage: message => {
                                     // setMessages(messages => ([...messages, message]));
                                     dispatch({type: 'addToMessages', payload: message});
+                                    showNotification(message);
                                 },
                                 onPresenceChanged: () => {
                                     if (state.currentRoom) {
@@ -285,6 +320,12 @@ const ChatContextProvider = props => {
                     this.createPrivateRoom(id).then(room => {
                         this.connectToRoom(room.id);
                     });
+                },
+                grantNotificationPermission: () => {
+                    grantNotificationPermission();
+                },
+                showNotification: (message) => {
+                    showNotification(message);
                 }
 
 
