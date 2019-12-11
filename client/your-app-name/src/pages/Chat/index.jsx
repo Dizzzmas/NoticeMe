@@ -11,6 +11,8 @@ import {
     connectToRoom,
     sendMessage,
     sendDM,
+    showNotification,
+    grantNotificationPermission
 } from './methods';
 
 import 'skeleton-css/css/normalize.css';
@@ -30,9 +32,9 @@ class Chat extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            firstConnect: true,
             userId: '',
             showLogin: true,
-            isLoaded: false,
             currentUser: null,
             currentRoom: null,
             rooms: [],
@@ -48,6 +50,8 @@ class Chat extends Component {
         this.connectToRoom = connectToRoom.bind(this);
         this.sendMessage = sendMessage.bind(this);
         this.sendDM = sendDM.bind(this);
+        this.showNotification = showNotification.bind(this);
+        this.grantNotificationPermission = grantNotificationPermission.bind(this);
     }
 
 
@@ -58,9 +62,6 @@ class Chat extends Component {
             // chatContext.grantNotificationPermission();
             // connectToChatkit();
             console.log('wtf');
-        } else if (!this.state.isLoaded) {
-
-            console.log('State not loaded');
         }
     }
 
@@ -102,11 +103,12 @@ class Chat extends Component {
                     <header className="chat-header">
                         {currentRoom ? <h3>{roomName}</h3> : null}
                     </header>
-
+                    {messages &&
                     <ul className="chat-messages">
                         <ChatSession messages={messages}/>
                     </ul>
                     }
+
                     <footer className="chat-footer">
                         <form onSubmit={this.sendMessage} className="message-form">
                             <input

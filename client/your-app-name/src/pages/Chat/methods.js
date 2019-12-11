@@ -1,6 +1,7 @@
 import Chatkit from '@pusher/chatkit-client';
 import axios from 'axios';
 import queryString from "query-string";
+import {format} from "date-fns";
 
 function sendMessage(event) {
     event.preventDefault();
@@ -44,14 +45,41 @@ function connectToRoom(id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
             messageLimit: 10,
             hooks: {
                 onMessage: message => {
-                    this.setState({
-                        messages: [...this.state.messages, message],
-                    }, () => this.showNotification(message));
+
                     const {currentRoom} = this.state;
+                    const {firstConnect} = this.state;
+                    // if (currentRoom === null) return;
+
+                    if (firstConnect) {
+                        this.setState({
+                                messages: [...this.state.messages, message],
+                            }
+                        );
+                        console.log('OnMessageCurrMsg: ', message);
+
+
+                        return currentUser.setReadCursor({
+                            roomId: id,
+                            position: message.id,
+                        });
+                    }
+
                     if (currentRoom === null) return;
+
                     if (id === currentRoom.id) {
 
+
+                        this.setState({
+                            messages: [...this.state.messages, message],
+                        }, () => {
+                            if (format(new Date(`${message.updatedAt}`), 'HH:mm') === format(new Date(), 'HH:mm')) {
+
+                                // this.showNotification(message)
+                            }
+                        });
+
                         console.log('OnMessageCurrRoom: ', currentRoom.name);
+                        console.log('OnMessageCurrMsg: ', message);
 
 
                         return currentUser.setReadCursor({
@@ -85,6 +113,7 @@ function connectToRoom(id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
                 roomUsers: currentRoom.users,
                 rooms: currentUser.rooms,
                 roomName,
+                firstConnect: false
             });
         })
         .catch(console.error);
@@ -126,20 +155,35 @@ function connectToChatkit(userId) {
                         });
                     },
                     onRoomUpdated: room => {
-
                         const {rooms} = this.state;
                         const index = rooms.findIndex(r => r.id === room.id);
                         rooms[index] = room;
                         console.log('OnRoomUpdated: ', room);
                         this.setState({
                             rooms,
+                        }, async () => {
+                            try {
+                                if (room.id !== this.state.currentRoom.id) {
+                                    let messages = await this.state.currentUser.fetchMultipartMessages({
+                                        roomId: room.id,
+                                        direction: 'newer',
+                                        limit: 100
+                                    });
+
+
+                                    console.log('Fetched msgs: ', messages);
+                                    this.showNotification(messages[messages.length - 1]);
+                                }
+                            } catch (error) {
+                                console.log('fetch messages error');
+                            }
                         });
                     }
                 })
                 .then(currentUser => {
                     this.setState(
                         {
-                            currentUser,
+                            currentUser: currentUser,
                             showLogin: false,
                             isLoading: false,
                             rooms: currentUser.rooms,
@@ -147,8 +191,10 @@ function connectToChatkit(userId) {
                         () => {
                             if (queryString.parse(window.location.search).user) {
                                 sendDM.call(this, queryString.parse(window.location.search).user);
+                                this.grantNotificationPermission();
                             } else {
-                                connectToRoom.call(this)
+                                connectToRoom.call(this);
+                                this.grantNotificationPermission();
                             }
                         }
                     );
@@ -204,7 +250,7 @@ function grantNotificationPermission() {
     }
 
     if (Notification.permission === 'granted') {
-        new Notification('You are already subscribed to message notifications');
+        // new Notification('You are already subscribed to message notifications');
         return;
     }
 
@@ -223,13 +269,22 @@ function grantNotificationPermission() {
 };
 
 function showNotification(message) {
-    const {username} = this.state;
-    if (message.senderId !== username) {
+    console.log('Notify msg: ', message);
+    const {currentUser} = this.state;
+    if (message.senderId !== currentUser.name) {
         const title = message.senderId;
-        const body = message.text;
+        const body = message.parts[0].payload.content;
 
         new Notification(title, {body});
     }
 };
 
-export {sendMessage, handleInput, connectToRoom, connectToChatkit, sendDM, grantNotificationPermission, showNotification};
+export {
+    sendMessage,
+    handleInput,
+    connectToRoom,
+    connectToChatkit,
+    sendDM,
+    grantNotificationPermission,
+    showNotification
+};
