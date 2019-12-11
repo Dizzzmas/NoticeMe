@@ -163,7 +163,7 @@ function connectToChatkit(userId) {
                             rooms,
                         }, async () => {
                             try {
-                                if (room.id !== this.state.currentRoom.id) {
+                                if (room.unreadCount > 0) {
                                     let messages = await this.state.currentUser.fetchMultipartMessages({
                                         roomId: room.id,
                                         direction: 'newer',
@@ -275,7 +275,12 @@ function showNotification(message) {
         const title = message.senderId;
         const body = message.parts[0].payload.content;
 
-        new Notification(title, {body});
+
+        console.log('typ: ', typeof (NotificationEvent));
+        new Notification(title, {body}).onclick = function (event) {
+
+            window.location.replace(`http://localhost:3000/chat?user=${title}`);
+        };
     }
 };
 
