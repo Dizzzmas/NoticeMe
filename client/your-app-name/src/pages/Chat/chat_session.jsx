@@ -14,7 +14,7 @@ const ChatSession = props => {
     return (
       <li className="message" key={message.id}>
         <div>
-          <span className="user-id">{message.senderId}</span>
+          <span className="user-id">{message.sender.name}</span>
           <span>{arr}</span>
         </div>
         <span className="message-time">{time}</span>

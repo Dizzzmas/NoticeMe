@@ -12,18 +12,20 @@ const RoomList = props => {
                 className={isRoomActive}
                 key={room.id}
                 onClick={() => {
-                    connectToRoom(room.id);
-                    setTimeout(() => {
+                    if (room !== currentRoom) {
                         connectToRoom(room.id);
-                    }, 600
-                    )
+                        setTimeout(() => {
+                                connectToRoom(room.id);
+                            }, 600
+                        )
+                    }
 
                 }}
             >
                 <span className="room-icon">{roomIcon}</span>
                 {room.customData && room.customData.isDirectMessage ? (
                     <span className="room-name">
-            {room.customData.userIds.filter(id => id !== currentUser.id)[0]}
+            {room.customData.userIds.filter(id => id !== currentUser.name)[0]}
 
           </span>
                 ) : (
@@ -32,7 +34,7 @@ const RoomList = props => {
 
 
                 )}
-                {room.unreadCount > 0 ? (
+                {room.unreadCount > 0 && room !== currentRoom ? (
                     <span className="room-unread">{room.unreadCount}</span>
                 ) : null}
             </li>

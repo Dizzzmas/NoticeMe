@@ -51,6 +51,7 @@ export default function EditModal(props) {
                                 }}
                                 validationSchema={CreateEditSchema}
                                 onSubmit={async (values, actions) => {
+                                    const old_username = userContext.currentUser.username;
                                     console.log('Val: ', values);
                                     let res = await fetch(`/api/v1/users/${userContext.currentUser.id}`, {
                                         method: 'PUT',
@@ -88,6 +89,22 @@ export default function EditModal(props) {
                                         } else if (sessionStorage.getItem('currentUser')) {
                                             await sessionStorage.setItem('currentUser', JSON.stringify(payload.user));
                                         }
+
+
+                                      let chatkit_updated_user = await fetch(`/api/v1/chatkit/update`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            "old_username": old_username,
+                                            "user_id": payload.user.id,
+                                            "username": payload.user.username,
+                                            "avatarUrl": payload.user.ava_url,
+                                        })
+                                    });
+
+
 
                                         userContext.handleSignIn(payload);
                                         console.log(props.history);

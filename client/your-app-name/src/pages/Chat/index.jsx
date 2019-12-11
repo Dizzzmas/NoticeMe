@@ -58,7 +58,7 @@ class Chat extends Component {
     componentDidMount() {
 
         if (!this.state.currentUser) {
-            this.connectToChatkit(this.context.currentUser.username);
+            this.connectToChatkit(this.context.currentUser);
             // chatContext.grantNotificationPermission();
             // connectToChatkit();
             console.log('wtf');
@@ -87,7 +87,7 @@ class Chat extends Component {
                     {currentUser ? (
                         <div className="user-profile">
                             <span className="username">{currentUser.name}</span>
-                            <span className="user-id">{`@${currentUser.id}`}</span>
+                            <span className="user-id">{`@${currentUser.name}`}</span>
                         </div>
                     ) : null}
                     {currentRoom ? (

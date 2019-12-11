@@ -11,7 +11,7 @@ function sendMessage(event) {
 
     parts.push({
         type: "text/plain",
-        content: newMessage
+        content: newMessage,
     });
 
     currentUser.sendMultipartMessage({
@@ -32,7 +32,7 @@ function handleInput(event) {
     });
 }
 
-function connectToRoom(id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
+function connectToRoom(id = '7cdeab9a-8f74-4de0-90ca-382a54f18ee7') {
     let {currentUser} = this.state;
 
     this.setState({
@@ -42,7 +42,7 @@ function connectToRoom(id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
     return currentUser
         .subscribeToRoomMultipart({
             roomId: `${id}`,
-            messageLimit: 10,
+            messageLimit: 30,
             hooks: {
                 onMessage: message => {
 
@@ -104,7 +104,7 @@ function connectToRoom(id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
             const roomName =
                 currentRoom.customData && currentRoom.customData.isDirectMessage
                     ? currentRoom.customData.userIds.filter(
-                    id => id !== currentUser.id
+                    id => id !== currentUser.name
                     )[0]
                     : currentRoom.name;
 
@@ -119,11 +119,13 @@ function connectToRoom(id = 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
         .catch(console.error);
 }
 
-function connectToChatkit(userId) {
+function connectToChatkit(user) {
     // event.preventDefault();
 
     // const { userId } = this.state;
 
+    const userId = user.id.toString();
+    const userName = user.username;
     if (userId === null || userId.trim() === '') {
         alert('Invalid userId');
         return;
@@ -134,10 +136,10 @@ function connectToChatkit(userId) {
     });
 
     axios
-        .post('/chatkit/users', {userId})
+        .post('/api/v1/chatkit/users', {userId, userName})
         .then(() => {
             const tokenProvider = new Chatkit.TokenProvider({
-                url: '/chatkit/authenticate',
+                url: '/api/v1/chatkit/authenticate',
             });
 
             const chatManager = new Chatkit.ChatManager({
@@ -159,11 +161,15 @@ function connectToChatkit(userId) {
                         const index = rooms.findIndex(r => r.id === room.id);
                         rooms[index] = room;
                         console.log('OnRoomUpdated: ', room);
+                        if (room === this.state.currentRoom) {
+
+                        }
                         this.setState({
                             rooms,
+
                         }, async () => {
                             try {
-                                if (room.unreadCount > 0) {
+                                if (room.unreadCount > 0 && room !== this.state.currentRoom) {
                                     let messages = await this.state.currentUser.fetchMultipartMessages({
                                         roomId: room.id,
                                         direction: 'newer',
@@ -181,6 +187,7 @@ function connectToChatkit(userId) {
                     }
                 })
                 .then(currentUser => {
+                    console.log(currentUser);
                     this.setState(
                         {
                             currentUser: currentUser,
@@ -189,12 +196,14 @@ function connectToChatkit(userId) {
                             rooms: currentUser.rooms,
                         },
                         () => {
-                            if (queryString.parse(window.location.search).user) {
+                            let direct_user = queryString.parse(window.location.search).user;
+                            if (direct_user && direct_user !== this.state.currentUser.name) {
                                 sendDM.call(this, queryString.parse(window.location.search).user);
                                 this.grantNotificationPermission();
                             } else {
                                 connectToRoom.call(this);
                                 this.grantNotificationPermission();
+
                             }
                         }
                     );
@@ -203,14 +212,25 @@ function connectToChatkit(userId) {
         .catch(console.error);
 }
 
-function createPrivateRoom(id) {
+async function createPrivateRoom(username) {
     const {currentUser, rooms} = this.state;
-    const roomName = `${currentUser.id}_${id}`;
+    const roomName = `${currentUser.name}_${username}`;
+
+
+    let r = await fetch(`/api/v1/users/getByUsername/${username}`);
+    let loaded_user = await r.json();
+
 
     const isPrivateChatCreated = rooms.filter(room => {
+        console.log('Custom: ', room.customData);
         if (room.customData && room.customData.isDirectMessage) {
-            const arr = [currentUser.id, id];
+            const arr = [currentUser.name, username];
+            // let users_arr = [];
+            // for(let  i = 0; i < room.users.length; i++){
+            //     users_arr.push(room.users[i].name);
+            // }
             const {userIds} = room.customData;
+            console.log('USERiDS: ', userIds);
 
             if (arr.sort().join('') === userIds.sort().join('')) {
                 return {
@@ -229,17 +249,29 @@ function createPrivateRoom(id) {
     return currentUser.createRoom({
         name: `${roomName}`,
         private: true,
-        addUserIds: [`${id}`],
+        addUserIds: [`${loaded_user.id}`],
         customData: {
             isDirectMessage: true,
-            userIds: [currentUser.id, id],
+            userIds: [currentUser.name, username],
         },
     });
 }
 
-function sendDM(id) {
-    createPrivateRoom.call(this, id).then(room => {
-        connectToRoom.call(this, room.id);
+async function sendDM(username) {
+
+    try {
+        let res = await fetch(`/api/v1/users/getByUsername/${username}`);
+        let found_by_username = await res.json();
+        username = found_by_username.username;
+    } catch (error) {
+        console.error(error);
+    }
+
+
+    createPrivateRoom.call(this, username).then(room => {
+        connectToRoom.call(this, room.id)
+    }).catch(error => {
+        connectToRoom.call(this);
     });
 }
 
