@@ -150,7 +150,6 @@ module.exports = {
                         ['createdAt', 'DESC'],
                         [Sequelize.literal("\"likesCount\""), 'DESC']
                     ],
-
                 });
             return res.status(200).send(posts);
         } catch (error) {

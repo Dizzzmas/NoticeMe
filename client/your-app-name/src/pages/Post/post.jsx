@@ -19,6 +19,7 @@ function Post(props) {
     let postId_from_path = slug.postId;
     console.log(postId_from_path);
     const [post, setPost] = useState({id: postId_from_path});
+    const [liked, setLiked] = useState(false);
 
     useEffect(() => {
             loadPost();
@@ -26,7 +27,6 @@ function Post(props) {
         }, []
     );
 
-    let liked, handle;
     const jwt = userContext.getJwt();
     let loadPost = () => {
         fetch(`/api/v1/posts/${post.id}`, {
@@ -37,14 +37,13 @@ function Post(props) {
             .then(response => response.json())
             .then(loaded_post => {
                     console.log('Post: ', loaded_post);
-                    liked = false;
+
                     for (const like of loaded_post.likes) {
                         console.log(like);
                         if (like.user_id == userContext.currentUser.id) {
-                            liked = true;
+                            setLiked(true);
                         }
                     }
-                    handle = `${loaded_post.user.handle}`;
                     setPost(loaded_post);
                 }
             ).catch((err) => {
@@ -61,7 +60,7 @@ function Post(props) {
             <PostBody
                 post={post}
                 liked={liked}
-                handle={handle}
+                handle={post.user.handle}
                 history={props.history}
             />}
         </div>

@@ -9,6 +9,7 @@ import Home from '../pages/Home';
 import UserPage from "../pages/UserPage";
 import PostPage from "../pages/Post";
 import Chat from "../pages/Chat";
+import WhoToFollow from "../pages/whoToFollow";
 
 
 export default function Routes() {
@@ -18,6 +19,7 @@ export default function Routes() {
             <Switch>
 
                 <Route path='/' exact component={Home}/>
+                <Route path='/signIn/follow' component={WhoToFollow}/>
                 <Route path='/signIn' component={SignIn}/>
                 <Route path='/signUp' component={SignUp}/>
                 <Route path='/posts' component={Posts} isPrivate/>

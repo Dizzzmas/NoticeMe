@@ -25,17 +25,12 @@ let app = express();
 app.use(express.static(path.join(__dirname, 'build')));
 
 
-
-
-app.use(cookieParser( 'cc6cd6b1fe55fd924d4a8e1b6bac018c'));
+app.use(cookieParser('cc6cd6b1fe55fd924d4a8e1b6bac018c'));
 app.use(cors());
-
 
 
 // view engine setup
 app.use('views', express.static(path.join(__dirname, 'views')));
-
-
 
 
 app.use(logger('dev'));
@@ -51,7 +46,6 @@ app.use(passport.session());
 app.use(flash());
 
 
-
 app.use(express.static('public'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
@@ -60,19 +54,21 @@ let authRoute = require('./routes/auth')(app, passport);
 require('./auth/passport')(passport, User);
 app.use('/api/v1', apiRouter.unprotected);
 
-app.use('/api/v1', passport.authenticate('jwt', {
-    session: false,
-}), (req, res, next) => {
-    console.log('jwt auth success');
-    return next();
-}, apiRouter.protected);
+app.use('/api/v1',
+    passport.authenticate('jwt', {
+        session: false,
+    }), (req, res, next) => {
+        console.log('jwt auth success');
+        return next();
+    }
+    , apiRouter.protected);
 
 
 app.use('/developer/v1', developerRouter);
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 
 app.use((req, res, next) => {
@@ -86,8 +82,6 @@ app.use((req, res, next) => {
 app.use(function (req, res, next) {
     next(createError(404));
 });
-
-
 
 
 // error handler

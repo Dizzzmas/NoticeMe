@@ -32,7 +32,7 @@ function handleInput(event) {
     });
 }
 
-function connectToRoom(id = '7cdeab9a-8f74-4de0-90ca-382a54f18ee7') {
+function connectToRoom(id = '9d138692-7ed7-426e-81bb-de38c84d566d') {
     let {currentUser} = this.state;
 
     this.setState({
@@ -220,8 +220,16 @@ async function createPrivateRoom(username) {
     const {currentUser, rooms} = this.state;
     const roomName = `${currentUser.name}_${username}`;
 
+    const jwt = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+    if (!jwt) {
+        return window.location.replace('/signIn');
+    }
 
-    let r = await fetch(`/api/v1/users/getByUsername/${username}`);
+    let r = await fetch(`/api/v1/users/getByUsername/${username}`, {
+        headers: {
+            Authorization: `Bearer ${jwt}`,
+        }
+    });
     let loaded_user = await r.json();
 
 
@@ -264,7 +272,16 @@ async function createPrivateRoom(username) {
 async function sendDM(username) {
 
     try {
-        let res = await fetch(`/api/v1/users/getByUsername/${username}`);
+        const jwt = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+        if (!jwt) {
+            return window.location.replace('/signIn');
+        }
+
+        let res = await fetch(`/api/v1/users/getByUsername/${username}`, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+            }
+        });
         let found_by_username = await res.json();
         username = found_by_username.username;
     } catch (error) {
@@ -315,7 +332,7 @@ function showNotification(message) {
         console.log('typ: ', typeof (NotificationEvent));
         new Notification(title, {body}).onclick = function (event) {
 
-            window.location.replace(`http://localhost:3000/chat?user=${title}`);
+            window.location.replace(`/chat?user=${title}`);
         };
     }
 };

@@ -40,7 +40,6 @@ module.exports = function (app, chatkit) {
                                 await chatkit.updateRoom({
                                     id: room.id,
                                     name: room.name.replace(re, req.body.username),
-                                    isPrivate: true,
                                     customData: {isDirectMessage: true, userIds: userIds},
                                 })
                             }

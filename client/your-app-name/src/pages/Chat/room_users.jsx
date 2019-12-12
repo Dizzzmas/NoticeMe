@@ -4,7 +4,7 @@ import Proptypes from 'prop-types';
 const RoomUsers = props => {
     const {roomUsers, sendDM, currentUser, currentRoom} = props;
 
-    if (currentRoom.id === 'e9f574df-af11-443e-89b5-1b5dd76ffcc3') {
+    if (currentRoom.id === '9d138692-7ed7-426e-81bb-de38c84d566d') {
 
         let only_user = undefined;
         for (let i = 0; i < roomUsers.length; i++) {

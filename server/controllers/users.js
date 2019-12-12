@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const md5 = require('md5');
 const utf8 = require('utf8');
 const bcrypt = require("bcrypt");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 module.exports = {
@@ -24,7 +26,19 @@ module.exports = {
                     let updated_user = await invalid_email_user.update({
                         password_hash: bcrypt.hashSync(req.body.password, salt)
                     });
-                    return res.status(201).send(updated_user);
+                    const payload = {
+                        user: updated_user
+                    };
+                    const token = jwt.sign(payload, 'cc6cd6b1fe55fd924d4a8e1b6bac018c');
+
+                    let final_user = Users.findByPk(updated_user.id, { include: [
+                    {model: Users, as: 'followed_by', through: {attributes: []}}, {
+                        model: Users,
+                        as: 'following',
+                        through: {attributes: []}
+                    }]});
+
+                    return res.status(201).send({final_user, token});
                 }
                 console.log('Repeated email');
                 return res.status(400).send({message: 'Account with such email already exists'});
@@ -48,7 +62,20 @@ module.exports = {
                     ava_url: `https://www.gravatar.com/avatar/${md5(utf8.encode(req.body.email.toLowerCase()))}?d=identicon`,
                 });
 
-            return res.status(201).send(user);
+            let final_user = await Users.findByPk(user.id,  { include: [
+                    {model: Users, as: 'followed_by', through: {attributes: []}}, {
+                        model: Users,
+                        as: 'following',
+                        through: {attributes: []}
+                    }]});
+
+            const payload = {
+                user: user
+            };
+            const token = jwt.sign(payload, 'cc6cd6b1fe55fd924d4a8e1b6bac018c');
+
+
+            return res.status(201).send({final_user, token});
         } catch (error) {
             console.log('Sign up error');
             return res.status(400).send({message: 'creating user failed', error: error});
@@ -228,7 +255,15 @@ module.exports = {
         try {
             console.log(req.body.email, req.body.password, req.body);
             const {email, password} = req.body;
-            let user = await Users.findOne({where: {email: email}});
+            let user = await Users.findOne({
+                    where: {email: email}, include: [
+                        {model: Users, as: 'followed_by', through: {attributes: []}}, {
+                            model: Users,
+                            as: 'following',
+                            through: {attributes: []}
+                        }]
+                }
+            );
             if (!user) {
                 return res.status(401).send({message: 'Wrong email or password'});
             }
@@ -237,10 +272,13 @@ module.exports = {
                     error: 'Wrong email or password'
                 });
             }
+            const Sequelize = require('sequelize');
+            const Op = Sequelize.Op;
+
             const payload = {
                 user: user
             };
-            const token = jwt.sign(payload,  'cc6cd6b1fe55fd924d4a8e1b6bac018c');
+            const token = jwt.sign(payload, 'cc6cd6b1fe55fd924d4a8e1b6bac018c');
 
             res.send({user, token});
         } catch (error) {
@@ -261,11 +299,17 @@ module.exports = {
     },
     async authGoogleUser(accessToken, refreshToken, profile, done) {
         try {
+
             let existing_user = await Users
                 .findOne({
                     where: {
                         google_id: profile.id
-                    }
+                    }, include: [
+                        {model: Users, as: 'followed_by', through: {attributes: []}}, {
+                            model: Users,
+                            as: 'following',
+                            through: {attributes: []}
+                        }]
                 });
             if (!existing_user) {
                 let new_user = await Users
@@ -277,7 +321,15 @@ module.exports = {
                         google_token: accessToken,
                         ava_url: `https://www.gravatar.com/avatar/${md5(utf8.encode(profile.emails[0].value.toLowerCase()))}?d=identicon`,
                     });
-                return done(null, new_user)
+                let final_user = await Users.findByPk(new_user.id, {
+                    include: [
+                        {model: Users, as: 'followed_by', through: {attributes: []}}, {
+                            model: Users,
+                            as: 'following',
+                            through: {attributes: []}
+                        }]
+                });
+                return done(null, final_user);
             } else {
                 return done(null, existing_user);
             }
@@ -286,5 +338,36 @@ module.exports = {
             console.log('Could not add google user');
             return done(null, false);
         }
+    },
+    async getSuggested(req, res) {
+        const pageSize = process.env.PAGE_SIZE || 4;
+        const offset = parseInt(req.query.page) * pageSize - pageSize;
+        const limit = pageSize;
+        try {
+            let suggested = await Users.findAndCountAll({
+                where: {
+                    id: {
+                        [Op.not]: req.params.userId
+                    }
+                },
+                attributes: [
+                    'id', 'username', 'handle', 'email', 'about_me', 'role', 'ava_url',
+                    [Sequelize.literal('(SELECT COUNT(*) FROM followers WHERE followers.followed_id = users.id)'), 'followersCount'],
+                ],
+                include: [
+                    {model: Users, as: 'followed_by', through: {attributes: []}}, {
+                        model: Users,
+                        as: 'following',
+                        through: {attributes: []}
+                    }],
+                order: [
+                    [Sequelize.literal("\"followersCount\""), 'DESC']
+                ],
+            });
+            return res.send(suggested);
+        } catch (error) {
+            return res.status(500).send();
+        }
+
     }
 };

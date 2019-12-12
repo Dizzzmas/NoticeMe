@@ -16,10 +16,12 @@ export default function RouteWrapper({
     if (isPrivate && !signed) {
         return <Redirect to='/signIn'/>;
     }
-    // if(signed && (Component.name === 'SignIn' || Component.name === 'SignUp')){
-    //     return <Redirect to='/'/>;
-    // }
-    console.log('COMPONENT: ', Component);
+
+    console.log('CMP: ', rest.path);
+    if(signed && (rest.path.toString() === '/signIn' || rest.path.toString() === '/signUp')){
+        return <Redirect to='/'/>;
+    }
+
 
     return <Route {...rest} component={Component}/>;
 

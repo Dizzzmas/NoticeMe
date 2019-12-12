@@ -28,6 +28,16 @@ const reducer = (state, action) => {
                 ...state,
                 currentUser: {user: guest},
             };
+        case 'followedUser':
+            return {
+                ...state,
+                followedCount: state.followedCount + 1
+            };
+        case 'unFollowedUser':
+            return {
+                ...state,
+                followedCount: state.followedCount - 1
+            };
         default:
             return state;
     }
@@ -59,6 +69,12 @@ const AuthContextProvider = props => {
                     }
                     return jwt;
                 },
+                handleFollow: () =>{
+                    dispatch({type: 'followedUser'});
+                },
+                handleUnfollow: () => {
+                    dispatch({type: 'unFollowedUser'});
+                }
 
             }
             }

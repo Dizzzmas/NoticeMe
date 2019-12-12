@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {NavLink} from "react-router-dom";
 import {Alert} from "react-bootstrap";
 import axios from "axios";
+import {AuthContext} from "../../services/auth";
 
 
 const SignUpSchema = Yup.object().shape({
@@ -26,7 +27,7 @@ const SignUpSchema = Yup.object().shape({
 
 
 export default function SignUp(props) {
-
+    const user = useContext(AuthContext);
     return (
         <div className="container">
             <div className="row mb-5">
@@ -41,10 +42,17 @@ export default function SignUp(props) {
                         validationSchema={SignUpSchema}
                         onSubmit={async (values, actions) => {
                             try {
-                                let res = await fetchSignUp(values);
-                                console.log(res);
+                                let payload = await fetchSignUp(values);
+                                if (!payload) {
+                                    actions.setStatus({message: 'Wrong email or password'});
+                                } else {
+                                    user.handleSignIn(payload);
+                                    props.history.push({
+                                        pathname: `/signIn/follow`, state: {user: payload.user}
+                                    });
+                                }
 
-                                props.history.push('/signIn');
+                                // props.history.push('/signIn');
                             } catch (error) {
                                 actions.setStatus({message: error.message});
                             }
@@ -159,13 +167,45 @@ let fetchSignUp = async (values) => {
             })
         });
 
-        let txt = await res.json();
-        console.log('SignUp error: ', txt.message);
+        let user_and_token = await res.json();
+        let txt = user_and_token.final_user;
+        let jwt = user_and_token.token;
+
+
         if (res.ok) {
             console.log('SignUp successful');
-            let userId = txt.username;
+            localStorage.setItem("jwt", jwt);
+
+            let stored_user = {
+                id: txt.id,
+                username: txt.username,
+                email: txt.email,
+                aboutMe: txt.about_me,
+                role: txt.role,
+                avaUrl: txt.ava_url,
+                followers_count: txt.followed_by.length,
+                following_count: txt.following.length,
+                createdAt: txt.createdAt,
+                updatedAt: txt.updatedAt,
+                signed: true,
+            };
+            let payload = {
+                user: stored_user
+            };
+            localStorage.setItem('currentUser', JSON.stringify(payload.user));
+
+
             await axios
                 .post('/api/v1/chatkit/users', {userId: txt.id, userName: txt.username});
+
+
+
+            return payload;
+            // ASDDDDDDDddasddasasddasdas
+
+
+            //fkldsklfdlkfd
+
         } else {
             throw new Error(txt.message.toString());
         }

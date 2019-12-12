@@ -1,16 +1,15 @@
 import React from 'react';
-import './App.css';
 import {Router} from 'react-router-dom';
 import history from "./services/history";
 import Routes from "./routes";
-import 'bootstrap/dist/css/bootstrap.min.css';
-// import MyNavBar from "./components/MyNavBar";
 import {AuthContextProvider} from "./services/auth";
-import './App.css';
 import MyNavBar from "./pages/MyNavbar";
+import './assets/css/styles.min.css'
+// import './assets/css/Footer-Basic.css'
+// import './assets/css/Header-Blue.css'
+// import './assets/css/Registration-Form-with-Photo.css'
+// import './assets/css/util.css'
 
-
-// const AuthContext = React.createContext();
 
 
 function App() {

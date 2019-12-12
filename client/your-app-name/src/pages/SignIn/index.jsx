@@ -4,11 +4,7 @@ import * as Yup from 'yup';
 import {AuthContext} from "../../services/auth";
 import {NavLink} from "react-router-dom";
 import {GoogleLogin} from 'react-google-login';
-// import '../../assets/css/main.css'
-// import '../../assets/css/Footer-Basic.css'
-// import '../../assets/css/Header-Blue.css'
-// import '../../assets/css/Registration-Form-with-Photo.css'
-// import '../../assets/css/util.css'
+
 
 
 const SignInSchema = Yup.object().shape({
@@ -129,7 +125,7 @@ export default function SignIn(props) {
                                                     }`}
                                                 />
                                                 <ErrorMessage
-                                                     component="div"
+                                                    component="div"
                                                     name="email"
                                                     className="invalid-feedback text-danger"
                                                 />
@@ -230,9 +226,9 @@ let fetchUser = async (values) => {
     let user_and_token = await res.json();
     let txt = user_and_token.user;
     let jwt = user_and_token.token;
-    if(values.remember_me) {
+    if (values.remember_me) {
         localStorage.setItem("jwt", jwt);
-    }else{
+    } else {
         sessionStorage.setItem('jwt', jwt);
     }
 
@@ -245,6 +241,8 @@ let fetchUser = async (values) => {
             aboutMe: txt.about_me,
             role: txt.role,
             avaUrl: txt.ava_url,
+            followers_count: txt.followed_by.length,
+            following_count: txt.following.length,
             createdAt: txt.createdAt,
             updatedAt: txt.updatedAt,
             signed: true,

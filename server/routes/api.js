@@ -23,7 +23,7 @@ router.put('/users/:userId', UsersController.updateById);
 routerProtected.delete('/users/:userId', UsersController.deleteById);
 routerProtected.post('/users/:userId/giveadmin', UsersController.setAdmin);
 routerProtected.post('/users/:userId/revokeadmin', UsersController.revokeAdmin);
-
+router.get('/users/:userId/getSuggested', UsersController.getSuggested);
 // Posts api
 router.post('/users/:userId/posts/new', PostsController.create);
 router.get('/users/:userId/posts/userPosts', PostsController.userPosts);
@@ -33,21 +33,17 @@ routerProtected.get('/posts/search', PostsController.search);
 routerProtected.put('/users/:userId/posts/:postId', parser.single('image'), PostsController.updateById);
 routerProtected.post('/users-log-out', UsersController.jwt_logout);
 router.post('/users-sign-in', UsersController.jwt_authenticate);
-
 //Comments api
 router.post('/users/:userId/posts/:postId/comments', CommentsController.create);
 routerProtected.put('/users/:userId/posts/:postId/comments/:commentId', CommentsController.updateById);
 router.delete('/comments/:commentId', CommentsController.deleteById);
 router.get('/posts/GetAllComments/:postId', CommentsController.getAll);
-
 //Likes api
 router.post('/users/:userId/posts/:postId/like', LikesController.create);
 router.delete('/users/:userId/posts/:postId/unlike', LikesController.deleteById);
-
 // Comment Likes api
 router.post('/users/:userId/comments/:commentId/like', CommentLikesController.create);
 router.delete('/users/:userId/comments/:commentId/unlike', CommentLikesController.deleteById);
-
 // Followers Api
 router.post('/users/:userId/follow/:followId', FollowersController.followUser);
 router.get('/users/:userId/followers', FollowersController.getFollowers);
