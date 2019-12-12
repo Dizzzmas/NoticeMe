@@ -238,7 +238,7 @@ const Likes = (props) => {
 
     let update_likes = async () => {
         if (liked) {
-            let res = await fetch(`api/v1/users/${userContext.currentUser.id}/posts/${props.post_id}/unlike`, {
+            let res = await fetch(`/api/v1/users/${userContext.currentUser.id}/posts/${props.post_id}/unlike`, {
                 method: 'DELETE'
             });
             if (res.ok && res.status === 204) {
@@ -249,7 +249,52 @@ const Likes = (props) => {
             }
 
         } else {
-            let res = await fetch(`api/v1/users/${userContext.currentUser.id}/posts/${props.post_id}/like`, {
+            let res = await fetch(`/api/v1/users/${userContext.currentUser.id}/posts/${props.post_id}/like`, {
+                method: 'POST'
+            });
+            if (res.ok && res.status === 201) {
+                setLikesCount(likes_count + 1);
+                setLiked(true);
+            } else {
+                console.log('could not like');
+            }
+        }
+    };
+
+
+    return (
+        <div className='likes'>
+            Likes: {likes_count}
+            {liked ? <button onClick={(e) => {
+                e.stopPropagation();
+                update_likes();
+            }}>Unlike</button> : <button onClick={(e) => {
+                e.stopPropagation();
+                update_likes();
+            }}>Like</button>}
+        </div>
+    )
+};
+
+const CommentLikes = (props) => {
+    let userContext = useContext(AuthContext);
+    const [liked, setLiked] = useState(props.liked);
+    const [likes_count, setLikesCount] = useState(parseInt(props.likes_count));
+
+    let update_likes = async () => {
+        if (liked) {
+            let res = await fetch(`/api/v1/users/${userContext.currentUser.id}/comments/${props.comment_id}/unlike`, {
+                method: 'DELETE'
+            });
+            if (res.ok && res.status === 204) {
+                setLikesCount(likes_count - 1);
+                setLiked(false);
+            } else {
+                console.log('could not unlike');
+            }
+
+        } else {
+            let res = await fetch(`/api/v1/users/${userContext.currentUser.id}/comments/${props.comment_id}/like`, {
                 method: 'POST'
             });
             if (res.ok && res.status === 201) {
@@ -318,6 +363,7 @@ const CommentBody = (props) => {
                                         post_id={props.post.id}/>
                     </div>
                     <Content content={props.content}/>
+                    <CommentLikes comment_id={props.id} liked={props.liked} likes_count={props.likes.length}/>
 
 
                 </div>

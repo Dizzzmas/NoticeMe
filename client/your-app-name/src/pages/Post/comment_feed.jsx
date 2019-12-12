@@ -76,13 +76,14 @@ function CommentFeed(props) {
                     content: 'post',
                     likes: 'likes',
                 };
-                // for (const like of post.likes) {
-                //     console.log(like);
-                //     console.log('curr: ', userContext.currentUser.id);
-                //     if (like.userId == userContext.currentUser.id) {
-                //         liked = true;
-                //     }
-                // }
+                let liked = false;
+                for (const like of comment.likes) {
+                    console.log(like);
+                    console.log('curr: ', userContext.currentUser.id);
+                    if (like.user_id == userContext.currentUser.id) {
+                        liked = true;
+                    }
+                }
 
 
                 return (
@@ -90,8 +91,10 @@ function CommentFeed(props) {
                         key={index}
                         post={comment.post}
                         user={comment.user}
+                        likes={comment.likes}
                         content={comment.content}
                         id={comment.id}
+                        liked={liked}
                         history={props.history}
                     />
                 )

@@ -66,9 +66,7 @@ function PostFeed(props) {
 
         if (getScrollTop() < getDocumentHeight() - window.innerHeight) return;
         loadPosts();
-        // if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-        //     loadPosts()
-        // }
+
     }, 100);
 
 

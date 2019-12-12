@@ -1,6 +1,9 @@
 const Comments = require('../models').comments;
 const Users = require('../models').users;
 const Posts = require('../models').posts;
+const CommentLikes = require('../models').comment_likes;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 module.exports = {
@@ -67,9 +70,18 @@ module.exports = {
                     model: Users
                 }, {
                     model: Posts
+                }, {
+                    model: CommentLikes,
+                    as: 'likes',
+                    required: false,
                 }],
+                attributes: [
+                    'id', 'content', 'createdAt', 'updatedAt', 'user_id',
+                    [Sequelize.literal('(SELECT COUNT(*) FROM comment_likes WHERE comment_likes.comment_id = comments.id)'), 'likesCount'],
+                ],
                 order: [
                     ['createdAt', 'DESC'],
+                    [Sequelize.literal("\"likesCount\""), 'DESC']
                 ],
                 where: {post_id: req.params.postId}
             });

@@ -1,6 +1,7 @@
 const CommentLikes = require('../models').comment_likes;
 
 
+
 module.exports = {
     async create(req, res) {
         try {
@@ -23,8 +24,8 @@ module.exports = {
     },
     async deleteById(req, res) {
         try {
-            let like = await LikeComments
-                .findOne({where: {user_id: req.params.userId, post_id: req.params.commentId}});
+            let like = await CommentLikes
+                .findOne({where: {user_id: req.params.userId, comment_id: req.params.commentId}});
             if (!like) {
                 return res.status(404).send({
                     message: 'Like not found'

@@ -22,6 +22,10 @@ const chatkit = new Chatkit.default({
 let app = express();
 
 
+app.use(express.static(path.join(__dirname, 'build')));
+
+
+
 
 app.use(cookieParser( 'cc6cd6b1fe55fd924d4a8e1b6bac018c'));
 app.use(cors());
@@ -65,6 +69,10 @@ app.use('/api/v1', passport.authenticate('jwt', {
 
 
 app.use('/developer/v1', developerRouter);
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 
 app.use((req, res, next) => {

@@ -20,36 +20,35 @@ export default function UserPage(props) {
 
 
     const jwt = userContext.getJwt();
-    let loadUser = () => {
-        fetch(`/api/v1/users/getByUsername/${user.username}`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${jwt}`,
-            }
-        })
-            .then(response => response.json())
-            .then(loaded_user => {
-                    console.log(loaded_user);
-                    let stored_user = {
-                        id: loaded_user.id,
-                        username: loaded_user.username,
-                        handle: loaded_user.handle,
-                        email: loaded_user.email,
-                        aboutMe: loaded_user.about_me,
-                        role: loaded_user.role,
-                        avaUrl: loaded_user.ava_url,
-                        followers_count: loaded_user.followed_by.length,
-                        following_count: loaded_user.following.length,
-                        createdAt: loaded_user.createdAt,
-                        updatedAt: loaded_user.updatedAt,
-                    };
-                    setUser(stored_user);
+    let loadUser = async () => {
+
+        try {
+            let r = await fetch(`/api/v1/users/getByUsername/${user.username}`, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
                 }
-            )
-            .catch((err) => {
-                console.error(err);
-                console.log('Loading user\'s page failed')
             });
+            let loaded_user = await r.json();
+            let stored_user = {
+                id: loaded_user.id,
+                username: loaded_user.username,
+                handle: loaded_user.handle,
+                email: loaded_user.email,
+                aboutMe: loaded_user.about_me,
+                role: loaded_user.role,
+                avaUrl: loaded_user.ava_url,
+                followers_count: loaded_user.followed_by.length,
+                following_count: loaded_user.following.length,
+                createdAt: loaded_user.createdAt,
+                updatedAt: loaded_user.updatedAt,
+            };
+            setUser(stored_user);
+        }
+        catch(error){
+            console.error(error);
+                console.log('Loading user\'s page failed')
+        }
+
     };
 
     return (
