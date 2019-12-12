@@ -15,8 +15,8 @@ router.get('/posts/:postId', PostsController.getById);
 // Users api
 router.post('/users', UsersController.create);
 routerProtected.get('/users', authHelpers.adminRequired, UsersController.getAll);
-router.get('/users/:userId', UsersController.getById);
-router.get('/users/getByUsername/:username', UsersController.getByUsername);
+routerProtected.get('/users/:userId', UsersController.getById);
+routerProtected.get('/users/getByUsername/:username', UsersController.getByUsername);
 router.put('/users/:userId', UsersController.updateById);
 routerProtected.delete('/users/:userId', UsersController.deleteById);
 routerProtected.post('/users/:userId/giveadmin', UsersController.setAdmin);
@@ -48,7 +48,7 @@ router.get('/users/:userId/followers', FollowersController.getFollowers);
 router.get('/users/:userId/followed', FollowersController.getFollowed);
 router.delete('/users/:userId/unfollow/:followedId', FollowersController.unFollowUser);
 router.get('/users/:userId/isfollowing/:followedId', FollowersController.isFollowing);
-router.get('/users/:userId/followedPosts', FollowersController.getFollowedPosts);
+routerProtected.get('/users/:userId/followedPosts', FollowersController.getFollowedPosts);
 
 routerProtected.get('/me', async (req, res) => {
     return res.status(200).send(req.user);

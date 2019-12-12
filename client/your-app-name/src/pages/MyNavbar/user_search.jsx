@@ -1,9 +1,11 @@
 import {Dropdown} from "semantic-ui-react";
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 
 export default function UserSearch(props) {
-    const [options, setOptions] = useState();
+    const [options, setOptions] = useState(
+    );
+
 
     return (
 
@@ -13,7 +15,11 @@ export default function UserSearch(props) {
             search
             selection
             onChange={(e, data) => {
-                props.history.push(`/${data.value}`)
+                props.history.push('/');
+                setTimeout(() => {
+                    props.history.push(`/${data.value}`)
+                }, 100);
+
             }}
             onSearchChange={async (e) => {
 

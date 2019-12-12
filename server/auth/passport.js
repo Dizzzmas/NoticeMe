@@ -5,21 +5,22 @@ module.exports = function (passport, user) {
     let JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
     let GoogleTokenStrategy = require('passport-google-token').Strategy;
     let UsersController = require('../controllers/users');
-
+    const passportJWT = require("passport-jwt");
+    const JWTStrategy = passportJWT.Strategy;
+    const ExtractJWT = passportJWT.ExtractJwt;
 
     passport.use('google-signin', new GoogleTokenStrategy({
-            clientID: "301902583432-1c95g8eich19cd94lhu0g13bbolp5n9a.apps.googleusercontent.com" ,
+            clientID: "301902583432-1c95g8eich19cd94lhu0g13bbolp5n9a.apps.googleusercontent.com",
             clientSecret: "uAED35OifWfPu_ejTiXik_A2"
         }, async function (accessToken, refreshToken, profile, done) {
-        console.log('Here I am');
+            console.log('Here I am');
             console.log(profile);
             console.log(accessToken);
             try {
                 await UsersController.authGoogleUser(accessToken, refreshToken, profile, function (err, user) {
                     return done(err, user);
                 });
-            }
-            catch (error) {
+            } catch (error) {
                 console.log('Auth google user failed');
                 console.error(error);
             }
@@ -27,8 +28,22 @@ module.exports = function (passport, user) {
     ));
 
 
+    passport.use(new JWTStrategy({
+            jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+            secretOrKey: process.env.SECRET_KEY || 'cc6cd6b1fe55fd924d4a8e1b6bac018c'
+        },
+        function (jwtPayload, cb) {
+            //find the user in db if needed.
+            //This functionality may be omitted if you store everything you'll need in JWT payload.
+            return User.findByPk(jwtPayload.user.id)
+                .then(user => cb(null, user))
+                .catch(err => cb(err));
+        }
+    ));
+
+
     passport.use('jwt-signin', new JwtCookieComboStrategy({
-        secretOrPublicKey: process.env.SECRET_KEY
+        secretOrPublicKey: process.env.SECRET_KEY || 'cc6cd6b1fe55fd924d4a8e1b6bac018c'
     }, (payload, done) => {
         console.log(payload);
         return done(null, payload.user, {});

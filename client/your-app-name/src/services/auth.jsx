@@ -45,8 +45,21 @@ const AuthContextProvider = props => {
                     dispatch({type: 'signInUser', payload: stored_user});
                 },
                 handleLogOut: () => {
+                    localStorage.removeItem('jwt');
+                    sessionStorage.removeItem('jwt');
+                    localStorage.removeItem('currentUser');
+                    sessionStorage.removeItem('currentUser');
+
                     dispatch({type: 'logoutUser', payload: guest});
-                }
+                },
+                getJwt: () => {
+                    const jwt = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+                    if (!jwt) {
+                        return window.location.replace('/signIn');
+                    }
+                    return jwt;
+                },
+
             }
             }
         >

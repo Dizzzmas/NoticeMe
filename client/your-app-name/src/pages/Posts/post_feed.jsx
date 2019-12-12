@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {CommentBody, PostBody} from './post';
-import moment from 'moment';
+import {PostBody} from './post';
 import debounce from "lodash.debounce";
 import {AuthContext} from "../../services/auth";
 

@@ -4,18 +4,28 @@ const Comments = require('../models').comments;
 const jwt = require('jsonwebtoken');
 const md5 = require('md5');
 const utf8 = require('utf8');
+const bcrypt = require("bcrypt");
 
 
 module.exports = {
     async create(req, res) {
         console.log(req.body.email, req.body.password, req.body.username);
         try {
+
+
             let invalid_email_user = await Users.findOne({
                 where: {
                     email: req.body.email
                 }
             });
             if (invalid_email_user) {
+                if (invalid_email_user.google_id && !invalid_email_user.password_hash) {
+                    const salt = bcrypt.genSaltSync();
+                    let updated_user = await invalid_email_user.update({
+                        password_hash: bcrypt.hashSync(req.body.password, salt)
+                    });
+                    return res.status(201).send(updated_user);
+                }
                 console.log('Repeated email');
                 return res.status(400).send({message: 'Account with such email already exists'});
             }
@@ -230,15 +240,9 @@ module.exports = {
             const payload = {
                 user: user
             };
-            const token = jwt.sign(payload, process.env.SECRET_KEY, {
-                expiresIn: 60 * 120
-            });
-            res.setHeader('Cache-Control', 'private');
-            res.cookie('jwt', token, {
-                httpOnly: true, maxAge: 60 * 120, sameSite: true,
-                signed: true,
-            });
-            res.send(user);
+            const token = jwt.sign(payload, process.env.SECRET_KEY || 'cc6cd6b1fe55fd924d4a8e1b6bac018c');
+
+            res.send({user, token});
         } catch (error) {
             return res.status(500).send({message: 'Something went wrong', error: error})
         }
@@ -267,10 +271,11 @@ module.exports = {
                 let new_user = await Users
                     .create({
                         username: profile.displayName,
+                        handle: '@' + profile.displayName,
                         email: profile.emails[0].value,
                         google_id: profile.id,
                         google_token: accessToken,
-                        avaUrl: `https://www.gravatar.com/avatar/${md5(utf8.encode(profile.emails[0].value.toLowerCase()))}?d=identicon`,
+                        ava_url: `https://www.gravatar.com/avatar/${md5(utf8.encode(profile.emails[0].value.toLowerCase()))}?d=identicon`,
                     });
                 return done(null, new_user)
             } else {

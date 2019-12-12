@@ -18,12 +18,7 @@ import {
 import 'skeleton-css/css/normalize.css';
 import 'skeleton-css/css/skeleton.css';
 import '../../chat.css';
-import queryString from 'query-string';
-import axios from "axios";
-import Chatkit from "@pusher/chatkit-client";
 import {AuthContext} from "../../services/auth";
-import {ChatContext} from "../../services/chat";
-import Dialog from "./dialog";
 
 
 class Chat extends Component {

@@ -5,13 +5,12 @@ import {Button} from "react-bootstrap";
 import Followers from "./followers";
 import UserPosts from "./user_posts";
 import EditModal from "./edit_modal";
-import {ChatContext} from "../../services/chat";
+
 
 export default function UserPage(props) {
     let slug = useParams();
     let username_from_path = slug.username;
     let userContext = useContext(AuthContext);
-    let chatContext = useContext(ChatContext);
     const [user, setUser] = useState({username: username_from_path});
 
     useEffect(() => {
@@ -20,8 +19,13 @@ export default function UserPage(props) {
     );
 
 
+    const jwt = userContext.getJwt();
     let loadUser = () => {
-        fetch(`/api/v1/users/getByUsername/${user.username}`)
+        fetch(`/api/v1/users/getByUsername/${user.username}`, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+            }
+        })
             .then(response => response.json())
             .then(loaded_user => {
                     console.log(loaded_user);
@@ -62,7 +66,7 @@ export default function UserPage(props) {
                 <p>About_me: {user.aboutMe}</p>
                 {user.username === userContext.currentUser.username &&
                 <EditModal history={props.history}/>}
-                <Button variant='success' onClick={ () => {
+                <Button variant='success' onClick={() => {
                     props.history.push({
                         pathname: '/chat',
                         search: `?user=${user.username}`

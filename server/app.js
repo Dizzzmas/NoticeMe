@@ -14,19 +14,16 @@ const passport = require('passport');
 const cors = require('cors');
 let User = require('./models').users;
 const formData = require('express-form-data');
-require('dotenv').config({ path: '.env' });
+require('dotenv').config({path: '.env'});
 const Chatkit = require('@pusher/chatkit-server');
 const chatkit = new Chatkit.default({
-      instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
-      key: process.env.CHATKIT_SECRET_KEY,
-    });
-
-
-
+    instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR || 'v1:us1:38689cbe-182b-47f8-8c59-c2e17238f44a',
+    key: process.env.CHATKIT_SECRET_KEY || 'd508adaa-05b5-4c6f-8ff4-115035a39a5f:af7UG/qjA6JsG8V2GaejxIKu5XApk3p6sEnXkxe6+yk=',
+});
 
 
 let app = express();
-app.use(cookieParser(process.env.SECRET_KEY));
+app.use(cookieParser(process.env.SECRET_KEY || 'cc6cd6b1fe55fd924d4a8e1b6bac018c'));
 app.use(cors());
 // view engine setup
 app.use('views', express.static(path.join(__dirname, 'views')));
@@ -39,9 +36,6 @@ app.engine('hbs', hbs({
     partialsDir: __dirname + '/views/partials',
     helpers: require('./helpers/handlebars'),
 }));
-
-
-
 
 
 app.use(logger('dev'));
@@ -64,11 +58,11 @@ let authRoute = require('./routes/auth')(app, passport);
 require('./auth/passport')(passport, User);
 app.use('/', indexRouter);
 app.use('/api/v1', apiRouter.unprotected);
-app.use('/api/v1', passport.authenticate(['jwt-signin'], {
-    session: false,
 
+app.use('/api/v1', passport.authenticate('jwt', {
+    session: false,
 }), (req, res, next) => {
-    console.log('success with google');
+    console.log('jwt auth success');
     return next();
 }, apiRouter.protected);
 
@@ -89,9 +83,6 @@ app.use(function (req, res, next) {
     next(createError(404));
 });
 
-
-
-app.get('/hey', (req, res) => res.send('ho!'));
 
 // error handler
 // app.use(function (err, req, res, next) {

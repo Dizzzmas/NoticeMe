@@ -165,7 +165,7 @@ let fetchSignUp = async (values) => {
             console.log('SignUp successful');
             let userId = txt.username;
             await axios
-                .post('/chatkit/users', {userId});
+                .post('/api/v1/chatkit/users', {userId: txt.id, userName: txt.username});
         } else {
             throw new Error(txt.message.toString());
         }

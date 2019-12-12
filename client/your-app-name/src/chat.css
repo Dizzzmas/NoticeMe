@@ -121,11 +121,10 @@
 
     .chat-header {
       height: 70px;
-      flex-shrink: 0;
       border-bottom: 1px solid #ccc;
       padding-left: 10px;
       padding-right: 20px;
-      display: flex;
+      display: block;
       flex-direction: column;
       justify-content: center;
     }
@@ -137,8 +136,8 @@
 
     .chat-messages {
       flex-grow: 1;
-      display: flex;
-      flex-direction: column;
+      display: block;
+
       justify-content: flex-end;
       margin-bottom: 0;
       min-height: min-content;

@@ -9,24 +9,27 @@ import Home from '../pages/Home';
 import UserPage from "../pages/UserPage";
 import PostPage from "../pages/Post";
 import Chat from "../pages/Chat";
-import DirectChat from "../pages/Chat/direct_chat";
 
 
 export default function Routes() {
     return (
-        <Switch>
-            <Route path='/' exact component={Home}/>
-            <Route path='/signIn' component={SignIn}/>
-            <Route path='/signUp' component={SignUp}/>
-            <Route path='/posts' component={Posts}/>
-            <Route path='/profile' component={UserPage} isPrivate/>
-            <Route path='/chat' component={Chat}/>
-            {/*<Route path='/chat/:username'  component={DirectChat}/>*/}
-            <Route path='/:username/posts/:postId' component={PostPage}/>
-            <Route path='/:username' component={UserPage}/>
 
-            <Route component={SignIn}/>
-        </Switch>
+        <React.Fragment>
+            <Switch>
+
+                <Route path='/' exact component={Home}/>
+                <Route path='/signIn' component={SignIn}/>
+                <Route path='/signUp' component={SignUp}/>
+                <Route path='/posts' component={Posts} isPrivate/>
+                <Route path='/chat' component={Chat} isPrivate/>
+                <Route path='/:username/posts/:postId' component={PostPage} isPrivate/>
+                <Route path='/:username' component={UserPage} isPrivate/>
+
+
+                <Route component={SignIn}/>
+
+            </Switch>
+        </React.Fragment>
     )
 }
 

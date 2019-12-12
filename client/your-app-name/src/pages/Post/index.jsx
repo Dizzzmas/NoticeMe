@@ -1,4 +1,3 @@
-import Feed from "../Posts/post_feed";
 import React, {useEffect} from "react";
 import Post from "./post";
 import {useParams} from "react-router";

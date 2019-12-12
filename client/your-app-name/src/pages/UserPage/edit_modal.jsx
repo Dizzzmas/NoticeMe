@@ -14,6 +14,7 @@ export default function EditModal(props) {
         email: Yup.string()
             .email("Invalid email address format")
             .required("Email is required"),
+        about_me: Yup.string()
     });
 
 
@@ -51,6 +52,9 @@ export default function EditModal(props) {
                                 }}
                                 validationSchema={CreateEditSchema}
                                 onSubmit={async (values, actions) => {
+                                    if (userContext.currentUser.username === values.username && userContext.currentUser.email === values.email && userContext.currentUser.aboutMe === values.about_me) {
+                                        return handleClose();
+                                    }
                                     const old_username = userContext.currentUser.username;
                                     console.log('Val: ', values);
                                     let res = await fetch(`/api/v1/users/${userContext.currentUser.id}`, {
@@ -91,19 +95,19 @@ export default function EditModal(props) {
                                         }
 
 
-                                      let chatkit_updated_user = await fetch(`/api/v1/chatkit/update`, {
-                                        method: 'PUT',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({
-                                            "old_username": old_username,
-                                            "user_id": payload.user.id,
-                                            "username": payload.user.username,
-                                            "avatarUrl": payload.user.ava_url,
-                                        })
-                                    });
-
+                                        if (old_username !== payload.user.username) {
+                                            await fetch(`/api/v1/chatkit/update`, {
+                                                method: 'PUT',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                                body: JSON.stringify({
+                                                    "old_username": old_username,
+                                                    "user_id": payload.user.id,
+                                                    "username": payload.user.username,
+                                                })
+                                            });
+                                        }
 
 
                                         userContext.handleSignIn(payload);

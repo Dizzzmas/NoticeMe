@@ -22,7 +22,7 @@ module.exports = function (app, passport) {
         const payload = {
             user: req.user
         };
-        const token = jwt.sign(payload, process.env.SECRET_KEY);
+        const token = jwt.sign(payload, process.env.SECRET_KEY || 'cc6cd6b1fe55fd924d4a8e1b6bac018c');
         res.setHeader('Cache-Control', 'private');
         res.cookie('jwt', token, {
             httpOnly: true, maxAge: 900000,
@@ -40,15 +40,7 @@ module.exports = function (app, passport) {
         const payload = {
             user: req.user
         };
-        const token = jwt.sign(payload, process.env.SECRET_KEY, {
-                expiresIn: 60 * 120
-            });
-        res.setHeader('Cache-Control', 'private');
-        res.cookie('jwt', token, {
-            httpOnly: true, maxAge: 60 * 120,
-            sameSite: true,
-            signed: true,
-        });
+        const token = jwt.sign(payload, process.env.SECRET_KEY);
 
         console.log(req.user);
         res.setHeader('x-auth-token', token);

@@ -1,12 +1,9 @@
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import React, {useContext} from "react";
-import {AuthContext} from "../services/auth";
-import NavLink from "react-bootstrap/NavLink";
+import {AuthContext} from "../../services/auth";
 import {Link} from "react-router-dom";
-import PostModal from "../pages/Post/post_modal";
-import UserSearch from "./users_search";
-
-
+import PostModal from "../Post/post_modal";
+import UserSearch from "./user_search";
 
 
 export default function MyNavBar(props) {
@@ -31,10 +28,10 @@ export default function MyNavBar(props) {
                     <PostModal history={props.history}/>
                 </Nav>
 
-                <Nav onSelect={async selectedKey => {
+                <Nav onSelect={selectedKey => {
                     if (selectedKey === 'logout') {
                         try {
-                            let res = await fetchLogOut();
+                            fetchLogOut();
                             user.handleLogOut();
                         } catch (error) {
                             console.log("AAAAA", error);
@@ -59,31 +56,12 @@ export default function MyNavBar(props) {
     )
 }
 
-let fetchLogOut = async () => {
-    try {
-        let res = await fetch('/api/v1/users-log-out', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        let txt = await res.json();
-        console.log('Txt: ', txt);
-        if (!sessionStorage.getItem('currentUser')) {
-            await localStorage.removeItem('currentUser');
-        } else {
-            await sessionStorage.removeItem('currentUser');
-        }
-        console.log('All must be deleted');
-        return ({message: 'Logout successful'});
+let fetchLogOut = () => {
 
-    } catch (error) {
-        console.log("Err", error);
-        if (!sessionStorage.getItem('currentUser')) {
-            await localStorage.removeItem('currentUser');
-        } else {
-            await sessionStorage.removeItem('currentUser');
-        }
-        return ({message: 'Logut failed'});
-    }
+
+    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentUser');
+    console.log('All must be deleted');
+    return ({message: 'Logout successful'});
+
 };

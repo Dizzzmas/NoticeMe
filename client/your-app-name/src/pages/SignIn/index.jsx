@@ -2,10 +2,8 @@ import React, {useContext} from "react";
 import {Formik, Form, Field, ErrorMessage} from "formik";
 import * as Yup from 'yup';
 import {AuthContext} from "../../services/auth";
-import {Alert} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import {GoogleLogin} from 'react-google-login';
-import {ChatContext} from "../../services/chat";
 // import '../../assets/css/main.css'
 // import '../../assets/css/Footer-Basic.css'
 // import '../../assets/css/Header-Blue.css'
@@ -25,7 +23,7 @@ const SignInSchema = Yup.object().shape({
 
 export default function SignIn(props) {
     const user = useContext(AuthContext);
-    let chatContext = useContext(ChatContext);
+
     let googleResponse = async (response) => {
         const tokenBlob = new Blob([JSON.stringify({access_token: response.accessToken}, null, 2)], {type: 'application/json'});
         const options = {
@@ -55,6 +53,7 @@ export default function SignIn(props) {
                     token: token
                 };
                 localStorage.setItem('currentUser', JSON.stringify(stored_user));
+                localStorage.setItem('jwt', payload.token);
                 user.handleSignIn(payload);
                 console.log('us', JSON.stringify(stored_user));
                 props.history.push({
@@ -67,7 +66,8 @@ export default function SignIn(props) {
         }
     };
     let onFailure = (error) => {
-        alert(error);
+        // alert(error);
+        console.log(error);
     };
 
     return (
@@ -90,7 +90,6 @@ export default function SignIn(props) {
                                 actions.setStatus({message: 'Wrong email or password'});
                             } else {
                                 user.handleSignIn(payload);
-                                chatContext.connectToChatkit(payload.user.username);
                                 props.history.push({
                                     pathname: `/${payload.user.username}`, state: {user: payload.user}
                                 });
@@ -228,7 +227,15 @@ let fetchUser = async (values) => {
         })
 
     });
-    let txt = await res.json();
+    let user_and_token = await res.json();
+    let txt = user_and_token.user;
+    let jwt = user_and_token.token;
+    if(values.remember_me) {
+        localStorage.setItem("jwt", jwt);
+    }else{
+        sessionStorage.setItem('jwt', jwt);
+    }
+
     console.log('Sign in response: ', txt);
     if (res.ok || res.status === 200) {
         let stored_user = {

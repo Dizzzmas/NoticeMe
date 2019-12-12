@@ -162,7 +162,11 @@ function connectToChatkit(user) {
                         rooms[index] = room;
                         console.log('OnRoomUpdated: ', room);
                         if (room === this.state.currentRoom) {
+                            console.log('rrrom users: ', room.users);
 
+                            this.setState({
+                                roomUsers: room.users
+                            });
                         }
                         this.setState({
                             rooms,
@@ -303,8 +307,8 @@ function grantNotificationPermission() {
 function showNotification(message) {
     console.log('Notify msg: ', message);
     const {currentUser} = this.state;
-    if (message.senderId !== currentUser.name) {
-        const title = message.senderId;
+    if (message.senderId !== currentUser.id) {
+        const title = message.sender.name;
         const body = message.parts[0].payload.content;
 
 

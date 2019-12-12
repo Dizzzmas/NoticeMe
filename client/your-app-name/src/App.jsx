@@ -4,10 +4,10 @@ import {Router} from 'react-router-dom';
 import history from "./services/history";
 import Routes from "./routes";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MyNavBar from "./components/MyNavBar";
+// import MyNavBar from "./components/MyNavBar";
 import {AuthContextProvider} from "./services/auth";
 import './App.css';
-import {ChatContextProvider} from "./services/chat";
+import MyNavBar from "./pages/MyNavbar";
 
 
 // const AuthContext = React.createContext();
@@ -18,12 +18,10 @@ function App() {
 
     return (
         <AuthContextProvider>
-            <ChatContextProvider>
                 <Router history={history}>
                     <MyNavBar history={history}/>
                     <Routes/>
                 </Router>
-            </ChatContextProvider>
         </AuthContextProvider>
 
     );
