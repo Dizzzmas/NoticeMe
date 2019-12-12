@@ -22,6 +22,7 @@ export default function UserPage(props) {
     const jwt = userContext.getJwt();
     let loadUser = () => {
         fetch(`/api/v1/users/getByUsername/${user.username}`, {
+            method: 'GET',
             headers: {
                 Authorization: `Bearer ${jwt}`,
             }

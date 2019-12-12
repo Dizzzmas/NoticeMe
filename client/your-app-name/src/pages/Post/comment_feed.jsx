@@ -31,7 +31,13 @@ function CommentFeed(props) {
 
     let loadComments = () => {
         setIsLoading(true);
-        fetch(`/api/v1/posts/GetAllComments/${props.post_id}?page=${page}`)
+        const jwt = userContext.getJwt();
+        fetch(`/api/v1/posts/GetAllComments/${props.post_id}?page=${page}`, { headers: {
+
+
+                                            Authorization: `Bearer ${jwt}`,
+
+                                        },})
             .then(response => response.json())
             .then(loaded_comments => {
                 console.log('page: ', page);

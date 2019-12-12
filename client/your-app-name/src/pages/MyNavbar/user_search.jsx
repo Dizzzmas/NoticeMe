@@ -1,11 +1,12 @@
 import {Dropdown} from "semantic-ui-react";
 import React, {useContext, useEffect, useState} from "react";
+import {AuthContext} from "../../services/auth";
 
 
 export default function UserSearch(props) {
     const [options, setOptions] = useState(
     );
-
+        let userContext = useContext(AuthContext);
 
     return (
 
@@ -22,8 +23,15 @@ export default function UserSearch(props) {
 
             }}
             onSearchChange={async (e) => {
+                const jwt = userContext.getJwt();
+                let results = await fetch(`/api/v1/users/search?search=${e.target.value}`, {
+                    headers: {
 
-                let results = await fetch(`/api/v1/users/search?search=${e.target.value}`);
+
+                        Authorization: `Bearer ${jwt}`,
+
+                    }
+                });
                 let searched_users = await results.json();
                 let opts = Object.values(searched_users).map((user, index) => {
                     return (
@@ -39,7 +47,7 @@ export default function UserSearch(props) {
                 setOptions(Object.values(opts));
 
             }}
-            options={options}
-        />
-    )
-}
+                options={options}
+                />
+                )
+            }

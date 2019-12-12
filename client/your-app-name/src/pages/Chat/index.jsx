@@ -127,13 +127,6 @@ class Chat extends Component {
                         />
                     ) : null}
                 </aside>
-                {/*{showLogin ? (*/}
-                {/*  <Dialog*/}
-                {/*    userId={userId}*/}
-                {/*    handleInput={this.handleInput}*/}
-                {/*    connectToChatkit={this.connectToChatkit}*/}
-                {/*  />*/}
-                {/*) : null}*/}
             </div>
         );
     }

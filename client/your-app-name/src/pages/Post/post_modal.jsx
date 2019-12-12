@@ -59,10 +59,13 @@ export default function PostModal(props) {
                                         });
                                     }
 
+                                    const jwt = userContext.getJwt();
                                     formData.append('content', values.content);
                                     let res = await fetch(`/api/v1/users/${userContext.currentUser.id}/posts/new`, {
                                         method: 'POST',
-                                        headers: {},
+                                        headers: {
+                                            Authorization: `Bearer ${jwt}`,
+                                        },
                                         body: formData
                                     });
 

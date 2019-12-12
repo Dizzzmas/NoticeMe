@@ -240,7 +240,7 @@ module.exports = {
             const payload = {
                 user: user
             };
-            const token = jwt.sign(payload, process.env.SECRET_KEY || 'cc6cd6b1fe55fd924d4a8e1b6bac018c');
+            const token = jwt.sign(payload,  'cc6cd6b1fe55fd924d4a8e1b6bac018c');
 
             res.send({user, token});
         } catch (error) {

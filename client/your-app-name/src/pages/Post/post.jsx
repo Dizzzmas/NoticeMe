@@ -27,8 +27,13 @@ function Post(props) {
     );
 
     let liked, handle;
+    const jwt = userContext.getJwt();
     let loadPost = () => {
-        fetch(`/api/v1/posts/${post.id}`)
+        fetch(`/api/v1/posts/${post.id}`, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+            },
+        })
             .then(response => response.json())
             .then(loaded_post => {
                     console.log('Post: ', loaded_post);

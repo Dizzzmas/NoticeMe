@@ -42,10 +42,14 @@ export default function CommentModal(props) {
                                 validationSchema={CreateCommentSchema}
                                 onSubmit={async (values, actions) => {
                                     console.log('Val: ', values);
+                                    const jwt = userContext.getJwt();
                                     let res = await fetch(`/api/v1/users/${userContext.currentUser.id}/posts/${props.post_id}/comments`, {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
+
+                                            Authorization: `Bearer ${jwt}`,
+
                                         },
                                         body: JSON.stringify({
                                             "content": values.content

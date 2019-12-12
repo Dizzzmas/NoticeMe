@@ -16,9 +16,9 @@ export default function RouteWrapper({
     if (isPrivate && !signed) {
         return <Redirect to='/signIn'/>;
     }
-    if(signed && (Component.name === 'SignIn' || Component.name === 'SignUp')){
-        return <Redirect to='/'/>;
-    }
+    // if(signed && (Component.name === 'SignIn' || Component.name === 'SignUp')){
+    //     return <Redirect to='/'/>;
+    // }
     console.log('COMPONENT: ', Component);
 
     return <Route {...rest} component={Component}/>;

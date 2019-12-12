@@ -2,11 +2,8 @@ let createError = require('http-errors');
 let express = require('express');
 let path = require('path');
 let logger = require('morgan');
-let hbs = require('express-handlebars');
 let flash = require('connect-flash');
-let indexRouter = require('./routes/index');
 let apiRouter = require('./routes/api');
-let tmpRouter = require('./routes/tmp');
 let developerRouter = require('./routes/developer');
 let cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -23,19 +20,18 @@ const chatkit = new Chatkit.default({
 
 
 let app = express();
-app.use(cookieParser(process.env.SECRET_KEY || 'cc6cd6b1fe55fd924d4a8e1b6bac018c'));
+
+
+
+app.use(cookieParser( 'cc6cd6b1fe55fd924d4a8e1b6bac018c'));
 app.use(cors());
+
+
+
 // view engine setup
 app.use('views', express.static(path.join(__dirname, 'views')));
-app.set('view engine', 'hbs');
 
-app.engine('hbs', hbs({
-    extname: 'hbs',
-    defaultView: '',
-    layoutsDir: __dirname + '/views',
-    partialsDir: __dirname + '/views/partials',
-    helpers: require('./helpers/handlebars'),
-}));
+
 
 
 app.use(logger('dev'));
@@ -50,13 +46,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+
+
 app.use(express.static('public'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 let chatkitRoute = require('./routes/chatkit')(app, chatkit);
 let authRoute = require('./routes/auth')(app, passport);
 require('./auth/passport')(passport, User);
-app.use('/', indexRouter);
 app.use('/api/v1', apiRouter.unprotected);
 
 app.use('/api/v1', passport.authenticate('jwt', {
@@ -68,7 +65,6 @@ app.use('/api/v1', passport.authenticate('jwt', {
 
 
 app.use('/developer/v1', developerRouter);
-app.use('/tmp', tmpRouter);
 
 
 app.use((req, res, next) => {
@@ -82,6 +78,8 @@ app.use((req, res, next) => {
 app.use(function (req, res, next) {
     next(createError(404));
 });
+
+
 
 
 // error handler

@@ -83,7 +83,7 @@ const Images = (props) => {
 };
 
 const DeletePostModal = (props) => {
-
+    let userContext = useContext(AuthContext);
     return (
         <Modal show={props.show} onHide={props.handleClose} animation={false}>
             <Modal.Header closeButton>
@@ -94,8 +94,12 @@ const DeletePostModal = (props) => {
                 <Modal.Footer>
                     <Button onClick={props.handleClose} variant="secondary">Close</Button>
                     <Button variant="danger" onClick={async () => {
+                        const jwt = userContext.getJwt();
                         let res = await fetch(`/api/v1/posts/${props.post_id}`, {
                             method: 'DELETE',
+                            headers: {
+                                Authorization: `Bearer ${jwt}`,
+                            }
                         });
                         if (res.ok && res.status === 204) {
                             console.log('Post deleted successfully');
@@ -186,7 +190,7 @@ const CommentOptions = (props) => {
 };
 
 const DeleteCommentModal = (props) => {
-
+    let userContext = useContext(AuthContext);
     return (
         <Modal show={props.show} onHide={props.handleClose} animation={false}>
             <Modal.Header closeButton>
@@ -195,11 +199,16 @@ const DeleteCommentModal = (props) => {
             <Modal.Body>
                 Are you sure you want to delete this comment ?
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={props.handleClose} >Close</Button>
+                    <Button variant="secondary" onClick={props.handleClose}>Close</Button>
 
                     <Button variant="danger" onClick={async () => {
+                        const jwt = userContext.getJwt();
                         let res = await fetch(`/api/v1/comments/${props.comment_id}`, {
                             method: 'DELETE',
+
+                            headers: {
+                                Authorization: `Bearer ${jwt}`,
+                            }
                         });
                         if (res.ok && res.status === 204) {
                             console.log('Comment deleted successfully');

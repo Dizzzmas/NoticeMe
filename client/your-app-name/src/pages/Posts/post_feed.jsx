@@ -40,7 +40,12 @@ function PostFeed(props) {
     }, []);
     let loadPosts = () => {
         setIsLoading(true);
-        fetch(`/api/v1/users/${userContext.currentUser.id}/followedPosts?page=${page}`)
+        const jwt = userContext.getJwt();
+        fetch(`/api/v1/users/${userContext.currentUser.id}/followedPosts?page=${page}`, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+            },
+        })
             .then(response => response.json())
             .then(loaded_posts => {
                 console.log('page: ', page);

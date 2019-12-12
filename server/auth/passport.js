@@ -30,7 +30,7 @@ module.exports = function (passport, user) {
 
     passport.use(new JWTStrategy({
             jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-            secretOrKey: process.env.SECRET_KEY || 'cc6cd6b1fe55fd924d4a8e1b6bac018c'
+            secretOrKey:  'cc6cd6b1fe55fd924d4a8e1b6bac018c'
         },
         function (jwtPayload, cb) {
             //find the user in db if needed.
@@ -43,7 +43,7 @@ module.exports = function (passport, user) {
 
 
     passport.use('jwt-signin', new JwtCookieComboStrategy({
-        secretOrPublicKey: process.env.SECRET_KEY || 'cc6cd6b1fe55fd924d4a8e1b6bac018c'
+        secretOrPublicKey: 'cc6cd6b1fe55fd924d4a8e1b6bac018c'
     }, (payload, done) => {
         console.log(payload);
         return done(null, payload.user, {});
