@@ -6,7 +6,6 @@ import {NavLink} from "react-router-dom";
 import {GoogleLogin} from 'react-google-login';
 
 
-
 const SignInSchema = Yup.object().shape({
     email: Yup.string()
         .email("Invalid email address format")
@@ -67,147 +66,349 @@ export default function SignIn(props) {
     };
 
     return (
-        <div className="container">
-            <div className="row mb-5">
-                <div className="col-lg-12 text-center">
-                    <h1 className="mt-5">Login Form</h1>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-lg-12">
+        <React.Fragment>
+            <div className="col-md-6 offset-xl-0"
+                 style={{"width": "607px", "padding": "0", "paddingTop": "49px", "height": "592px"}}>
+                <div>
+                    <title>Login V14</title>
 
-                    <Formik
-                        initialValues={{email: "", password: "", remember_me: false}}
-                        validationSchema={SignInSchema}
-                        onSubmit={async (values, actions) => {
-                            console.log(values);
-                            let payload = await fetchUser(values);
-                            if (!payload) {
-                                actions.setStatus({message: 'Wrong email or password'});
-                            } else {
-                                user.handleSignIn(payload);
-                                props.history.push({
-                                    pathname: `/${payload.user.username}`, state: {user: payload.user}
-                                });
-                            }
+                    <div className="limiter">
+                        <div className="slide-in-blurred-bottom">
+                            <div className="wrap-login100 p-l-100 p-r-100 p-t-55 p-b-55">
+                                <Formik
+                                    initialValues={{email: "", password: "", remember_me: false}}
+                                    validationSchema={SignInSchema}
+                                    onSubmit={async (values, actions) => {
+                                        console.log(values);
+
+                                        let payload = await fetchUser(values);
+                                        if (!payload) {
+                                            actions.setStatus({message: 'Wrong email or password'});
+                                        } else {
+                                            user.handleSignIn(payload);
+                                            props.history.push({
+                                                pathname: `/${payload.user.username}`, state: {user: payload.user}
+                                            });
+                                        }
 
 
-                            actions.setSubmitting(false);
+                                        actions.setSubmitting(false);
 
-                        }}
-                    >
-                        {({touched, errors, isSubmitting, status}) => (
+                                    }}
+                                    // Here class err possible
+                                    className="login100-form validate-form flex-sb flex-w">
 
-                            <div className="limiter">
+                                    {({touched, errors, isSubmitting, status, setFieldValue}) => (
 
-                                <div className="slide-in-blurred-bottom">
-                                    <div className="wrap-login100 p-l-100 p-r-100 p-t-55 p-b-55">
-                                        <Form className="login100-form validate-form flex-sb flex-w">
-					                    <span className="login100-form-title p-b-34" id="login_text">
-						                    Login
-					                        </span>
+                                        <Form>
+                                    <span
+                                        className="login100-form-title p-b-34" id="login_text">
+                         Log in
+                    </span>
+
+
 
                                             <span className="txt1 p-b-11">
-						                    Username
-					                        </span>
+                        Email
+                    </span>
+                                            <div className="wrap-input100 m-b-36" style={{"border": "0px"}}
+                                                 data-validate="Email is required">
 
-
-                                            <div className="wrap-input100 validate-input m-b-36"
-                                                 data-validate="Username is required">
 
                                                 <Field
-                                                    type="email"
+                                                    type="text"
                                                     name="email"
-                                                    id="username"
-                                                    placeholder="Enter email"
-                                                    className={`input100 ${
-                                                        touched.email && errors.email ? "is-invalid" : ""
-                                                    }`}
+                                                    placeholder="Email"
+                                                    className={`input100`}
                                                 />
                                                 <ErrorMessage
                                                     component="div"
                                                     name="email"
-                                                    className="invalid-feedback text-danger"
+                                                    className="wrap-input100 validate-input m-b-36"
+                                                    style={{"border": "0px"}}
                                                 />
 
-                                                <span className="focus-input100"></span>
 
-                                            </div>
-
-
+                                                <span
+                                                    className="focus-input100"></span></div>
                                             <span className="txt1 p-b-11">
-						                            Password
-					                                    </span>
+                        Password
+                    </span>
                                             <div className="wrap-input100 validate-input m-b-12"
-                                                 data-validate="Password is required">
-						                <span className="btn-show-pass" onClick="showPassword()">
-							                <i className="fa fa-eye"></i>
-						                </span>
+                                                 style={{"border": "0px"}}
+                                                 data-validate="Password is required"><span
+                                                className="btn-show-pass"><i className="fa fa-eye"></i></span>
+
                                                 <Field
                                                     type="password"
                                                     name="password"
-                                                    id="password"
-                                                    placeholder="Enter password"
-                                                    className={`input100 ${
-                                                        touched.password && errors.password ? "is-invalid" : ""
-                                                    }`}
+                                                    placeholder="Password"
+                                                    className={`input100`}
                                                 />
                                                 <ErrorMessage
                                                     component="div"
                                                     name="password"
-                                                    className="invalid-feedback"
+                                                    className="wrap-input100 validate-input m-b-12"
+                                                    style={{"border": "0px"}}
                                                 />
-                                                <span className="focus-input100"></span>
-                                            </div>
 
+
+                                                <span className="focus-input100"></span></div>
                                             <div className="flex-sb-m w-full p-b-28">
                                                 <div className="contact100-form-checkbox">
-                                                    <input className="input-checkbox100" id="ckb1" type="checkbox"
-                                                           name="remember-me"/>
-                                                    <label className="label-checkbox100" htmlFor="ckb1">
-                                                        Remember me
-                                                    </label>
 
-                                                </div>
-
-                                                <div>
-                                                    <a href="#" className="txt3">
-                                                        Forgot Password?
-                                                    </a>
-                                                </div>
+                                                    <input
+                                                        className="input-checkbox100" id="remember_me" type="checkbox"
+                                                        name="remember_me" onChange={(e) => {
+                                                        setFieldValue('remember_me', e.target.checked)
+                                                    }}/><label
+                                                    htmlFor="remember_me">
+                                                    Remember me
+                                                </label></div>
+                                                {/*<div><a href="#" className="txt3">*/}
+                                                {/*    Forgot Password?*/}
+                                                {/*</a></div>*/}
                                             </div>
-
                                             <div className="container-login100-form-btn">
-                                                <button className="login100-form-btn">
-                                                    Login
+                                                <button className="login100-form-btn" type="submit"
+                                                        disabled={isSubmitting}>
+                                                    {isSubmitting ? "Please wait..." : "Login"}
                                                 </button>
 
                                             </div>
+                                            <div className="social-container">
+                                                <div className="container-login100-form-btn">
 
 
+                                                <GoogleLogin
+                                                    clientId="301902583432-1c95g8eich19cd94lhu0g13bbolp5n9a.apps.googleusercontent.com"
+                                                    render={renderProps => (
+                                                        <button onClick={renderProps.onClick}
+                                                                disabled={renderProps.disabled}
+
+                                                                className="login100-form-btn"
+                                                                style={{"background-color": "#3d5fbf",
+                                                                "marginTop": "5%"
+                                                                }}>Google </button>
+                                                    )}
+                                                    buttonText="Login"
+                                                    onSuccess={googleResponse}
+                                                    onFailure={onFailure}
+                                                />
+
+                                            </div>
+                                                {/*<a href="#" className="social"><i*/}
+                                                {/*className="fab fa-google-plus-g"></i></a>*/}
+
+                                            </div>
                                         </Form>
-                                        <button onClick="register()" className="text-center txt4">
-                                            New around here? Click here!
-                                        </button>
-                                    </div>
-                                </div>
+                                    )}
+                                </Formik>
+                                <button className="text-center txt4" onClick={() => {
+                                    props.handleChangeAuth();
+                                }}>
+                                    New around here? Click here!
+                                </button>
                             </div>
-
-
-                        )}
-                    </Formik>
-                    <p>Need an account? <NavLink to='/signUp'>Sign Up</NavLink></p>
-                    <p><GoogleLogin
-                        clientId="301902583432-1c95g8eich19cd94lhu0g13bbolp5n9a.apps.googleusercontent.com"
-                        buttonText="Google Login"
-                        onSuccess={googleResponse}
-                        onFailure={onFailure}
-                    /></p>
+                        </div>
+                    </div>
+                    <div id="dropDownSelect1"></div>
                 </div>
             </div>
-        </div>
+        </React.Fragment>
     );
 }
+// }export default function SignIn(props) {
+//     const user = useContext(AuthContext);
+//
+//     let googleResponse = async (response) => {
+//         const tokenBlob = new Blob([JSON.stringify({access_token: response.accessToken}, null, 2)], {type: 'application/json'});
+//         const options = {
+//             method: 'POST',
+//             body: tokenBlob,
+//             cache: 'default'
+//         };
+//         try {
+//             let r = await fetch('/auth/google', options);
+//             console.log('r: ', r);
+//             const token = r.headers.get('x-auth-token');
+//             let google_user = await r.json();
+//             if (token) {
+//                 console.log(google_user);
+//                 let stored_user = {
+//                     id: google_user.id,
+//                     username: google_user.username,
+//                     email: google_user.email,
+//                     aboutMe: google_user.about_me,
+//                     role: google_user.role,
+//                     createdAt: google_user.createdAt,
+//                     updatedAt: google_user.updatedAt,
+//                     signed: true,
+//                 };
+//                 let payload = {
+//                     user: stored_user,
+//                     token: token
+//                 };
+//                 localStorage.setItem('currentUser', JSON.stringify(stored_user));
+//                 localStorage.setItem('jwt', payload.token);
+//                 user.handleSignIn(payload);
+//                 console.log('us', JSON.stringify(stored_user));
+//                 props.history.push({
+//                     pathname: `/${stored_user.username}`
+//                 });
+//             }
+//         } catch (error) {
+//             console.log("Google auth failed");
+//             console.error(error);
+//         }
+//     };
+//     let onFailure = (error) => {
+//         // alert(error);
+//         console.log(error);
+//     };
+//
+//     return (
+//         <div className="container">
+//             <div className="row mb-5">
+//                 <div className="col-lg-12 text-center">
+//                     <h1 className="mt-5">Login Form</h1>
+//                 </div>
+//             </div>
+//             <div className="row">
+//                 <div className="col-lg-12">
+//
+//                     <Formik
+//                         initialValues={{email: "", password: "", remember_me: false}}
+//                         validationSchema={SignInSchema}
+//                         onSubmit={async (values, actions) => {
+//                             console.log(values);
+//                             let payload = await fetchUser(values);
+//                             if (!payload) {
+//                                 actions.setStatus({message: 'Wrong email or password'});
+//                             } else {
+//                                 user.handleSignIn(payload);
+//                                 props.history.push({
+//                                     pathname: `/${payload.user.username}`, state: {user: payload.user}
+//                                 });
+//                             }
+//
+//
+//                             actions.setSubmitting(false);
+//
+//                         }}
+//                     >
+//                         {({touched, errors, isSubmitting, status}) => (
+//
+//                             <div className="limiter">
+//
+//                                 <div className="slide-in-blurred-bottom">
+//                                     <div className="wrap-login100 p-l-100 p-r-100 p-t-55 p-b-55">
+//                                         <Form className="login100-form validate-form flex-sb flex-w">
+// 					                    <span className="login100-form-title p-b-34" id="login_text">
+// 						                    Login
+// 					                        </span>
+//
+//                                             <span className="txt1 p-b-11">
+// 						                    Username
+// 					                        </span>
+//
+//
+//                                             <div className="wrap-input100 validate-input m-b-36"
+//                                                  data-validate="Username is required">
+//
+//                                                 <Field
+//                                                     type="email"
+//                                                     name="email"
+//                                                     id="username"
+//                                                     placeholder="Enter email"
+//                                                     className={`input100 ${
+//                                                         touched.email && errors.email ? "is-invalid" : ""
+//                                                     }`}
+//                                                 />
+//                                                 <ErrorMessage
+//                                                     component="div"
+//                                                     name="email"
+//                                                     className="invalid-feedback text-danger"
+//                                                 />
+//
+//                                                 <span className="focus-input100"></span>
+//
+//                                             </div>
+//
+//
+//                                             <span className="txt1 p-b-11">
+// 						                            Password
+// 					                                    </span>
+//                                             <div className="wrap-input100 validate-input m-b-12"
+//                                                  data-validate="Password is required">
+// 						                <span className="btn-show-pass" onClick="showPassword()">
+// 							                <i className="fa fa-eye"></i>
+// 						                </span>
+//                                                 <Field
+//                                                     type="password"
+//                                                     name="password"
+//                                                     id="password"
+//                                                     placeholder="Enter password"
+//                                                     className={`input100 ${
+//                                                         touched.password && errors.password ? "is-invalid" : ""
+//                                                     }`}
+//                                                 />
+//                                                 <ErrorMessage
+//                                                     component="div"
+//                                                     name="password"
+//                                                     className="invalid-feedback"
+//                                                 />
+//                                                 <span className="focus-input100"></span>
+//                                             </div>
+//
+//                                             <div className="flex-sb-m w-full p-b-28">
+//                                                 <div className="contact100-form-checkbox">
+//                                                     <input className="input-checkbox100" id="ckb1" type="checkbox"
+//                                                            name="remember-me"/>
+//                                                     <label className="label-checkbox100" htmlFor="ckb1">
+//                                                         Remember me
+//                                                     </label>
+//
+//                                                 </div>
+//
+//                                                 <div>
+//                                                     <a href="#" className="txt3">
+//                                                         Forgot Password?
+//                                                     </a>
+//                                                 </div>
+//                                             </div>
+//
+//                                             <div className="container-login100-form-btn">
+//                                                 <button className="login100-form-btn">
+//                                                     Login
+//                                                 </button>
+//
+//                                             </div>
+//
+//
+//                                         </Form>
+//                                         <button onClick="register()" className="text-center txt4">
+//                                             New around here? Click here!
+//                                         </button>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//
+//
+//                         )}
+//                     </Formik>
+//                     <p>Need an account? <NavLink to='/signUp'>Sign Up</NavLink></p>
+//                     <p><GoogleLogin
+//                         clientId="301902583432-1c95g8eich19cd94lhu0g13bbolp5n9a.apps.googleusercontent.com"
+//                         buttonText="Google Login"
+//                         onSuccess={googleResponse}
+//                         onFailure={onFailure}
+//                     /></p>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
 
 
 let fetchUser = async (values) => {

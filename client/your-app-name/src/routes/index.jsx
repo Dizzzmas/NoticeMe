@@ -10,6 +10,7 @@ import UserPage from "../pages/UserPage";
 import PostPage from "../pages/Post";
 import Chat from "../pages/Chat";
 import WhoToFollow from "../pages/whoToFollow";
+import MyNavBar from "../pages/MyNavbar";
 
 
 export default function Routes() {
@@ -18,9 +19,8 @@ export default function Routes() {
         <React.Fragment>
             <Switch>
 
-                <Route path='/' exact component={Home}/>
-                <Route path='/signIn/follow' component={WhoToFollow}/>
-                <Route path='/signIn' component={SignIn}/>
+                <Route path='/' exact component={MyNavBar}/>
+                <Route path='/signIn' component={WhoToFollow}/>
                 <Route path='/signUp' component={SignUp}/>
                 <Route path='/posts' component={Posts} isPrivate/>
                 <Route path='/chat' component={Chat} isPrivate/>
@@ -28,7 +28,7 @@ export default function Routes() {
                 <Route path='/:username' component={UserPage} isPrivate/>
 
 
-                <Route component={SignIn}/>
+                <Route component={MyNavBar}/>
 
             </Switch>
         </React.Fragment>

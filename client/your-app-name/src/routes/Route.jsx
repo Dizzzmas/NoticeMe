@@ -14,12 +14,11 @@ export default function RouteWrapper({
 
     console.log("RouterWrapper changed: ", isPrivate, signed);
     if (isPrivate && !signed) {
-        return <Redirect to='/signIn'/>;
+        return <Redirect to='/'/>;
     }
 
-    console.log('CMP: ', rest.path);
-    if(signed && (rest.path.toString() === '/signIn' || rest.path.toString() === '/signUp')){
-        return <Redirect to='/'/>;
+    if(signed && (rest.path.toString() === '/')){
+        return <Redirect to={`/${user.currentUser.username}`}/>;
     }
 
 

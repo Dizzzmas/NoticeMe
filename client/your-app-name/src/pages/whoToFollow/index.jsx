@@ -32,6 +32,101 @@ const UserBody = (props) => {
         }
     };
 
+    // return (
+    //     <React.Fragment>
+    //         <div>
+    //             <div className="media d-xl-flex align-items-xl-center" style="margin: 16px;padding: 8px;"><img
+    //                 className="float-none d-sm-flex flex-grow-0 flex-shrink-0 justify-content-center align-items-center align-content-center align-self-center flex-wrap justify-content-sm-center mr-3"
+    //                 style={{
+    //                     "width": "50px",
+    //                     "height": "50px",
+    //                     "borderRadius": "25px",
+    //                     "margin": "0 0 0 0",
+    //                     "marginRight": "0px",
+    //                     "marginTop": "0",
+    //                     "marginBottom": "0",
+    //                     "marginLeft": "0"
+    //                 }}
+    //                 src={props.user.ava_url}/>
+    //                 <div
+    //                     className="d-flex float-left d-sm-flex align-content-center align-self-center flex-wrap justify-content-sm-start align-items-sm-center">
+    //                     <h6 className="d-block float-none"
+    //                         style={{
+    //                             "margin": "0px",
+    //                             "marginTop": "0",
+    //                             "marginRight": "0",
+    //                             "marginLeft": "0"
+    //                         }}>{props.user.username}
+    //                         <block className="verified">
+    //                             <svg id="svg_1">
+    //                                 <g id="g_2" id="scale">
+    //                                     <path id="path_3" id="scale">
+    //                                     </path>
+    //                                 </g>
+    //                             </svg>
+    //                         </block>
+    //                         <span className="d-block d-xl-flex justify-content-xl-start"
+    //                               style={{
+    //                                   "margin": "00",
+    //                                   "marginBottom": "0px",
+    //                                   "marginTop": "0",
+    //                                   "marginLeft": "0",
+    //                                   "fontSize": "7px"
+    //                               }}>{props.user.handle}</span>
+    //                     </h6>
+    //                 </div>
+    //                 <div
+    //                     className="d-flex float-right d-sm-flex align-self-center flex-wrap justify-content-sm-end align-items-sm-center">
+    //
+    //
+    //                     {following ?
+    //                         <button
+    //                             onClick={() => {
+    //                                 update_following();
+    //                             }}
+    //
+    //                             className="btn btn-link btn-block text-capitalize text-primary border rounded border-primary d-sm-flex d-xl-flex align-self-center justify-content-sm-center justify-content-xl-center align-items-xl-center"
+    //                             type="button"
+    //                             style={{
+    //                                 "width": "87px",
+    //                                 "height": "26px",
+    //                                 "marginTop": "0",
+    //                                 "padding": "0px",
+    //                                 "opacity": "0.51",
+    //                                 "marginRight": "0",
+    //                                 "marginLeft": "0",
+    //                                 "fontSize": "14px",
+    //                                 "color": "rgb(118,97,99)"
+    //                             }}>Unfollow
+    //                         </button> :
+    //                         <button
+    //                             onClick={() => {
+    //                                 update_following();
+    //                             }}
+    //
+    //                             className="btn btn-link btn-block text-capitalize text-primary border rounded border-primary d-sm-flex d-xl-flex align-self-center justify-content-sm-center justify-content-xl-center align-items-xl-center"
+    //                             type="button"
+    //                             style={{
+    //                                 "width": "87px",
+    //                                 "height": "26px",
+    //                                 "marginTop": "0",
+    //                                 "padding": "0px",
+    //                                 "opacity": "0.51",
+    //                                 "marginRight": "0",
+    //                                 "marginLeft": "0",
+    //                                 "fontSize": "14px",
+    //                                 "color": "rgb(118,97,99)"
+    //                             }}>Follow
+    //                         </button>}
+    //                 </div>
+    //             </div>
+    //         </div>
+    //
+    //
+    //     </React.Fragment>
+    // )
+
+
     return (
         <React.Fragment>
             <span>{props.user.username}</span>
@@ -78,6 +173,8 @@ export default function WhoToFollow() {
             {suggested_users &&
             <React.Fragment>
                 <p>Please follow some users in order to enjoy the full experience: </p>
+
+
                 {[...suggested_users.rows].map((user, index) => {
                     console.log('usr: ', user);
                     let followed = false;
@@ -95,6 +192,8 @@ export default function WhoToFollow() {
                         />
                     )
                 })}
+
+
                 <Link to={`/${userContext.currentUser.username}`}>Next</Link>
             </React.Fragment>
             }
