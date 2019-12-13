@@ -5,8 +5,8 @@ import {Link} from "react-router-dom";
 import PostModal from "../Post/post_modal";
 import UserSearch from "./user_search";
 import SignIn from "../SignIn";
-import '../../assets/css/styles.min.css'
 import SignUp from "../SignUp";
+import '../../assets/css/styles.min.css'
 
 
 export default function MyNavBar(props) {
@@ -19,6 +19,7 @@ export default function MyNavBar(props) {
 
 
     return (
+        <div className='who-to-follow'>
         <div className="pulse animated"
              style={{backgroundColor: "#ffffff"}}>
             <div className="align-items-center header-blue"
@@ -117,6 +118,7 @@ export default function MyNavBar(props) {
                 </div>
             </div>
         </div>
+            </div>
     )
 }
 // export default function MyNavBar(props) {

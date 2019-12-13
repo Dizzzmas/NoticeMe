@@ -322,7 +322,7 @@ const CommentLikes = (props) => {
 };
 
 const PostBody = (props) => {
-
+    let userContext = useContext(AuthContext);
     return (
         <PostBox>
             <div className="inner-body" onClick={() => {
@@ -338,7 +338,9 @@ const PostBody = (props) => {
                         <Comments comments_count={props.post.comments.length}/>
                         <CommentModal history={props.history} post_id={props.post.id}
                                       post_author={props.post.username}/>
+                        {(props.post.user.id === userContext.currentUser.id || userContext.currentUser.role) &&
                         <PostOptions history={props.history} post_id={props.post.id}/>
+                        }
                     </div>
                     <Images images={props.post.images}/>
                     <Content content={props.post.content}/>
@@ -350,6 +352,7 @@ const PostBody = (props) => {
 };
 
 const CommentBody = (props) => {
+    let userContext = useContext(AuthContext);
     return (
         <PostBox>
             <div className="inner-body">
@@ -359,8 +362,10 @@ const CommentBody = (props) => {
                         <UserName username={props.user.username} userId={props.post.user_id}/>
                         <Handle handle={props.user.handle}/>
                         <PostedOn posted_on={moment(props.post.createdAt).fromNow()}/>
+                        {(props.user.id === userContext.currentUser.id || userContext.currentUser.role) &&
                         <CommentOptions username={props.user.username} history={props.history} comment_id={props.id}
                                         post_id={props.post.id}/>
+                        }
                     </div>
                     <Content content={props.content}/>
                     <CommentLikes comment_id={props.id} liked={props.liked} likes_count={props.likes.length}/>

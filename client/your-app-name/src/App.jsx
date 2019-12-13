@@ -7,8 +7,7 @@ import MyNavBar from "./pages/MyNavbar";
 
 import $ from 'jquery'
 // import $ from 'jquery'
-// import './assets/js/jquery.min'
-// import './assets/js/script.min'
+
 // import './assets/css/Footer-Basic.css'
 // import './assets/css/Header-Blue.css'
 // import './assets/css/Registration-Form-with-Photo.css'

@@ -23,9 +23,6 @@ export default function UserPage(props) {
     let loadUser = async () => {
 
         try {
-
-
-
             let r = await fetch(`/api/v1/users/getByUsername/${user.username}`, {
                 headers: {
                     Authorization: `Bearer ${jwt}`,

@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+// import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import $ from 'jquery'
-import 'semantic-ui-css/semantic.min.css';
+// import 'semantic-ui-css/semantic.min.css';
+import './assets/css/styles.min.css';
+import './assets/css/styles.css';
+import './assets/css/Contact-Form-Clean.css';
+import './assets/css/css.css';
+import './assets/css/vierified.css';
 
-import './assets/css/styles.min.css'
+// import './assets/js/jquery.min'
+// import './assets/js/script.min'
 
 
 ReactDOM.render(<App/>, document.getElementById('root'));
