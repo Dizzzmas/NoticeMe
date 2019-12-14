@@ -263,8 +263,11 @@ const Likes = (props) => {
 
 
     return (
-        <div className='likes'>
-            Likes: {likes_count}
+        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+           className="post-add-icon inline-items">
+            <svg className="olymp-heart-icon">
+                <use xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
+            </svg>
             {liked ? <button onClick={(e) => {
                 e.stopPropagation();
                 update_likes();
@@ -272,8 +275,21 @@ const Likes = (props) => {
                 e.stopPropagation();
                 update_likes();
             }}>Like</button>}
-        </div>
+            <span>{likes_count}</span>
+        </a>
     )
+    // )return (
+    //     <div className='likes'>
+    //         Likes: {likes_count}
+    //         {liked ? <button onClick={(e) => {
+    //             e.stopPropagation();
+    //             update_likes();
+    //         }}>Unlike</button> : <button onClick={(e) => {
+    //             e.stopPropagation();
+    //             update_likes();
+    //         }}>Like</button>}
+    //     </div>
+    // )
 };
 
 const CommentLikes = (props) => {
@@ -324,31 +340,143 @@ const CommentLikes = (props) => {
 const PostBody = (props) => {
     let userContext = useContext(AuthContext);
     return (
-        <PostBox>
-            <div className="inner-body" onClick={() => {
-                props.history.push({pathname: `/${props.post.user.username}/posts/${props.post.id}`});
-            }}>
-                <Avatar image={props.post.user.ava_url}/>
-                <div className="body">
+        <article className="hentry post">
 
-                    <div className="inner-body">
-                        <UserName username={props.post.user.username} userId={props.post.user_id}/>
-                        <Handle handle={props.post.user.handle}/>
-                        <PostedOn posted_on={moment(props.post.createdAt).fromNow()}/>
-                        <Comments comments_count={props.post.comments.length}/>
-                        <CommentModal history={props.history} post_id={props.post.id}
-                                      post_author={props.post.username}/>
-                        {(props.post.user.id === userContext.currentUser.id || userContext.currentUser.role) &&
-                        <PostOptions history={props.history} post_id={props.post.id}/>
-                        }
+            <div className="post__author author vcard inline-items">
+                <img src={props.post.user.ava_url} alt="author"/>
+
+                <div className="author-date">
+                    <Link className="h6 post__author-name fn"
+                          to={{pathname: `/${props.post.user.username}`}}>{props.post.user.username} {props.post.user.verified}</Link>
+
+                    <div className="post__date">
+                        <time className="published" dateTime={props.post.createdAt}>
+                            {moment(props.post.createdAt).fromNow()}
+                        </time>
                     </div>
-                    <Images images={props.post.images}/>
-                    <Content content={props.post.content}/>
-                    <Likes post_id={props.post.id} liked={props.liked} likes_count={props.post.likes.length}/>
                 </div>
+
+                <div className="more">
+                    <svg className="olymp-three-dots-icon">
+                        <use xlinkHref="../../assets/img/./icons.svg#olymp-three-dots-icon"></use>
+                    </svg>
+                    <ul className="more-dropdown">
+                        <li>
+                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Edit
+                                Post</a>
+                        </li>
+                        <li>
+                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Delete
+                                Post</a>
+                        </li>
+
+                    </ul>
+                </div>
+
             </div>
-        </PostBox>
+
+            <p>Hey guys I just wanted to let y'all know i eat poop unironically stay tuned folks
+            </p>
+
+            {/*likes here*/}
+            <div className="post-additional-info inline-items">
+
+                <Likes post_id={props.post.id} liked={props.liked} likes_count={props.post.likes.length}/>
+                {/*
+<ul class="friends-harmonic">
+<li>
+<a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+<img src="assets/img/./friend-harmonic7.jpg" alt="friend">
+</a>
+</li>
+<li>
+<a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+<img src="assets/img/./friend-harmonic8.jpg" alt="friend">
+</a>
+</li>
+<li>
+<a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+<img src="assets/img/./friend-harmonic9.jpg" alt="friend">
+</a>
+</li>
+<li>
+<a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+<img src="assets/img/./friend-harmonic10.jpg" alt="friend">
+</a>
+</li>
+<li>
+<a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+<img src="assets/img/./friend-harmonic11.jpg" alt="friend">
+</a>
+</li>
+</ul> */}
+
+
+                <div className="comments-shared">
+                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                       className="post-add-icon inline-items">
+                        <svg className="olymp-speech-balloon-icon">
+                            <use
+                                xlinkHref="assets/img/./icons.svg#olymp-speech-balloon-icon"></use>
+                        </svg>
+                        <span>{props.post.comments.length}</span>
+                    </a>
+
+                </div>
+
+
+            </div>
+
+            {/*                        <div class="control-block-button post-control-button">
+
+<a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" class="btn btn-control">
+<svg class="olymp-like-post-icon">
+<use   xlinkHref="assets/img/./icons.svg#olymp-like-post-icon"></use>
+</svg>
+</a>
+
+<a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" class="btn btn-control">
+<svg class="olymp-comments-post-icon">
+<use   xlinkHref="assets/img/./icons.svg#olymp-comments-post-icon"></use>
+</svg>
+</a>
+
+<a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" class="btn btn-control">
+<svg class="olymp-share-icon">
+<use   xlinkHref="assets/img/./icons.svg#olymp-share-icon"></use>
+</svg>
+</a>
+
+</div> */}
+
+        </article>
+
     )
+    // )    <PostBox>
+    //         <div className="inner-body" onClick={() => {
+    //             props.history.push({pathname: `/${props.post.user.username}/posts/${props.post.id}`});
+    //         }}>
+    //             <Avatar image={props.post.user.ava_url}/>
+    //             <div className="body">
+    //
+    //                 <div className="inner-body">
+    //                     <UserName username={props.post.user.username} userId={props.post.user_id}/>
+    //                     <Handle handle={props.post.user.handle}/>
+    //                     <PostedOn posted_on={moment(props.post.createdAt).fromNow()}/>
+    //                     <Comments comments_count={props.post.comments.length}/>
+    //                     <CommentModal history={props.history} post_id={props.post.id}
+    //                                   post_author={props.post.username}/>
+    //                     {(props.post.user.id === userContext.currentUser.id || userContext.currentUser.role) &&
+    //                     <PostOptions history={props.history} post_id={props.post.id}/>
+    //                     }
+    //                 </div>
+    //                 <Images images={props.post.images}/>
+    //                 <Content content={props.post.content}/>
+    //                 <Likes post_id={props.post.id} liked={props.liked} likes_count={props.post.likes.length}/>
+    //             </div>
+    //         </div>
+    //     </PostBox>
+    // )
 };
 
 const CommentBody = (props) => {

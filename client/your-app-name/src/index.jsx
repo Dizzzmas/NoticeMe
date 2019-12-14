@@ -11,8 +11,8 @@ import './assets/css/Contact-Form-Clean.css';
 import './assets/css/css.css';
 import './assets/css/vierified.css';
 
-// import './assets/js/jquery.min'
-// import './assets/js/script.min'
+ // import './assets/js/jquery.min'
+ // import './assets/js/script.min'
 
 
 ReactDOM.render(<App/>, document.getElementById('root'));
