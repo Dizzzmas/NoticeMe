@@ -8,29 +8,38 @@ import CommentForm from "../Post/comment_form";
 
 
 const ViewMoreComments = (props) => {
-    const [page, setPage] = useState(1);
 
+    let pageSize = process.env.COMMENT_PAGE_SIZE || 4;
+    let needed_page = Math.ceil(props.post.comments.length / pageSize) + 1;
+    console.log(needed_page);
+    console.log(needed_page);
+    const [end_of_comments, setEndOfComments] = useState(false);
+    // const [page, setPage] = useState(2);
+    //
     return (
+
         <button
             onClick={async () => {
-                let r = await fetch(`/api/v1/posts/GetPostComments/${props.post_id}?page=${page}`);
+                let r = await fetch(`/api/v1/posts/GetPostComments/${props.post_id}?page=${needed_page}`);
                 let comments = await r.json();
                 console.log('COMMIES: ', comments);
                 let new_posts = props.posts;
-                for (let i in new_posts) {
+                if (!new_posts) {
+                    setEndOfComments(true);
+                }
+                for (let i = 0; i < new_posts.length; i++) {
                     if (new_posts[i].id == props.post_id) {
-                        new_posts[i].comments = new_posts[i].comments.concat(comments);
+                        new_posts[i].comments = new_posts[i].comments.concat(comments.rows);
                         break;
                     }
                 }
-                console.log('POSTDZ: ',new_posts);
-                props.handlePostsUpdate(new_posts);
-                setPage(page + 1);
+                if (comments)
+                    props.handlePostsUpdate(new_posts);
 
             }}
             className="more-comments">View more comments <span>+</span></button>
     )
-}
+};
 
 const usePrevious = current => {
     const ref = useRef()
@@ -69,9 +78,12 @@ function UserPosts(props) {
         setPosts(new_posts);
     };
 
+
     useEffect(() => {
         loadUserPosts();
     }, []);
+
+
     let loadUserPosts = () => {
         console.log('uId: ', props.userId);
         setIsLoading(true);
@@ -81,8 +93,8 @@ function UserPosts(props) {
                 console.log('page: ', page);
                 console.log('my lengthL: ', posts.length);
                 console.log('all Posts: ', loaded_posts.count);
-                console.log('HAS MORE? :', posts.length + 1 < loaded_posts.count);
-                setHasMore(posts.length <= loaded_posts.count);
+                console.log('HAS MORE? :', posts.length < loaded_posts.count);
+                setHasMore(posts.length < loaded_posts.count);
                 setIsLoading(false);
                 setPosts(posts.concat(loaded_posts.rows));
                 setCurrentPage(page + 1);
@@ -160,7 +172,10 @@ function UserPosts(props) {
                                 )
                             })}
                         </ul>
-                        <ViewMoreComments post_id={post.id} posts={posts} handlePostsUpdate={handlePostsUpdate}/>
+                        {post.comments.length != post.commentsCount ?
+                            <ViewMoreComments post_id={post.id} post={post} posts={posts}
+                                              handlePostsUpdate={handlePostsUpdate}/>
+                            : <span>No More Comments</span>}
 
                         <CommentForm posts={posts} handlePostsUpdate={handlePostsUpdate} post_id={post.id}/>
 

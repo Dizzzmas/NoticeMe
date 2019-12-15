@@ -102,7 +102,7 @@ module.exports = {
         }
     },
     async getPostComments(req, res) {
-        const commentPageSize = process.env.COMMENT_PAGE_SIZE || 4;
+        const commentPageSize = process.env.COMMENT_PAGE_SIZE || 2;
         const limit = commentPageSize;
         const offset = parseInt(req.query.page) * commentPageSize - commentPageSize;
         try {

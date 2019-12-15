@@ -325,7 +325,7 @@ const CommentLikes = (props) => {
 
     return (
         <a
-           className="post-add-icon inline-items">
+            className="post-add-icon inline-items">
             <svg className="olymp-heart-icon">
                 <use xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
             </svg>
@@ -397,7 +397,7 @@ const PostBody = (props) => {
             {/*likes here*/}
             <div className="post-additional-info inline-items">
 
-                <Likes post_id={props.post.id} liked={props.liked} likes_count={props.post.likes.length}/>
+                <Likes post_id={props.post.id} liked={props.liked} likes_count={props.post.likesCount}/>
                 {/*
 <ul class="friends-harmonic">
 <li>
@@ -435,7 +435,7 @@ const PostBody = (props) => {
                             <use
                                 xlinkHref="assets/img/./icons.svg#olymp-speech-balloon-icon"></use>
                         </svg>
-                        <span>{props.post.comments.length}</span>
+                        <span>{props.post.commentsCount}</span>
                     </a>
 
                 </div>
@@ -526,7 +526,8 @@ const CommentBody = (props) => {
             <p>{props.comment.content}</p>
 
 
-            <CommentLikes comment_id={props.comment.id} liked={props.liked} likes_count={props.comment.likes.length}/>
+            <CommentLikes comment_id={props.comment.id} liked={props.liked}
+                          likes_count={<props className="comment likes length"></props>}/>
         </li>
 
     )

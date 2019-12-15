@@ -18,7 +18,6 @@ export default function CommentForm(props) {
             initialValues={{content: ""}}
             validationSchema={CreateCommentSchema}
             onSubmit={async (values, actions) => {
-                console.log('Val: ', values);
                 const jwt = userContext.getJwt();
                 let res = await fetch(`/api/v1/users/${userContext.currentUser.id}/posts/${props.post_id}/comments`, {
                     method: 'POST',
@@ -39,8 +38,8 @@ export default function CommentForm(props) {
                     for (let i = 0; i < new_posts.length; i++) {
 
                         if (new_posts[i].id == props.post_id) {
-                            new_posts[i].comments.unshift(new_comment);
-                            console.log(new_posts[i]);
+                            new_posts[i].comments.push(new_comment);
+                            new_posts[i].commentsCount = parseInt(new_posts[i].commentsCount) + 1;
                             break;
                         }
 

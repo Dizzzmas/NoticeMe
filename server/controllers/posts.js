@@ -179,12 +179,15 @@ module.exports = {
         }
     },
     async userPosts(req, res) {
-        const pageSize = process.env.PAGE_SIZE || 4;
-        const commentPageSize = process.env.COMMENT_PAGE_SIZE || 4;
+        const pageSize = process.env.PAGE_SIZE || 2;
+        const commentPageSize = process.env.COMMENT_PAGE_SIZE || 2;
         const limit = pageSize;
         const offset = parseInt(req.query.page) * pageSize - pageSize;
 
         try {
+
+            // let comments_count = await Posts.Coun
+
             let posts = await Posts
                 .findAndCountAll({
                     offset,
@@ -196,7 +199,6 @@ module.exports = {
                         model: Users,
                     },
                         {
-
                             limit: commentPageSize,
                             subQuery: false,
                             model: Comments,
@@ -227,9 +229,10 @@ module.exports = {
                             as: 'likes',
                         }, {model: PostImages, as: 'images'}],
                     attributes: [
+                        // [[Sequelize.fn("COUNT", Sequelize.col("comments.id")), "sensorCount"]],
                         'id', 'content', 'createdAt', 'updatedAt', 'user_id',
                         [Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id)'), 'likesCount'],
-
+                        [Sequelize.literal('(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id)'), 'commentsCount']
                     ],
                     order: [
                         ['createdAt', 'DESC'],
