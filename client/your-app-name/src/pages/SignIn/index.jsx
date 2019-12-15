@@ -37,6 +37,7 @@ export default function SignIn(props) {
                 let stored_user = {
                     id: google_user.id,
                     username: google_user.username,
+                    handle: `@${google_user.username}`,
                     email: google_user.email,
                     aboutMe: google_user.about_me,
                     role: google_user.role,
@@ -255,6 +256,7 @@ let fetchUser = async (values) => {
         let stored_user = {
             id: txt.id,
             username: txt.username,
+            handle: txt.username,
             email: txt.email,
             aboutMe: txt.about_me,
             role: txt.role,

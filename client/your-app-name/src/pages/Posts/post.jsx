@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../services/auth";
 import {Link} from "react-router-dom";
 import moment from "moment";
-import CommentModal from "../Post/comment_modal";
+import CommentModal from "../Post/comment_form";
 import {SplitButton, Dropdown, Modal, Button} from "react-bootstrap";
 
 
@@ -263,8 +263,8 @@ const Likes = (props) => {
 
 
     return (
-        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-           className="post-add-icon inline-items">
+        <a
+            className="post-add-icon inline-items">
             <svg className="olymp-heart-icon">
                 <use xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
             </svg>
@@ -324,8 +324,11 @@ const CommentLikes = (props) => {
 
 
     return (
-        <div className='likes'>
-            Likes: {likes_count}
+        <a
+           className="post-add-icon inline-items">
+            <svg className="olymp-heart-icon">
+                <use xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
+            </svg>
             {liked ? <button onClick={(e) => {
                 e.stopPropagation();
                 update_likes();
@@ -333,8 +336,21 @@ const CommentLikes = (props) => {
                 e.stopPropagation();
                 update_likes();
             }}>Like</button>}
-        </div>
+            <span>{likes_count}</span>
+        </a>
     )
+    // ) return (
+    //     <div className='likes'>
+    //         Likes: {likes_count}
+    //         {liked ? <button onClick={(e) => {
+    //             e.stopPropagation();
+    //             update_likes();
+    //         }}>Unlike</button> : <button onClick={(e) => {
+    //             e.stopPropagation();
+    //             update_likes();
+    //         }}>Like</button>}
+    //     </div>
+    // )
 };
 
 const PostBody = (props) => {
@@ -375,7 +391,7 @@ const PostBody = (props) => {
 
             </div>
 
-            <p>Hey guys I just wanted to let y'all know i eat poop unironically stay tuned folks
+            <p>{props.post.content}
             </p>
 
             {/*likes here*/}
@@ -482,27 +498,60 @@ const PostBody = (props) => {
 const CommentBody = (props) => {
     let userContext = useContext(AuthContext);
     return (
-        <PostBox>
-            <div className="inner-body">
-                <Avatar image={props.user.ava_url}/>
-                <div className="body">
-                    <div className="inner-body">
-                        <UserName username={props.user.username} userId={props.post.user_id}/>
-                        <Handle handle={props.user.handle}/>
-                        <PostedOn posted_on={moment(props.post.createdAt).fromNow()}/>
-                        {(props.user.id === userContext.currentUser.id || userContext.currentUser.role) &&
-                        <CommentOptions username={props.user.username} history={props.history} comment_id={props.id}
-                                        post_id={props.post.id}/>
-                        }
+        <li className="comment-item">
+            <div className="post__author author vcard inline-items">
+                <img src={props.comment.user.ava_url} alt="author"/>
+
+                <div className="author-date">
+
+                    <Link className="h6 post__author-name fn"
+                          to={{pathname: `/${props.comment.user.username}`}}>{props.comment.user.username} {props.comment.user.verified}</Link>
+
+                    <div className="post__date">
+                        <time className="published" dateTime={props.comment.createdAt}>
+                            {moment(props.comment.createdAt).fromNow()}
+                        </time>
                     </div>
-                    <Content content={props.content}/>
-                    <CommentLikes comment_id={props.id} liked={props.liked} likes_count={props.likes.length}/>
-
-
                 </div>
+
+                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                   className="more">
+                    <svg className="olymp-three-dots-icon">
+                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
+                    </svg>
+                </a>
+
             </div>
-        </PostBox>
+
+            <p>{props.comment.content}</p>
+
+
+            <CommentLikes comment_id={props.comment.id} liked={props.liked} likes_count={props.comment.likes.length}/>
+        </li>
+
     )
+    // )return (
+    //     <PostBox>
+    //         <div className="inner-body">
+    //             <Avatar image={props.user.ava_url}/>
+    //             <div className="body">
+    //                 <div className="inner-body">
+    //                     <UserName username={props.user.username} userId={props.post.user_id}/>
+    //                     <Handle handle={props.user.handle}/>
+    //                     <PostedOn posted_on={moment(props.post.createdAt).fromNow()}/>
+    //                     {(props.user.id === userContext.currentUser.id || userContext.currentUser.role) &&
+    //                     <CommentOptions username={props.user.username} history={props.history} comment_id={props.id}
+    //                                     post_id={props.post.id}/>
+    //                     }
+    //                 </div>
+    //                 <Content content={props.content}/>
+    //                 <CommentLikes comment_id={props.id} liked={props.liked} likes_count={props.likes.length}/>
+    //
+    //
+    //             </div>
+    //         </div>
+    //     </PostBox>
+    // )
 };
 
 export {

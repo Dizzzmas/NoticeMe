@@ -38,6 +38,7 @@ router.post('/users/:userId/posts/:postId/comments', CommentsController.create);
 routerProtected.put('/users/:userId/posts/:postId/comments/:commentId', CommentsController.updateById);
 router.delete('/comments/:commentId', CommentsController.deleteById);
 router.get('/posts/GetAllComments/:postId', CommentsController.getAll);
+router.get('/posts/GetPostComments/:post_id', CommentsController.getPostComments);
 //Likes api
 router.post('/users/:userId/posts/:postId/like', LikesController.create);
 router.delete('/users/:userId/posts/:postId/unlike', LikesController.deleteById);

@@ -16,7 +16,17 @@ module.exports = {
                     user_id: req.params.userId,
                     post_id: req.params.postId,
                 });
-            return res.status(201).send(comment);
+
+            let final_comment = await Comments.findByPk(comment.id, {
+                include: [{
+                    model: CommentLikes,
+                    as: 'likes',
+                    required: false,
+                }, {
+                    model: Users,
+                }],
+            });
+            return res.status(201).send(final_comment);
         } catch (error) {
             return res.status(400).send({message: 'Creating comment failed', error: error});
         }
@@ -60,6 +70,7 @@ module.exports = {
     },
     async getAll(req, res) {
         const pageSize = process.env.PAGE_SIZE || 4;
+
         const limit = pageSize;
         const offset = parseInt(req.query.page) * pageSize - pageSize;
         try {
@@ -88,6 +99,37 @@ module.exports = {
             return res.status(200).send(comments);
         } catch (error) {
             return res.status(400).send({message: 'GetAll comments failed', error: error})
+        }
+    },
+    async getPostComments(req, res) {
+        const commentPageSize = process.env.COMMENT_PAGE_SIZE || 4;
+        const limit = commentPageSize;
+        const offset = parseInt(req.query.page) * commentPageSize - commentPageSize;
+        try {
+            let comments = await Comments.findAndCountAll({
+                offset,
+                limit,
+                where: {post_id: req.params.post_id},
+                include: [{
+                    model: CommentLikes,
+                    as: 'likes',
+                    required: false,
+                }, {
+                    model: Users,
+                    required: false
+                }],
+                attributes: [
+                    'id', 'content', 'createdAt', 'updatedAt', 'user_id', 'post_id',
+                    [Sequelize.literal('(SELECT COUNT(*) FROM comment_likes WHERE comment_likes.comment_id = comments.id)'), 'likedCommentsCount'],
+                ],
+                order: [
+                    ['createdAt', 'DESC'],
+                    [Sequelize.literal("\"likedCommentsCount\""), 'DESC']],
+            });
+            return res.status(200).send(comments);
+
+        } catch (error) {
+            return res.status(400).send({message: 'GetPostComments failed', error: error});
         }
     }
 

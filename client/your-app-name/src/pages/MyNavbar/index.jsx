@@ -19,7 +19,7 @@ export default function MyNavBar(props) {
 
 
     return (
-        <div className='who-to-follow'>
+        <div className='who-to-follow' style={{"overflow": "hidden"}}>
         <div className="pulse animated"
              style={{backgroundColor: "#ffffff"}}>
             <div className="align-items-center header-blue"

@@ -6,6 +6,7 @@ const PostImages = require('../models').post_images;
 let fs = require('fs');
 const Sequelize = require('sequelize');
 const cloudinary = require('cloudinary');
+const CommentLikes = require('../models').comment_likes;
 
 
 cloudinary.config({
@@ -178,7 +179,8 @@ module.exports = {
         }
     },
     async userPosts(req, res) {
-         const pageSize = process.env.PAGE_SIZE || 4;
+        const pageSize = process.env.PAGE_SIZE || 4;
+        const commentPageSize = process.env.COMMENT_PAGE_SIZE || 4;
         const limit = pageSize;
         const offset = parseInt(req.query.page) * pageSize - pageSize;
 
@@ -187,34 +189,57 @@ module.exports = {
                 .findAndCountAll({
                     offset,
                     limit,
-                    where:{
+                    where: {
                         user_id: req.params.userId
                     },
                     include: [{
                         model: Users,
                     },
                         {
+
+                            limit: commentPageSize,
+                            subQuery: false,
                             model: Comments,
-                            as: 'comments'
+                            as: 'comments',
+                            attributes: [
+                                'id', 'content', 'createdAt', 'updatedAt', 'user_id', 'post_id',
+                                [Sequelize.literal('(SELECT COUNT(*) FROM comment_likes WHERE comment_likes.comment_id = comments.id)'), 'likedCommentsCount'],
+                            ],
+                            order: [
+                                ['createdAt', 'DESC'],
+                                [Sequelize.literal("\"likedCommentsCount\""), 'DESC']],
+                            include: [{
+
+                                model: CommentLikes,
+                                as: 'likes',
+
+                            }, {
+
+                                model: Users,
+
+
+                            }],
+
+
                         },
                         {
                             model: Likes,
                             as: 'likes',
-                            required: false,
                         }, {model: PostImages, as: 'images'}],
                     attributes: [
                         'id', 'content', 'createdAt', 'updatedAt', 'user_id',
                         [Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id)'), 'likesCount'],
+
                     ],
                     order: [
                         ['createdAt', 'DESC'],
-                        [Sequelize.literal("\"likesCount\""), 'DESC']
+                        [Sequelize.literal("\"likesCount\""), 'DESC'],
                     ],
 
                 });
             return res.status(200).send(posts);
         } catch (error) {
-            return res.status(400).send({message: 'GetuserPosts failed', error: error})
+            return res.status(400).send({message: 'GetuserPosts failed', error: error});
         }
     }
 

@@ -49,7 +49,7 @@ function PostFeed(props) {
             .then(response => response.json())
             .then(loaded_posts => {
                 console.log('page: ', page);
-                setHasMore(posts.length < loaded_posts.count);
+                setHasMore(posts.length <= loaded_posts.count);
                 setIsLoading(false);
                 setPosts(posts.concat(loaded_posts.rows));
                 setCurrentPage(page + 1);
