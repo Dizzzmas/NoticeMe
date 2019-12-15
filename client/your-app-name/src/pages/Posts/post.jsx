@@ -70,8 +70,8 @@ const Images = (props) => {
             {Object.values(props.images).map((image, index) => {
                 return (
                     <div key={index} className='post_image'><img key={index} src={image.image_url}
-                                                                 width={15}
-                                                                 height={15}/></div>
+                                                                 width={250}
+                                                                 height={250}/></div>
                 )
 
                 // TODO: Adjust pics size here, add modal with full size pic
@@ -392,6 +392,7 @@ const PostBody = (props) => {
             </div>
 
             <p>{props.post.content}
+                <Images images={props.post.images}/>
             </p>
 
             {/*likes here*/}
@@ -527,7 +528,7 @@ const CommentBody = (props) => {
 
 
             <CommentLikes comment_id={props.comment.id} liked={props.liked}
-                          likes_count={<props className="comment likes length"></props>}/>
+                          likes_count={props.comment.likes.length}/>
         </li>
 
     )

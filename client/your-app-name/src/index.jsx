@@ -6,11 +6,6 @@ import * as serviceWorker from './serviceWorker';
 import $ from 'jquery'
 // import 'semantic-ui-css/semantic.min.css';
 import './assets/css/styles.min.css';
-import './assets/css/styles.css';
-import './assets/css/Contact-Form-Clean.css';
-import './assets/css/css.css';
-import './assets/css/vierified.css';
-
  // import './assets/js/jquery.min'
  // import './assets/js/script.min'
 

@@ -1,6 +1,8 @@
 import React, {useContext, useState} from "react";
 import PostFeed from "./post_feed";
 import {AuthContext} from "../../services/auth";
+import UserPosts from "../UserPage/user_posts";
+import PostForm from "../Post/post_form";
 
 
 export default function Posts(props) {
@@ -106,7 +108,7 @@ export default function Posts(props) {
                         <div className="control-block">
                             <div className="author-page author vcard inline-items">
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./author-page.jpg" className="avatar"/>
+                                    <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                     <span className="icon-status online"></span>
                                 </div>
                                 <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html"
@@ -252,13 +254,13 @@ export default function Posts(props) {
                         <ul className="chat-users">
                             <li className="inline-items js-chat-open">
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./avatar70-sm.jpg" className="avatar"/>
+                                    <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                     <span className="icon-status disconected"></span>
                                 </div>
                             </li>
                             <li className="inline-items js-chat-open">
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./avatar64-sm.jpg" className="avatar"/>
+                                    <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                     <span className="icon-status online"></span>
                                 </div>
                             </li>
@@ -266,13 +268,13 @@ export default function Posts(props) {
 
                             <li className="inline-items js-chat-open">
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./avatar63-sm.jpg" className="avatar"/>
+                                    <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                     <span className="icon-status status-invisible"></span>
                                 </div>
                             </li>
                             <li className="inline-items js-chat-open">
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./avatar72-sm.jpg" className="avatar"/>
+                                    <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                     <span className="icon-status away"></span>
                                 </div>
                             </li>
@@ -321,7 +323,7 @@ export default function Posts(props) {
                             <li className="inline-items js-chat-open">
 
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./avatar67-sm.jpg" className="avatar"/>
+                                    <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                     <span className="icon-status online"></span>
                                 </div>
 
@@ -372,7 +374,7 @@ export default function Posts(props) {
                             <li className="inline-items js-chat-open">
 
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./avatar62-sm.jpg" className="avatar"/>
+                                    <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                     <span className="icon-status online"></span>
                                 </div>
 
@@ -479,7 +481,7 @@ export default function Posts(props) {
 
 
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./avatar69-sm.jpg" className="avatar"/>
+                                    <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                     <span className="icon-status away"></span>
                                 </div>
 
@@ -533,7 +535,7 @@ export default function Posts(props) {
 
 
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./avatar70-sm.jpg" className="avatar"/>
+                                    <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                     <span className="icon-status disconected"></span>
                                 </div>
 
@@ -1665,7 +1667,7 @@ export default function Posts(props) {
 
                         <div className="author-page author vcard inline-items more">
                             <div className="author-thumb">
-                                <img alt="author" src="assets/img/./author-page.jpg" className="avatar"/>
+                                <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
                                 <span className="icon-status online"></span>
                                 <div className="more-dropdown more-with-triangle">
                                     <div className="mCustomScrollbar ps ps--theme_default" data-mcs-theme="dark"
@@ -1842,7 +1844,7 @@ export default function Posts(props) {
                             <ul className="notification-list friend-requests">
                                 <li>
                                     <div className="author-thumb">
-                                        <img src="assets/img/./avatar55-sm.jpg" alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -1879,7 +1881,7 @@ export default function Posts(props) {
                                 </li>
                                 <li>
                                     <div className="author-thumb">
-                                        <img src="assets/img/./avatar56-sm.jpg" alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -1916,7 +1918,7 @@ export default function Posts(props) {
                                 </li>
                                 <li className="accepted">
                                     <div className="author-thumb">
-                                        <img src="assets/img/./avatar57-sm.jpg" alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         You and <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -1944,7 +1946,7 @@ export default function Posts(props) {
                                 </li>
                                 <li>
                                     <div className="author-thumb">
-                                        <img src="assets/img/./avatar58-sm.jpg" alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -2008,7 +2010,7 @@ export default function Posts(props) {
                             <ul className="notification-list chat-message">
                                 <li className="message-unread">
                                     <div className="author-thumb">
-                                        <img src="assets/img/./avatar59-sm.jpg" alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -2032,7 +2034,7 @@ export default function Posts(props) {
 
                                 <li>
                                     <div className="author-thumb">
-                                        <img src="assets/img/./avatar60-sm.jpg" alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -2056,7 +2058,7 @@ export default function Posts(props) {
                                 </li>
                                 <li>
                                     <div className="author-thumb">
-                                        <img src="assets/img/./avatar61-sm.jpg" alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -2172,138 +2174,7 @@ export default function Posts(props) {
 
                             {/* News Feed Form  */}
 
-                            <div className="news-feed-form">
-                                {/* Nav tabs */}
-                                <ul className="nav nav-tabs" role="tablist">
-                                    <li className="nav-item">
-                                        <a className="nav-link active inline-items" data-toggle="tab" href="#home-1"
-                                           role="tab" aria-expanded="true">
 
-                                            <svg className="olymp-status-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-status-icon"></use>
-                                            </svg>
-
-                                            <span>Status</span>
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link inline-items" data-toggle="tab" href="#profile-1"
-                                           role="tab"
-                                           aria-expanded="false">
-
-                                            <svg className="olymp-multimedia-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-multimedia-icon"></use>
-                                            </svg>
-
-                                            <span>Multimedia</span>
-                                        </a>
-                                    </li>
-
-                                    <li className="nav-item">
-                                        <a className="nav-link inline-items" data-toggle="tab" href="#blog" role="tab"
-                                           aria-expanded="false">
-                                            <svg className="olymp-blog-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-blog-icon"></use>
-                                            </svg>
-
-                                            <span>Blog Post</span>
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                {/* Tab panes */}
-                                <div className="tab-content">
-                                    <div className="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
-                                        <form>
-                                            <div className="author-thumb">
-                                                <img src="assets/img/./author-page.jpg" alt="author"/>
-                                            </div>
-                                            <div className="form-group with-icon label-floating is-empty">
-                                                <label className="control-label">Share what you are thinking
-                                                    here...</label>
-                                                <textarea className="form-control" placeholder=""></textarea>
-                                                <span className="material-input"></span></div>
-                                            <div className="add-options-message">
-                                                <a href="#" className="options-message" data-toggle="tooltip"
-                                                   data-placement="top" data-original-title="ADD PHOTOS">
-                                                    <svg className="olymp-camera-icon" data-toggle="modal"
-                                                         data-target="#update-header-photo">
-                                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                             xlinkHref="assets/img/./icons.svg#olymp-camera-icon"></use>
-                                                    </svg>
-                                                </a>
-
-
-                                                <button className="btn btn-primary btn-md-2"
-                                                        style={{"backgroundColor": "#3d5fbf", "border": "0px"}}>Post
-                                                    Status
-                                                </button>
-
-                                            </div>
-
-                                        </form>
-                                    </div>
-
-                                    <div className="tab-pane" id="profile-1" role="tabpanel" aria-expanded="true">
-                                        <form>
-                                            <div className="author-thumb">
-                                                <img src="img/author-page.jpg" alt="author"/>
-                                            </div>
-                                            <div className="form-group with-icon label-floating is-empty">
-                                                <label className="control-label">Share what you are thinking
-                                                    here...</label>
-                                                <textarea className="form-control" placeholder=""></textarea>
-                                                <span className="material-input"></span></div>
-                                            <div className="add-options-message">
-                                                <a href="#" className="options-message" data-toggle="tooltip"
-                                                   data-placement="top" data-original-title="ADD PHOTOS">
-                                                    <svg className="olymp-camera-icon" data-toggle="modal"
-                                                         data-target="#update-header-photo">
-                                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                             xlinkHref="assets/img/./icons.svg#olymp-camera-icon"></use>
-                                                    </svg>
-                                                </a>
-
-
-                                                <button className="btn btn-primary btn-md-2">Post Status</button>
-
-                                            </div>
-
-                                        </form>
-                                    </div>
-
-                                    <div className="tab-pane" id="blog" role="tabpanel" aria-expanded="true">
-                                        <form>
-                                            <div className="author-thumb">
-                                                <img src="img/author-page.jpg" alt="author"/>
-                                            </div>
-                                            <div className="form-group with-icon label-floating is-empty">
-                                                <label className="control-label">Share what you are thinking
-                                                    here...</label>
-                                                <textarea className="form-control" placeholder=""></textarea>
-                                                <span className="material-input"></span></div>
-                                            <div className="add-options-message">
-                                                <a href="#" className="options-message" data-toggle="tooltip"
-                                                   data-placement="top" data-original-title="ADD PHOTOS">
-                                                    <svg className="olymp-camera-icon" data-toggle="modal"
-                                                         data-target="#update-header-photo">
-                                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                             xlinkHref="assets/img/./icons.svg#olymp-camera-icon"></use>
-                                                    </svg>
-                                                </a>
-
-
-                                                <button className="btn btn-primary btn-md-2">Post Status</button>
-
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
 
                             {/* ... end News Feed Form  */}            </div>
 
@@ -2312,502 +2183,7 @@ export default function Posts(props) {
                             <div id="newsfeed-items-grid" style={{"position": "relative", "marginTop": "30px"}}>
                                 {/* Post */}
 
-                                <article className="hentry post video">
-
-                                    <div className="post__author author vcard inline-items">
-                                        <img src="assets/img/./author-page.jpg" alt="author"/>
-
-                                        <div className="author-date">
-                                            <a className="h6 post__author-name fn"
-                                               href="https://html.crumina.net/html-olympus/02-ProfilePage.html"
-                                            >{userContext.currentUser.username} {userContext.currentUser.verified}</a> shared
-                                            a
-                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               style={{"color": "#6993af"}}>link</a>
-                                            <div className="post__date">
-                                                <time className="published" dateTime="2017-03-24T18:18">
-                                                    7 hours ago
-                                                </time>
-                                            </div>
-                                        </div>
-
-                                        <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
-                                            <ul className="more-dropdown">
-                                                <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Edit
-                                                        Post</a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Delete
-                                                        Post</a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Turn
-                                                        Off Notifications</a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Select
-                                                        as Featured</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                    </div>
-
-                                    <p>If someone missed it, check out the new song by System of a Revenge! I thinks
-                                        they
-                                        are going back to their roots...</p>
-
-                                    <div className="post-video">
-                                        <div className="video-thumb">
-                                            <img src="assets/img/./video5.jpg" alt="photo"/>
-                                            <a href="https://youtube.com/watch?v=excVFQ2TWig" className="play-video">
-                                                <svg className="olymp-play-icon">
-                                                    <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                         xlinkHref="assets/img/./icons.svg#olymp-play-icon"></use>
-                                                </svg>
-                                            </a>
-                                        </div>
-
-                                        <div className="video-content">
-                                            <a style={{
-                                                "h4_title": {"color": "#ff6a00"},
-                                                "h4_title_hover": {"color": "#ff6a00"}
-                                            }} href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="h4 title">
-
-                                                System of a Revenge - Nothing Else Matters (LIVE)</a>
-                                            <p>Lorem ipsum dolor sit amet, consectetur ipisicing elit, sed do eiusmod
-                                                tempo
-                                                incididunt ut labore..</p>
-                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="link-site">YOUTUBE.COM</a>
-                                        </div>
-                                    </div>
-
-                                    <div className="post-additional-info inline-items">
-
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                           className="post-add-icon inline-items">
-                                            <svg className="olymp-heart-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
-                                            </svg>
-                                            <span>15</span>
-                                        </a>
-                                        {/*
-                                                                    <ul class="friends-harmonic">
-                                                                        <li>
-                                                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                                <img src="assets/img/./friend-harmonic9.jpg" alt="friend">
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                                <img src="assets/img/./friend-harmonic10.jpg" alt="friend">
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                                <img src="assets/img/./friend-harmonic7.jpg" alt="friend">
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                                <img src="assets/img/./friend-harmonic8.jpg" alt="friend">
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                                <img src="assets/img/./friend-harmonic11.jpg" alt="friend">
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                         */}
-                                        {/* 								<div class="names-people-likes">
-                                                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Jenny</a>, <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Robert</a> and
-                                                                        <br>13 more liked this
-                                                                    </div>
-                                                         */}
-
-
-                                    </div>
-
-                                    {/* 							<div class="control-block-button post-control-button">
-
-                                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" class="btn btn-control">
-                                                                    <svg class="olymp-like-post-icon">
-                                                                        <use xlinkHref="http://www.w3.org/1999/xlink" xlinkHref="assets/img/./icons.svg#olymp-like-post-icon"></use>
-                                                                    </svg>
-                                                                </a>
-
-                                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" class="btn btn-control">
-                                                                    <svg class="olymp-comments-post-icon">
-                                                                        <use xlinkHref="http://www.w3.org/1999/xlink" xlinkHref="assets/img/./icons.svg#olymp-comments-post-icon"></use>
-                                                                    </svg>
-                                                                </a>
-
-                                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" class="btn btn-control">
-                                                                    <svg class="olymp-share-icon">
-                                                                        <use xlinkHref="http://www.w3.org/1999/xlink" xlinkHref="assets/img/./icons.svg#olymp-share-icon"></use>
-                                                                    </svg>
-                                                                </a>
-
-                                                            </div>
-                                                     */}
-                                </article>
-
-                                {/* .. end Post */}                </div>
-                            <div className="ui-block"
-                                 style={{"position": "relative", "left": "0px", "marginTop": "30px"}}>
-                                {/* Post */}
-
-                                <article className="hentry post">
-
-                                    <div className="post__author author vcard inline-items">
-                                        <img src="assets/img/./author-page.jpg" alt="author"/>
-
-                                        <div className="author-date">
-                                            <a className="h6 post__author-name fn"
-                                               href="https://html.crumina.net/html-olympus/02-ProfilePage.html">{userContext.currentUser.username} {userContext.currentUser.verified}</a>
-                                            <div className="post__date">
-                                                <time className="published" dateTime="2017-03-24T18:18">
-                                                    2 hours ago
-                                                </time>
-                                            </div>
-                                        </div>
-
-                                        <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
-                                            <ul className="more-dropdown">
-                                                <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Edit
-                                                        Post</a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Delete
-                                                        Post</a>
-                                                </li>
-
-                                            </ul>
-                                        </div>
-
-                                    </div>
-
-                                    <p>Hey guys I just wanted to let y'all know i eat poop unironically stay tuned folks
-                                        wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-                                    </p>
-
-                                    <div className="post-additional-info inline-items">
-
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                           className="post-add-icon inline-items">
-                                            <svg className="olymp-heart-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
-                                            </svg>
-                                            <span>36</span>
-                                        </a>
-                                        {/*
-                                                                <ul class="friends-harmonic">
-                                                                    <li>
-                                                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                            <img src="assets/img/./friend-harmonic7.jpg" alt="friend">
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                            <img src="assets/img/./friend-harmonic8.jpg" alt="friend">
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                            <img src="assets/img/./friend-harmonic9.jpg" alt="friend">
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                            <img src="assets/img/./friend-harmonic10.jpg" alt="friend">
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                                            <img src="assets/img/./friend-harmonic11.jpg" alt="friend">
-                                                                        </a>
-                                                                    </li>
-                                                                </ul> */}
-
-
-                                    </div>
-
-                                    {/* 						<div class="control-block-button post-control-button">
-
-                                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" class="btn btn-control">
-                                                                <svg class="olymp-like-post-icon">
-                                                                    <use xlinkHref="http://www.w3.org/1999/xlink" xlinkHref="assets/img/./icons.svg#olymp-like-post-icon"></use>
-                                                                </svg>
-                                                            </a>
-
-                                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" class="btn btn-control">
-                                                                <svg class="olymp-comments-post-icon">
-                                                                    <use xlinkHref="http://www.w3.org/1999/xlink" xlinkHref="assets/img/./icons.svg#olymp-comments-post-icon"></use>
-                                                                </svg>
-                                                            </a>
-
-                                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" class="btn btn-control">
-                                                                <svg class="olymp-share-icon">
-                                                                    <use xlinkHref="http://www.w3.org/1999/xlink" xlinkHref="assets/img/./icons.svg#olymp-share-icon"></use>
-                                                                </svg>
-                                                            </a>
-
-                                                        </div> */}
-
-                                </article>
-
-                                {/* .. end Post */}
-                                {/* Comments */}
-
-                                <ul className="comments-list">
-                                    <li className="comment-item">
-                                        <div className="post__author author vcard inline-items">
-                                            <img src="assets/img/./avatar10-sm.jpg" alt="author"/>
-
-                                            <div className="author-date">
-                                                <a className="h6 post__author-name fn"
-                                                   href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">{userContext.currentUser.username} {userContext.currentUser.verified}</a>
-                                                <div className="post__date">
-                                                    <time className="published" dateTime="2017-03-24T18:18">
-                                                        5 mins ago
-                                                    </time>
-                                                </div>
-                                            </div>
-
-                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="more">
-                                                <svg className="olymp-three-dots-icon">
-                                                    <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                         xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                                </svg>
-                                            </a>
-
-                                        </div>
-
-                                        <p>Hey guys I just wanted to let y'all know i eat poop unironically stay tuned
-                                            folks</p>
-
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                           className="post-add-icon inline-items">
-                                            <svg className="olymp-heart-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
-                                            </svg>
-                                            <span>8</span>
-                                        </a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                           className="reply">Reply</a>
-                                    </li>
-                                    <li className="comment-item has-children">
-                                        <div className="post__author author vcard inline-items">
-                                            <img src="assets/img/./avatar5-sm.jpg" alt="author"/>
-
-                                            <div className="author-date">
-                                                <a className="h6 post__author-name fn"
-                                                   href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">{userContext.currentUser.username} {userContext.currentUser.verified}</a>
-                                                <div className="post__date">
-                                                    <time className="published" dateTime="2017-03-24T18:18">
-                                                        1 hour ago
-                                                    </time>
-                                                </div>
-                                            </div>
-
-                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="more">
-                                                <svg className="olymp-three-dots-icon">
-                                                    <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                         xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                                </svg>
-                                            </a>
-
-                                        </div>
-
-                                        <p>Hey guys I just wanted to let y'all know i eat poop unironically stay tuned
-                                            folks
-                                        </p>
-
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                           className="post-add-icon inline-items">
-                                            <svg className="olymp-heart-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
-                                            </svg>
-                                            <span>5</span>
-                                        </a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                           className="reply">Reply</a>
-
-                                        <ul className="children">
-                                            <li className="comment-item">
-                                                <div className="post__author author vcard inline-items">
-                                                    <img src="assets/img/./avatar8-sm.jpg" alt="author"/>
-
-                                                    <div className="author-date">
-                                                        <a className="h6 post__author-name fn"
-                                                           href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">{userContext.currentUser.username} {userContext.currentUser.verified}</a>
-                                                        <div className="post__date">
-                                                            <time className="published" dateTime="2017-03-24T18:18">
-                                                                39 mins ago
-                                                            </time>
-                                                        </div>
-                                                    </div>
-
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                                       className="more">
-                                                        <svg className="olymp-three-dots-icon">
-                                                            <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                                 xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                                        </svg>
-                                                    </a>
-
-                                                </div>
-
-                                                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                                    dolore eu fugiat nulla pariatur.</p>
-
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                                   className="post-add-icon inline-items">
-                                                    <svg className="olymp-heart-icon">
-                                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                             xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
-                                                    </svg>
-                                                    <span>2</span>
-                                                </a>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                                   className="reply">Reply</a>
-                                            </li>
-                                            <li className="comment-item">
-                                                <div className="post__author author vcard inline-items">
-                                                    <img src="assets/img/./avatar2-sm.jpg" alt="author"/>
-
-                                                    <div className="author-date">
-                                                        <a className="h6 post__author-name fn"
-                                                           href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">{userContext.currentUser.username} {userContext.currentUser.verified}</a>
-                                                        <div className="post__date">
-                                                            <time className="published" dateTime="2017-03-24T18:18">
-                                                                24 mins ago
-                                                            </time>
-                                                        </div>
-                                                    </div>
-
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                                       className="more">
-                                                        <svg className="olymp-three-dots-icon">
-                                                            <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                                 xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                                        </svg>
-                                                    </a>
-
-                                                </div>
-
-                                                <p>Excepteur sint occaecat cupidatat non proident.</p>
-
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                                   className="post-add-icon inline-items">
-                                                    <svg className="olymp-heart-icon">
-                                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                             xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
-                                                    </svg>
-                                                    <span>0</span>
-                                                </a>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                                   className="reply">Reply</a>
-
-                                            </li>
-                                        </ul>
-
-                                    </li>
-
-                                    <li className="comment-item">
-                                        <div className="post__author author vcard inline-items">
-                                            <img src="assets/img/./avatar4-sm.jpg" alt="author"/>
-
-                                            <div className="author-date">
-                                                <a className="h6 post__author-name fn"
-                                                   href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">{userContext.currentUser.username} {userContext.currentUser.verified}</a>
-                                                <div className="post__date">
-                                                    <time className="published" dateTime="2017-03-24T18:18">
-                                                        1 hour ago
-                                                    </time>
-                                                </div>
-                                            </div>
-
-                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="more">
-                                                <svg className="olymp-three-dots-icon">
-                                                    <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                         xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                                </svg>
-                                            </a>
-
-                                        </div>
-
-                                        <p>Dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                            proident,
-                                            sunt in culpa qui officia deserunt mollit.</p>
-
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                           className="post-add-icon inline-items">
-                                            <svg className="olymp-heart-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
-                                            </svg>
-                                            <span>7</span>
-                                        </a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                           className="reply">Reply</a>
-
-                                    </li>
-                                </ul>
-
-                                {/* ... end Comments */}
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="more-comments">View more comments <span>+</span></a>
-
-                                {/* Comment Form  */}
-
-                                <form className="comment-form inline-items">
-
-                                    <div className="post__author author vcard inline-items">
-                                        <img src="assets/img/./author-page.jpg" alt="author"/>
-
-                                        <div className="form-group with-icon-right is-empty">
-                                            <textarea className="form-control" placeholder=""></textarea>
-                                            <div className="add-options-message">
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                                   className="options-message" data-toggle="modal"
-                                                   data-target="#update-header-photo">
-                                                    <svg className="olymp-camera-icon">
-                                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                             xlinkHref="assets/img/./icons.svg#olymp-camera-icon"></use>
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                            <span className="material-input"></span></div>
-                                    </div>
-
-                                    <button className="btn btn-md-2 btn-primary"
-                                            style={{"backgroundColor": "#3d5fbf", "borderColor": "#3d5fbf"}}>Post
-                                        Comment
-                                    </button>
-
-
-                                </form>
+                                <PostFeed history={props.history}/>
 
                                 {/* ... end Comment Form  */}                </div>
 

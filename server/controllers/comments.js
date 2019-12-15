@@ -3,6 +3,7 @@ const Users = require('../models').users;
 const Posts = require('../models').posts;
 const CommentLikes = require('../models').comment_likes;
 const Sequelize = require('sequelize');
+
 const Op = Sequelize.Op;
 
 

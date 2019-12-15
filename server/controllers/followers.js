@@ -3,6 +3,7 @@ const Posts = require('../models').posts;
 const Users = require('../models').users;
 const Comments = require('../models').comments;
 const Followers = require('../models').followers;
+const CommentLikes = require('../models').comment_likes;
 const PostImages = require('../models').post_images;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -100,6 +101,7 @@ module.exports = {
     },
     async getFollowedPosts(req, res) {
         const pageSize = process.env.PAGE_SIZE || 4;
+        const commentPageSize = process.env.COMMENT_PAGE_SIZE || 2;
         const limit = pageSize;
         const offset = parseInt(req.query.page) * pageSize - pageSize;
         const userId = req.params.userId;
@@ -117,11 +119,8 @@ module.exports = {
 
             let posts = await Posts
                 .findAndCountAll({
-
                     offset,
                     limit,
-
-
                     where: {
                         user_id: {
                             [Op.or]: [
@@ -134,17 +133,35 @@ module.exports = {
                         model: Users,
                     },
                         {
+                            limit: commentPageSize,
+                            attributes: [
+                                'id', 'content', 'createdAt', 'updatedAt', 'user_id', 'post_id',
+                                [Sequelize.literal('(SELECT COUNT(*) FROM comment_likes WHERE comment_likes.comment_id = comments.id)'), 'likedCommentsCount'],
+                            ],
+                            subQuery: false,
+                            order: [
+                                ['createdAt', 'DESC'],
+                                [Sequelize.literal("\"likedCommentsCount\""), 'DESC']],
                             model: Comments,
-                            as: 'comments'
+                            as: 'comments',
+
+                            include: [{
+                                model: CommentLikes,
+                                as: 'likes',
+
+                            }, {
+                                model: Users,
+                            }],
                         },
                         {
                             model: Likes,
                             as: 'likes',
-                            required: false,
-                        }, {model: PostImages, as: 'images'}],
+                        },
+                        {model: PostImages, as: 'images'}],
                     attributes: [
                         'id', 'content', 'createdAt', 'updatedAt', 'user_id',
                         [Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id)'), 'likesCount'],
+                        [Sequelize.literal('(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id)'), 'commentsCount']
                     ],
                     order: [
                         ['createdAt', 'DESC'],

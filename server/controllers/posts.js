@@ -19,7 +19,7 @@ cloudinary.config({
 module.exports = {
     async create(req, res) {
         try {
-
+            const commentPageSize = process.env.COMMENT_PAGE_SIZE || 2;
 
             let post = await Posts
                 .create({
@@ -27,25 +27,70 @@ module.exports = {
                     user_id: req.params.userId
                 });
 
-            let images = Object.values(req.files);
-            if (images) {
-                let upload_promises = images.map(image => cloudinary.v2.uploader.upload(image.path,
-                    // {
-                    //   transformation: [{ width: 500, height: 500, crop: "limit" }]                 // Uncomment to crop images on upload
-                    // },
-                ));
-                console.log('Promises: ', upload_promises);
-                let upload_results = await Promise.all(upload_promises);
-                console.log('Upload_result', upload_results);
-                let insert_images_promises = upload_results.map(image => PostImages.create({
-                    image_url: image.secure_url,
-                    public_id: image.public_id,
-                    post_id: post.id
-                }));
-                await Promise.all(insert_images_promises);
+            if (req.files) {
+                let images = Object.values(req.files);
+                if (images) {
+                    let upload_promises = images.map(image => cloudinary.v2.uploader.upload(image.path,
+                        // {
+                        //   transformation: [{ width: 500, height: 500, crop: "limit" }]                 // Uncomment to crop images on upload
+                        // },
+                    ));
+                    console.log('Promises: ', upload_promises);
+                    let upload_results = await Promise.all(upload_promises);
+                    console.log('Upload_result', upload_results);
+                    let insert_images_promises = upload_results.map(image => PostImages.create({
+                        image_url: image.secure_url,
+                        public_id: image.public_id,
+                        post_id: post.id
+                    }));
+                    await Promise.all(insert_images_promises);
+                }
             }
 
-            return res.status(201).send(post);
+
+            let final_post = await Posts.findByPk(post.id, {
+                include: [{
+                    model: Users,
+                },
+                    {
+                        limit: commentPageSize,
+                        subQuery: false,
+                        model: Comments,
+                        as: 'comments',
+                        attributes: [
+                            'id', 'content', 'createdAt', 'updatedAt', 'user_id', 'post_id',
+                            [Sequelize.literal('(SELECT COUNT(*) FROM comment_likes WHERE comment_likes.comment_id = comments.id)'), 'likedCommentsCount'],
+                        ],
+                        order: [
+                            ['createdAt', 'DESC'],
+                            [Sequelize.literal("\"likedCommentsCount\""), 'DESC']],
+                        include: [{
+                            model: CommentLikes,
+                            as: 'likes',
+                        }, {
+                            model: Users,
+                        }]
+                    },
+                    {
+                        model: Likes,
+                        as: 'likes',
+                    }
+                    , {model: PostImages, as: 'images'}],
+                attributes: [
+                    'id', 'content', 'createdAt', 'updatedAt', 'user_id',
+                    [Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id)'), 'likesCount'],
+                    [Sequelize.literal('(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id)'), 'commentsCount']
+                ],
+                order: [
+                    ['createdAt', 'DESC'],
+                    [Sequelize.literal("\"likesCount\""), 'DESC']
+                ]
+
+
+            });
+
+
+            return res.status(201).send(final_post);
 
         } catch (error) {
             console.error(error);
@@ -179,7 +224,7 @@ module.exports = {
         }
     },
     async userPosts(req, res) {
-        const pageSize = process.env.PAGE_SIZE || 2;
+        const pageSize = process.env.PAGE_SIZE || 6;
         const commentPageSize = process.env.COMMENT_PAGE_SIZE || 2;
         const limit = pageSize;
         const offset = parseInt(req.query.page) * pageSize - pageSize;
@@ -229,7 +274,6 @@ module.exports = {
                             as: 'likes',
                         }, {model: PostImages, as: 'images'}],
                     attributes: [
-                        // [[Sequelize.fn("COUNT", Sequelize.col("comments.id")), "sensorCount"]],
                         'id', 'content', 'createdAt', 'updatedAt', 'user_id',
                         [Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id)'), 'likesCount'],
                         [Sequelize.literal('(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id)'), 'commentsCount']
