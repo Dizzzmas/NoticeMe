@@ -18,7 +18,7 @@ export default function PostForm(props) {
     return (
 
 
-        <div className="news-feed-form">
+        <div className="news-feed-form" style={{background:"white"}}>
             <Formik
                 initialValues={{content: ""}}
                 validationSchema={CreatePostSchema}
@@ -80,7 +80,7 @@ export default function PostForm(props) {
 
                             <div className="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
 
-                                <div className="author-thumb">
+                                <div className="author-thumb" style={{width: "50px", marginTop: "50px", marginLeft: "-13px"}}>
                                     <img src={userContext.currentUser.avaUrl} alt="author"/>
                                 </div>
                                 <div className="form-group with-icon label-floating is-empty">
@@ -129,7 +129,7 @@ export default function PostForm(props) {
 
 
                                     <button type="submit" className="btn btn-primary btn-md-2"
-                                            style={{"backgroundColor": "#3d5fbf", "border": "0px"}}>
+                                            style={{"backgroundColor": "#3d5fbf", "border": "0px", letterSpacing: "0", margin: "10px" }}>
                                         {isSubmitting ? "Please wait..." : "Post"}
                                     </button>
 

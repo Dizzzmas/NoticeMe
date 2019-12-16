@@ -39,8 +39,11 @@ export default function SignIn(props) {
                     username: google_user.username,
                     handle: `@${google_user.username}`,
                     email: google_user.email,
+                    avaUrl: google_user.ava_url,
                     aboutMe: google_user.about_me,
                     role: google_user.role,
+                    followers_count: google_user.followed_by.length,
+                    following_count: google_user.following.length,
                     createdAt: google_user.createdAt,
                     updatedAt: google_user.updatedAt,
                     signed: true,
@@ -53,9 +56,15 @@ export default function SignIn(props) {
                 localStorage.setItem('jwt', payload.token);
                 user.handleSignIn(payload);
                 console.log('us', JSON.stringify(stored_user));
-                props.history.push({
-                    pathname: `/${stored_user.username}`
-                });
+                if (google_user.following < 3) {
+                    props.history.push({
+                        pathname: `/signIn/follow`
+                    });
+                } else {
+                    props.history.push({
+                        pathname: `/posts`
+                    });
+                }
             }
         } catch (error) {
             console.log("Google auth failed");
@@ -89,7 +98,7 @@ export default function SignIn(props) {
                                         } else {
                                             user.handleSignIn(payload);
                                             props.history.push({
-                                                pathname: `/${payload.user.username}`, state: {user: payload.user}
+                                                pathname: `/posts`, state: {user: payload.user}
                                             });
                                         }
 

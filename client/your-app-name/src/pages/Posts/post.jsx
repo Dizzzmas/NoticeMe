@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 import moment from "moment";
 import CommentModal from "../Post/comment_form";
 import {SplitButton, Dropdown, Modal, Button} from "react-bootstrap";
+import {render} from 'react-dom'
+import {ReactSVG} from 'react-svg'
 
 
 const PostBox = (props) => {
@@ -265,16 +267,28 @@ const Likes = (props) => {
     return (
         <a
             className="post-add-icon inline-items">
-            <svg className="olymp-heart-icon">
-                <use xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
-            </svg>
-            {liked ? <button onClick={(e) => {
-                e.stopPropagation();
-                update_likes();
-            }}>Unlike</button> : <button onClick={(e) => {
-                e.stopPropagation();
-                update_likes();
-            }}>Like</button>}
+
+            {liked ? <React.Fragment>
+                <i style={{color: "#c94b4b"}} className="material-icons">
+                    favorite
+                </i>
+
+                <button style={{"letterSpacing": "0"}} onClick={(e) => {
+                    e.stopPropagation();
+                    update_likes();
+                }}>Unlike
+                </button>
+
+            </React.Fragment> : <React.Fragment>
+                <i className="material-icons">
+                    favorite
+                </i>
+                <button style={{"letterSpacing": "0"}} onClick={(e) => {
+                    e.stopPropagation();
+                    update_likes();
+                }}>Like
+                </button>
+            </React.Fragment>}
             <span>{likes_count}</span>
         </a>
     )
@@ -326,16 +340,28 @@ const CommentLikes = (props) => {
     return (
         <a
             className="post-add-icon inline-items">
-            <svg className="olymp-heart-icon">
-                <use xlinkHref="assets/img/./icons.svg#olymp-heart-icon"></use>
-            </svg>
-            {liked ? <button onClick={(e) => {
-                e.stopPropagation();
-                update_likes();
-            }}>Unlike</button> : <button onClick={(e) => {
-                e.stopPropagation();
-                update_likes();
-            }}>Like</button>}
+
+            {liked ? <React.Fragment>
+                <i style={{color: "#c94b4b"}} className="material-icons">
+                    favorite
+                </i>
+
+                <button style={{"letterSpacing": "0"}} onClick={(e) => {
+                    e.stopPropagation();
+                    update_likes();
+                }}>Unlike
+                </button>
+
+            </React.Fragment> : <React.Fragment>
+                <i className="material-icons">
+                    favorite
+                </i>
+                <button style={{"letterSpacing": "0"}} onClick={(e) => {
+                    e.stopPropagation();
+                    update_likes();
+                }}>Like
+                </button>
+            </React.Fragment>}
             <span>{likes_count}</span>
         </a>
     )
@@ -355,6 +381,12 @@ const CommentLikes = (props) => {
 
 const PostBody = (props) => {
     let userContext = useContext(AuthContext);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => {
+        setShow(false)
+    };
+    const handleShow = () => setShow(true);
     return (
         <article className="hentry post">
 
@@ -373,17 +405,25 @@ const PostBody = (props) => {
                 </div>
 
                 <div className="more">
-                    <svg className="olymp-three-dots-icon">
-                        <use xlinkHref="../../assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                    </svg>
-                    <ul className="more-dropdown">
+
+                    <i className="material-icons">more_horiz</i>
+
+
+                    <ul className="more-dropdown" style={{"borderRadius": "50px"}}>
                         <li>
-                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Edit
-                                Post</a>
-                        </li>
-                        <li>
-                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Delete
-                                Post</a>
+                            <button style={{
+                                "fontSize": "10pt",
+                                "letterSpacing": "0rem",
+                                "lineHeight": "18px",
+                                "marginLeft": "0px",
+                                "height": "20px"
+                            }} onClick={handleShow}>Delete
+                                Post
+                            </button>
+
+                            <DeletePostModal history={props.history} show={show} handleClose={handleClose}
+                                             post_id={props.post.id}/>
+
                         </li>
 
                     </ul>
@@ -432,10 +472,9 @@ const PostBody = (props) => {
                 <div className="comments-shared">
                     <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                        className="post-add-icon inline-items">
-                        <svg className="olymp-speech-balloon-icon">
-                            <use
-                                xlinkHref="assets/img/./icons.svg#olymp-speech-balloon-icon"></use>
-                        </svg>
+                        <i class="material-icons" style={{marginRight: "10px"}}>
+                            speaker_notes
+                        </i>
                         <span>{props.post.commentsCount}</span>
                     </a>
 
@@ -469,31 +508,7 @@ const PostBody = (props) => {
         </article>
 
     )
-    // )    <PostBox>
-    //         <div className="inner-body" onClick={() => {
-    //             props.history.push({pathname: `/${props.post.user.username}/posts/${props.post.id}`});
-    //         }}>
-    //             <Avatar image={props.post.user.ava_url}/>
-    //             <div className="body">
-    //
-    //                 <div className="inner-body">
-    //                     <UserName username={props.post.user.username} userId={props.post.user_id}/>
-    //                     <Handle handle={props.post.user.handle}/>
-    //                     <PostedOn posted_on={moment(props.post.createdAt).fromNow()}/>
-    //                     <Comments comments_count={props.post.comments.length}/>
-    //                     <CommentModal history={props.history} post_id={props.post.id}
-    //                                   post_author={props.post.username}/>
-    //                     {(props.post.user.id === userContext.currentUser.id || userContext.currentUser.role) &&
-    //                     <PostOptions history={props.history} post_id={props.post.id}/>
-    //                     }
-    //                 </div>
-    //                 <Images images={props.post.images}/>
-    //                 <Content content={props.post.content}/>
-    //                 <Likes post_id={props.post.id} liked={props.liked} likes_count={props.post.likes.length}/>
-    //             </div>
-    //         </div>
-    //     </PostBox>
-    // )
+
 };
 
 const CommentBody = (props) => {
@@ -515,12 +530,31 @@ const CommentBody = (props) => {
                     </div>
                 </div>
 
-                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                   className="more">
-                    <svg className="olymp-three-dots-icon">
-                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                    </svg>
-                </a>
+                <div className="more">
+
+                    <i className="material-icons">more_horiz</i>
+
+
+                    <ul className="more-dropdown" style={{"borderRadius": "50px"}}>
+                        <li>
+                            <button style={{
+                                "fontSize": "10pt",
+                                "letterSpacing": "0rem",
+                                "lineHeight": "18px",
+                                "marginLeft": "0px",
+                                "height": "20px"
+                            }} >Delete
+                                Comment
+                            </button>
+
+
+
+                        </li>
+
+                    </ul>
+                </div>
+
+
 
             </div>
 

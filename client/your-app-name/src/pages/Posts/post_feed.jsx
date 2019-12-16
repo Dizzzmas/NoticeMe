@@ -130,8 +130,10 @@ function PostFeed(props) {
                 }
                 console.log('NEEDED: ', post);
                 return (
-                    <div className="ui-block"
-                         style={{"position": "relative", "left": "0px", "marginTop": "30px"}}>
+
+
+<div className="ui-block" style={{"position": "relative", "left": "0px", "marginTop": "30px"}}>
+
                         <PostBody
                             key={index}
                             post={post}
@@ -177,59 +179,12 @@ function PostFeed(props) {
             <div>Loading...</div>
             }
             {!hasMore &&
-            <div>You did it! You reached the end!</div>
+            <div>You're spending your life watching other's unrealistic lives! Congratulations! You reached the end!</div>
             }
         </React.Fragment>
 
     );
-// return (
-//
-//         <div className="main-body">
-//             {[...posts].map((post, index) => {
-//
-//
-//                 let liked = false;
-//                 let styles = {
-//                     postBox: 'post-body',
-//                     avatar: 'avatar',
-//                     handle: 'handle',
-//                     postedOn: 'posted_on',
-//                     userName: 'username',
-//                     content: 'post',
-//                     likes: 'likes',
-//                 };
-//                 for (const like of post.likes) {
-//                     console.log(like);
-//                     console.log('curr: ', userContext.currentUser.id);
-//                     if (like.user_id == userContext.currentUser.id) {
-//                         liked = true;
-//                     }
-//                 }
-//                 return (
-//                     <PostBody
-//                         key={index}
-//                         post={post}
-//                         liked={liked}
-//                         history={props.history}
-//                     />
-//                 )
-//             })}
-//             {error &&
-//             <div style={{color: '#900'}}>
-//                 {error}
-//             </div>
-//             }
-//             {isLoading &&
-//             <div>Loading...</div>
-//             }
-//             {!hasMore &&
-//             <div>You did it! You reached the end!</div>
-//             }
-//         </div>
-//
-//     );
-
-
 }
+
 
 export default PostFeed

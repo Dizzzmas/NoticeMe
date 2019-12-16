@@ -8,6 +8,7 @@ import $ from 'jquery'
 import './assets/css/styles.min.css';
  // import './assets/js/jquery.min'
  // import './assets/js/script.min'
+import './assets/js/back-to-top';
 
 
 ReactDOM.render(<App/>, document.getElementById('root'));

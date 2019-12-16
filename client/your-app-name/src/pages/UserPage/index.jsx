@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "../../services/auth";
 import {useParams} from "react-router";
-import {Button} from "react-bootstrap";
-import Followers from "./followers";
+
 import UserPosts from "./user_posts";
-import EditModal from "./edit_modal";
+import "../../assets/js/back-to-top"
+import {Link} from "react-router-dom";
 
 
 const usePrevious = current => {
@@ -114,12 +114,12 @@ const UserPage = (props) => {
 
         <React.Fragment key={username_from_path}>
 
-            <div
+            <divf
                 className="fixed-sidebar open">
                 <div
                     className="fixed-sidebar-left sidebar--small"
                     id="sidebar-left"
-                    style={{"-webkit-transform": "translateX(0%)", "transform": "translateX(0 %)"}}>
+                    style={{"-webkit-transform": "translateX(0%)", "transform": "translateX(0 %)", marginTop: "-56%"}}>
 
                     <a
                         href="https://html.crumina.net/html-olympus/02-ProfilePage.html"
@@ -127,7 +127,7 @@ const UserPage = (props) => {
                         < div
                             className="img-wrap">
                             <img
-                                src="assets/img/./logo.png"
+                                src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474159/safe/logo_uwdarw.png"
                                 alt=""/>
                         </div>
                     </a>
@@ -135,22 +135,12 @@ const UserPage = (props) => {
                     <div className="mCustomScrollbar ps ps--theme_default ps--active-x" data-mcs-theme="dark"
                          data-ps-id="ec16cdd5-39b8-7f34-c5fe-226c4a5a2537">
                         <ul className="left-menu">
-                            <li>
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="js-sidebar-open active">
-                                    <svg className="olymp-menu-icon left-menu-icon" data-toggle="tooltip"
-                                         data-placement="right" data-original-title="OPEN MENU"
-                                         aria-describedby="tooltip404315">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-menu-icon"></use>
-                                    </svg>
-                                </a>
-                            </li>
+
                             <li>
                                 <a href="https://html.crumina.net/html-olympus/03-Newsfeed.html">
-                                    <svg className="olymp-newsfeed-icon left-menu-icon" data-toggle="tooltip"
-                                         data-placement="right" data-original-title="NEWSFEED">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-newsfeed-icon"></use>
-                                    </svg>
+                                    <i className="material-icons" style={{marginLeft: "-8px"}}>
+                                        menu_book
+                                    </i>
                                 </a>
                             </li>
                             <li>
@@ -175,7 +165,7 @@ const UserPage = (props) => {
                 </div>
 
 
-            </div>
+            </divf>
 
 
             <div className="fixed-sidebar fixed-sidebar-responsive">
@@ -183,7 +173,8 @@ const UserPage = (props) => {
                 <div className="fixed-sidebar-left sidebar--small" id="sidebar-left-responsive">
                     <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                        className="logo js-sidebar-open">
-                        <img src="assets/img/./logo.png" alt=""/>
+                        <img src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474159/safe/logo_uwdarw.png"
+                             alt=""/>
                     </a>
 
                 </div>
@@ -200,8 +191,8 @@ const UserPage = (props) => {
                         <ul className="chat-users">
                             <li className="inline-items js-chat-open">
                                 <div className="author-thumb">
-                                    <img alt="author" src={user.avaUrl} className="avatar"/>
-                                    <span className="icon-status disconected"></span>
+                                    <img alt="author" src={user.avaUrl} className="avatar" style={{"width": "100%"}}/>
+                                    <span className="icon-status online"></span>
                                 </div>
                             </li>
                             <li className="inline-items js-chat-open">
@@ -210,12 +201,13 @@ const UserPage = (props) => {
                                     <span className="icon-status online"></span>
                                 </div>
                             </li>
-
+                            <span className="icon-status away"></span>
+                            <span className="icon-status away"></span>
 
                             <li className="inline-items js-chat-open">
                                 <div className="author-thumb">
                                     <img alt="author" src={user.avaUrl} className="avatar"/>
-                                    <span className="icon-status status-invisible"></span>
+
                                 </div>
                             </li>
                             <li className="inline-items js-chat-open">
@@ -237,17 +229,22 @@ const UserPage = (props) => {
                     <div className="search-friend inline-items">
                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                            className="js-sidebar-open">
-                            <svg className="olymp-menu-icon">
-                                <use xlinkHref="assets/img/./icons.svg#olymp-menu-icon"></use>
-                            </svg>
+                            <i style={{color: "#3d5fbf"}} className="material-icons">
+                                menu
+                            </i>
                         </a>
                     </div>
 
                     <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                        className="olympus-chat inline-items js-chat-open">
-                        <svg className="olymp-chat---messages-icon">
-                            <use xlinkHref="assets/img/./icons.svg#olymp-chat---messages-icon"></use>
-                        </svg>
+                        <i className="material-icons" style={{
+                            color: "#fff",
+
+
+                            marginLeft: "35%"
+                        }}>
+                            mail
+                        </i>
                     </a>
 
                 </div>
@@ -267,7 +264,8 @@ const UserPage = (props) => {
                             <li className="inline-items js-chat-open">
 
                                 <div className="author-thumb">
-                                    <img alt="author" src="assets/img/./avatar67-sm.jpg" className="avatar"/>
+                                    <img alt="author" src="assets/img/./avatar67-sm.jpg" className="avatar"
+                                         style={{"width": "100%"}}/>
                                     <span className="icon-status online"></span>
                                 </div>
 
@@ -278,9 +276,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -327,9 +325,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -378,9 +376,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -430,9 +428,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -482,9 +480,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -542,9 +540,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -600,9 +598,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -650,9 +648,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -699,9 +697,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -747,9 +745,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -795,9 +793,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -847,9 +845,9 @@ const UserPage = (props) => {
 
                         <a href="https://html.crumina.net/html-olympus/29-YourAccount-AccountSettings.html"
                            className="settings">
-                            <svg className="olymp-settings-icon">
-                                <use xlinkHref="assets/img/./icons.svg#olymp-settings-icon"></use>
-                            </svg>
+                            <i className="material-icons">
+                                settings_applications
+                            </i>
                         </a>
 
                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -864,9 +862,9 @@ const UserPage = (props) => {
                        className="olympus-chat inline-items js-chat-open">
 
                         <h6 className="olympus-chat-title">OLYMPUS CHAT</h6>
-                        <svg className="olymp-chat---messages-icon">
-                            <use xlinkHref="assets/img/./icons.svg#olymp-chat---messages-icon"></use>
-                        </svg>
+                        <i className="material-icons">
+                            mail
+                        </i>
                     </a>
 
                 </div>
@@ -911,9 +909,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -960,9 +958,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1011,9 +1009,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1063,9 +1061,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1115,9 +1113,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1175,9 +1173,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1233,9 +1231,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1283,9 +1281,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1332,9 +1330,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1380,9 +1378,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1428,9 +1426,9 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="more">
-                                    <svg className="olymp-three-dots-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                    </svg>
+                                    <i class="material-icons">
+                                        more_horiz
+                                    </i>
 
                                     <ul className="more-icons">
                                         <li>
@@ -1479,9 +1477,9 @@ const UserPage = (props) => {
 
                         <a href="https://html.crumina.net/html-olympus/29-YourAccount-AccountSettings.html"
                            className="settings">
-                            <svg className="olymp-settings-icon">
-                                <use xlinkHref="assets/img/./icons.svg#olymp-settings-icon"></use>
-                            </svg>
+                            <i className="material-icons">
+                                settings_applications
+                            </i>
                         </a>
 
                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -1508,7 +1506,7 @@ const UserPage = (props) => {
             <header className="header" id="site-header">
 
                 <div className="page-title">
-                    <h6>Profile Page</h6>
+                    <h6>Notice Me</h6>
                 </div>
 
                 <div className="header-content-wrapper">
@@ -1549,8 +1547,9 @@ const UserPage = (props) => {
 
 
                         <div className="author-page author vcard inline-items more">
-                            <div className="author-thumb">
-                                <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
+                            <div className="author-thumb" style={{"maxWidth": "40px", "overflow": "hidden"}}>
+                                <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"
+                                     style={{"width": "100%"}}/>
                                 <span className="icon-status online"></span>
                                 <div className="more-dropdown more-with-triangle">
                                     <div className="mCustomScrollbar ps ps--theme_default" data-mcs-theme="dark"
@@ -1561,28 +1560,21 @@ const UserPage = (props) => {
 
                                         <ul className="account-settings">
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/29-YourAccount-AccountSettings.html">
+                                                <Link to={`/${userContext.currentUser.username}`}>
 
-                                                    <svg className="olymp-menu-icon">
-                                                        <use xlinkHref="assets/img/./icons.svg#olymp-menu-icon"></use>
-                                                    </svg>
+                                                    <i className="material-icons">
+                                                        settings_applications
+                                                    </i>
 
-                                                    <span>Profile Settings</span>
-                                                </a>
+                                                    <span>Profile</span>
+                                                </Link>
                                             </li>
-                                            <li>
-                                                <a href="https://html.crumina.net/html-olympus/36-FavPage-SettingsAndCreatePopup.html">
-                                                    <svg className="olymp-star-icon left-menu-icon"
-                                                         data-toggle="tooltip" data-placement="right"
-                                                         data-original-title="FAV PAGE">
-                                                        <use xlinkHref="assets/img/./icons.svg#olymp-star-icon"></use>
-                                                    </svg>
 
-                                                    <span>Create Fav Page</span>
-                                                </a>
-                                            </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a onClick={() => {
+                                                    fetchLogOut();
+                                                    userContext.handleLogOut();
+                                                }} href={'#'}>
                                                     <svg className="olymp-logout-icon">
                                                         <use xlinkHref="assets/img/./icons.svg#olymp-logout-icon"></use>
                                                     </svg>
@@ -1593,24 +1585,7 @@ const UserPage = (props) => {
                                         </ul>
 
 
-                                        <div className="ui-block-title ui-block-title-small">
-                                            <h6 className="title">About</h6>
-                                        </div>
 
-                                        <ul>
-                                            <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                    <span>Documentation</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                    <span>FAQs</span>
-                                                </a>
-                                            </li>
-
-
-                                        </ul>
                                         <div className="ps__scrollbar-x-rail" style={{"left": "0px", "bottom": "0px"}}>
                                             <div className="ps__scrollbar-x" tabIndex="0"
                                                  style={{"left": "0px", "width": "0px"}}></div>
@@ -1767,7 +1742,9 @@ const UserPage = (props) => {
                         <div className="ui-block">
                             <div className="top-header">
                                 <div className="top-header-thumb">
-                                    <img src="{user.headerUrl}" alt="nature"/>
+                                    <img style={{height: "300px"}}
+                                         src={'https://res.cloudinary.com/dv0smnf2u/image/upload/v1576470477/safe/header-midnightBlue_iwmokh.jpg'}
+                                         alt="nature"/>
                                 </div>
                                 <div className="profile-section">
                                     <div className="row">
@@ -1848,17 +1825,14 @@ const UserPage = (props) => {
 
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                                            className="btn btn-control bg-purple">
-                                            <svg className="olymp-chat---m
-\749oes-icon">
-                                                <use
-                                                    xlinkHref="assets/img/./icons.svg#olymp-chat---messages-icon"></use>
-                                            </svg>
+                                            <i className="material-icons" style={{color: "#fff"}}> mail </i>
                                         </a>
 
                                         <div className="btn btn-control  more" style={{"backgroundColor": "#3d5fbf"}}>
-                                            <svg className="olymp-settings-icon" style={{"color": "#3d5fbf"}}>
-                                                <use xlinkHref="assets/img/./icons.svg#olymp-settings-icon"></use>
-                                            </svg>
+
+                                            <i style={{"color": "#fff"}} className="material-icons">
+                                                settings_applications
+                                            </i>
 
                                             <ul className="more-dropdown more-with-triangle triangle-bottom-right">
                                                 <li>
@@ -1882,7 +1856,7 @@ const UserPage = (props) => {
                                 <div className="top-header-author">
                                     <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html"
                                        className="author-thumb">
-                                        <img src={user.avaUrl} alt="author"/>
+                                        <img src={user.avaUrl} alt="author" style={{"width": "100%"}}/>
                                     </a>
                                     <div className="author-content">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html"
@@ -1905,12 +1879,7 @@ const UserPage = (props) => {
                     {/* Main Content */}
 
                     <div className="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-                        <div id="newsfeed-items-grid" style={{"position": "relative"}}>
-                            <div className="ui-block"
-                                 style={{"position": "relative", "left": "0px", "marginTop": "30px"}}>
-
-
-                            </div>
+                        <div id="newsfeed-items-grid" style={{"position": "relative", "marginTop": "-30px"}}>
 
 
                             {user.id &&
@@ -1923,9 +1892,9 @@ const UserPage = (props) => {
                         <a id="load-more-button" href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                            className="btn btn-control btn-more hidden-xs-up" data-load-link="items-to-load.html"
                            data-container="newsfeed-items-grid">
-                            <svg className="olymp-three-dots-icon">
-                                <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                            </svg>
+                            <i class="material-icons">
+                                more_horiz
+                            </i>
                             <div className="ripple-container"></div>
                         </a>
                     </div>
@@ -1969,23 +1938,25 @@ const UserPage = (props) => {
                                        className="social-item bg-facebook">
                                         <svg className="svg-inline--fa fa-facebook-f fa-w-9" aria-hidden="true"
                                              data-prefix="fab" data-icon="facebook-f" role="img"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" data-fa-i2svg="">
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" data-fa-i2svg=""
+                                             style={{height: "30px", marginTop: "3px"}}>
                                             <path fill="currentColor"
                                                   d="M76.7 512V283H0v-91h76.7v-71.7C76.7 42.4 124.3 0 193.8 0c33.3 0 61.9 2.5 70.2 3.6V85h-48.2c-37.8 0-45.1 18-45.1 44.3V192H256l-11.7 91h-73.6v229"></path>
                                         </svg>
                                         {/* <i class="fab fa-facebook-f" aria-hidden="true"></i> */}
-                                        Facebook
+
                                     </a>
                                     <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                                        className="social-item bg-twitter">
                                         <svg className="svg-inline--fa fa-twitter fa-w-16" aria-hidden="true"
                                              data-prefix="fab" data-icon="twitter" role="img"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""
+                                             style={{height: "30px", marginTop: "3px"}}>
                                             <path fill="currentColor"
                                                   d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
                                         </svg>
                                         {/* <i class="fab fa-twitter" aria-hidden="true"></i> */}
-                                        Twitter
+
                                     </a>
 
                                 </div>
@@ -2009,10 +1980,10 @@ const UserPage = (props) => {
                             <ul className="widget w-twitter">
                                 <li className="twitter-item">
                                     <div className="author-folder">
-                                        <img src="assets/img/./twitter-avatar1.png" alt="avatar"/>
+                                        <img src={user.avaUrl} style={{width: "30px"}} alt="avatar"/>
                                         <div className="author">
                                             <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="author-name">Space Cowboy</a>
+                                               className="author-name">{user.username}</a>
                                             <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                                                className="group">{user.handle}</a>
                                         </div>
@@ -2029,10 +2000,10 @@ const UserPage = (props) => {
                                 </li>
                                 <li className="twitter-item">
                                     <div className="author-folder">
-                                        <img src="assets/img/./twitter-avatar1.png" alt="avatar"/>
+                                        <img src={user.avaUrl} style={{width: "30px"}} alt="avatar"/>
                                         <div className="author">
                                             <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="author-name">Space Cowboy</a>
+                                               className="author-name">{user.username}</a>
                                             <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                                                className="group">{user.handle}</a>
                                         </div>
@@ -2048,16 +2019,16 @@ const UserPage = (props) => {
                                 </li>
                                 <li className="twitter-item">
                                     <div className="author-folder">
-                                        <img src="assets/img/./twitter-avatar1.png" alt="avatar"/>
+                                        <img src={user.avaUrl} style={{width: "30px"}} alt="avatar"/>
                                         <div className="author">
-                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="author-name">Space Cowboy</a>
-                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                            <a href="#"
+                                               className="author-name">{user.username}</a>
+                                            <a href="#"
                                                className="group">{user.handle}</a>
                                         </div>
                                     </div>
                                     <p>The Sunday is the annual agency camping trip and I still haven’t got a tent
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="link-post">#TheWild #Indoors</a></p>
                                     <span className="post__date">
 <time className="published" dateTime="2017-03-24T18:18">
@@ -2093,9 +2064,11 @@ Yesterday
                             <ol className="widget w-playlist">
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist6.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
                                                 <use
@@ -2105,25 +2078,25 @@ Yesterday
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">The Past Starts Slow...</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">System of a Revenge</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">3:22</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -2134,9 +2107,11 @@ Yesterday
 
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist7.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
                                                 <use
@@ -2146,25 +2121,25 @@ Yesterday
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">The Pretender</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">Kung Fighters</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">5:48</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -2174,9 +2149,11 @@ Yesterday
                                 </li>
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist8.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
                                                 <use
@@ -2186,25 +2163,25 @@ Yesterday
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">Blood Brothers</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">Iron Maid</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">3:06</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -2214,9 +2191,11 @@ Yesterday
                                 </li>
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist9.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
                                                 <use
@@ -2226,25 +2205,25 @@ Yesterday
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">Seven Nation Army</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">The Black Stripes</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">6:17</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -2254,9 +2233,11 @@ Yesterday
                                 </li>
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist10.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
                                                 <use
@@ -2266,25 +2247,25 @@ Yesterday
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">Killer Queen</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">Archiduke</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">5:40</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -2308,7 +2289,7 @@ Yesterday
                      aria-labelledby="update-header-photo" aria-hidden="true">
                     <div className="modal-dialog window-popup update-header-photo" role="document">
                         <div className="modal-content">
-                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                            <a href="#"
                                className="close icon-close" data-dismiss="modal" aria-label="Close">
                                 <svg className="olymp-close-icon">
                                     <use xlinkHref="assets/img/./icons.svg#olymp-close-icon"></use>
@@ -2320,7 +2301,7 @@ Yesterday
                             </div>
 
                             <div className="modal-body">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                <a href="#"
                                    className="upload-photo-item">
                                     <svg className="olymp-computer-icon">
                                         <use xlinkHref="assets/img/./icons.svg#olymp-computer-icon"></use>
@@ -2330,7 +2311,7 @@ Yesterday
                                     <span>Browse your computer.</span>
                                 </a>
 
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                <a href="#"
                                    className="upload-photo-item" data-toggle="modal"
                                    data-target="#choose-from-my-photo">
 
@@ -2356,7 +2337,7 @@ Yesterday
                     <div className="modal-dialog window-popup choose-from-my-photo" role="document">
 
                         <div className="modal-content">
-                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                            <a href="#"
                                className="close icon-close" data-dismiss="modal" aria-label="Close">
                                 <svg className="olymp-close-icon">
                                     <use xlinkHref="assets/img/./icons.svg#olymp-close-icon"></use>
@@ -2369,7 +2350,7 @@ Yesterday
                                 <ul className="nav nav-tabs" role="tablist">
                                     <li className="nav-item">
                                         <a className="nav-link active" data-toggle="tab"
-                                           href="https://html.crumina.net/html-olympus/02-ProfilePage.html#home"
+                                           href="#"
                                            role="tab" aria-expanded="true">
                                             <svg className="olymp-photos-icon">
                                                 <use xlinkHref="assets/img/./icons.svg#olymp-photos-icon"></use>
@@ -2378,7 +2359,7 @@ Yesterday
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link" data-toggle="tab"
-                                           href="https://html.crumina.net/html-olympus/02-ProfilePage.html#profile"
+                                           href="#"
                                            role="tab" aria-expanded="false">
                                             <svg className="olymp-albums-icon">
                                                 <use xlinkHref="assets/img/./icons.svg#olymp-albums-icon"></use>
@@ -2469,17 +2450,17 @@ Yesterday
 </div> */}
 
 
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="btn btn-secondary btn-lg btn--half-width">Cancel</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="btn btn-primary btn-lg btn--half-width">Confirm Photo</a>
 
                                     </div>
 
 
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                    <a href="#"
                                        className="btn btn-secondary btn-lg btn--half-width">Cancel</a>
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                    <a href="#"
                                        className="btn btn-primary btn-lg disabled btn--half-width">Confirm Photo</a>
                                 </div>
                             </div>
@@ -2491,459 +2472,15 @@ Yesterday
 
             {/* ... end Window-popup Choose from my Photo */}
 
-            {/* Playlist Popup */}
 
-            <div className="window-popup playlist-popup" tabIndex="-1" role="dialog" aria-labelledby="playlist-popup"
-                 aria-hidden="true">
+            <a className="back-to-top" id="backttop" href="#">
+                <i className="material-icons" style={{
+                    marginTop: "25%",
 
-                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html"
-                   className="icon-close js-close-popup">
-                    <svg className="olymp-close-icon">
-                        <use xlinkHref="assets/img/./icons.svg#olymp-close-icon"></use>
-                    </svg>
-                </a>
-
-                <div className="mCustomScrollbar ps ps--theme_default"
-                     data-ps-id="d5efeaef-140f-f06d-c4cb-c461425f8c7c">
-                    <table className="playlist-popup-table">
-
-                        <thead>
-
-                        <tr>
-
-                            <th className="play">
-                                PLAY
-                            </th>
-
-                            <th className="cover">
-                                COVER
-                            </th>
-
-                            <th className="song-artist">
-                                SONG AND ARTIST
-                            </th>
-
-                            <th className="album">
-                                ALBUM
-                            </th>
-
-                            <th className="released">
-                                RELEASED
-                            </th>
-
-                            <th className="duration">
-                                DURATION
-                            </th>
-
-                            <th className="spotify">
-                                GET IT ON SPOTIFY
-                            </th>
-
-                            <th className="remove">
-                                REMOVE
-                            </th>
-                        </tr>
-
-                        </thead>
-
-                        <tbody>
-                        <tr>
-                            <td className="play">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="play-icon">
-                                    <svg className="olymp-music-play-icon-big">
-                                        <use xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                            <td className="cover">
-                                <div className="playlist-thumb">
-                                    <img src="assets/img/./playlist19.jpg" alt="thumb-composition"/>
-                                </div>
-                            </td>
-                            <td className="song-artist">
-                                <div className="composition">
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-name">We Can Be Heroes</a>
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-author">Jason Bowie</a>
-                                </div>
-                            </td>
-                            <td className="album">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="album-composition">Ziggy Firedust</a>
-                            </td>
-                            <td className="released">
-                                <div className="release-year">2014</div>
-                            </td>
-                            <td className="duration">
-                                <div className="composition-time">
-                                    <time className="published" dateTime="2017-03-24T18:18">6:17</time>
-                                </div>
-                            </td>
-                            <td className="spotify">
-                                <svg className="svg-inline--fa fa-spotify fa-w-16 composition-icon" aria-hidden="true"
-                                     data-prefix="fab" data-icon="spotify" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 496 512" data-fa-i2svg="">
-                                    <path fill="currentColor"
-                                          d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"></path>
-                                </svg>
-                                {/* <i class="fab fa-spotify composition-icon" aria-hidden="true"></i> */}
-                            </td>
-                            <td className="remove">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="remove-icon">
-                                    <svg className="olymp-close-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-close-icon"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td className="play">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="play-icon">
-                                    <svg className="olymp-music-play-icon-big">
-                                        <use xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                            <td className="cover">
-                                <div className="playlist-thumb">
-                                    <img src="assets/img/./playlist6.jpg" alt="thumb-composition"/>
-                                </div>
-                            </td>
-                            <td className="song-artist">
-                                <div className="composition">
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-name">The Past Starts Slow and Ends</a>
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-author">System of a Revenge</a>
-                                </div>
-                            </td>
-                            <td className="album">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="album-composition">Wonderize</a>
-                            </td>
-                            <td className="released">
-                                <div className="release-year">2014</div>
-                            </td>
-                            <td className="duration">
-                                <div className="composition-time">
-                                    <time className="published" dateTime="2017-03-24T18:18">6:17</time>
-                                </div>
-                            </td>
-                            <td className="spotify">
-                                <svg className="svg-inline--fa fa-spotify fa-w-16 composition-icon" aria-hidden="true"
-                                     data-prefix="fab" data-icon="spotify" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 496 512" data-fa-i2svg="">
-                                    <path fill="currentColor"
-                                          d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"></path>
-                                </svg>
-                                {/* <i class="fab fa-spotify composition-icon" aria-hidden="true"></i> */}
-                            </td>
-                            <td className="remove">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="remove-icon">
-                                    <svg className="olymp-close-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-close-icon"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td className="play">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="play-icon">
-                                    <svg className="olymp-music-play-icon-big">
-                                        <use xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                            <td className="cover">
-                                <div className="playlist-thumb">
-                                    <img src="assets/img/./playlist7.jpg" alt="thumb-composition"/>
-                                </div>
-                            </td>
-                            <td className="song-artist">
-                                <div className="composition">
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-name">The Pretender</a>
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-author">Kung Fighters</a>
-                                </div>
-                            </td>
-                            <td className="album">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="album-composition">Warping Lights</a>
-                            </td>
-                            <td className="released">
-                                <div className="release-year">2014</div>
-                            </td>
-                            <td className="duration">
-                                <div className="composition-time">
-                                    <time className="published" dateTime="2017-03-24T18:18">6:17</time>
-                                </div>
-                            </td>
-                            <td className="spotify">
-                                <svg className="svg-inline--fa fa-spotify fa-w-16 composition-icon" aria-hidden="true"
-                                     data-prefix="fab" data-icon="spotify" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 496 512" data-fa-i2svg="">
-                                    <path fill="currentColor"
-                                          d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"></path>
-                                </svg>
-                                {/* <i class="fab fa-spotify composition-icon" aria-hidden="true"></i> */}
-                            </td>
-                            <td className="remove">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="remove-icon">
-                                    <svg className="olymp-close-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-close-icon"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td className="play">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="play-icon">
-                                    <svg className="olymp-music-play-icon-big">
-                                        <use xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                            <td className="cover">
-                                <div className="playlist-thumb">
-                                    <img src="assets/img/./playlist8.jpg" alt="thumb-composition"/>
-                                </div>
-                            </td>
-                            <td className="song-artist">
-                                <div className="composition">
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-name">Seven Nation Army</a>
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-author">The Black Stripes</a>
-                                </div>
-                            </td>
-                            <td className="album">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="album-composition ">Icky Strung (LIVE at Cube Garden)</a>
-                            </td>
-                            <td className="released">
-                                <div className="release-year">2014</div>
-                            </td>
-                            <td className="duration">
-                                <div className="composition-time">
-                                    <time className="published" dateTime="2017-03-24T18:18">6:17</time>
-                                </div>
-                            </td>
-                            <td className="spotify">
-                                <svg className="svg-inline--fa fa-spotify fa-w-16 composition-icon" aria-hidden="true"
-                                     data-prefix="fab" data-icon="spotify" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 496 512" data-fa-i2svg="">
-                                    <path fill="currentColor"
-                                          d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"></path>
-                                </svg>
-                                {/* <i class="fab fa-spotify composition-icon" aria-hidden="true"></i> */}
-                            </td>
-                            <td className="remove">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="remove-icon">
-                                    <svg className="olymp-close-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-close-icon"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td className="play">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="play-icon">
-                                    <svg className="olymp-music-play-icon-big">
-                                        <use xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                            <td className="cover">
-                                <div className="playlist-thumb">
-                                    <img src="assets/img/./playlist9.jpg" alt="thumb-composition"/>
-                                </div>
-                            </td>
-                            <td className="song-artist">
-                                <div className="composition">
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-name">Leap of Faith</a>
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-author">Eden Artifact</a>
-                                </div>
-                            </td>
-                            <td className="album">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="album-composition">The Assassins’s Soundtrack</a>
-                            </td>
-                            <td className="released">
-                                <div className="release-year">2014</div>
-                            </td>
-                            <td className="duration">
-                                <div className="composition-time">
-                                    <time className="published" dateTime="2017-03-24T18:18">6:17</time>
-                                </div>
-                            </td>
-                            <td className="spotify">
-                                <svg className="svg-inline--fa fa-spotify fa-w-16 composition-icon" aria-hidden="true"
-                                     data-prefix="fab" data-icon="spotify" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 496 512" data-fa-i2svg="">
-                                    <path fill="currentColor"
-                                          d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"></path>
-                                </svg>
-                                {/* <i class="fab fa-spotify composition-icon" aria-hidden="true"></i> */}
-                            </td>
-                            <td className="remove">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="remove-icon">
-                                    <svg className="olymp-close-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-close-icon"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td className="play">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="play-icon">
-                                    <svg className="olymp-music-play-icon-big">
-                                        <use xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                            <td className="cover">
-                                <div className="playlist-thumb">
-                                    <img src="assets/img/./playlist10.jpg" alt="thumb-composition"/>
-                                </div>
-                            </td>
-                            <td className="song-artist">
-                                <div className="composition">
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-name">Killer Queen</a>
-                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                       className="composition-author">Archiduke</a>
-                                </div>
-                            </td>
-                            <td className="album">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="album-composition ">News of the Universe</a>
-                            </td>
-                            <td className="released">
-                                <div className="release-year">2014</div>
-                            </td>
-                            <td className="duration">
-                                <div className="composition-time">
-                                    <time className="published" dateTime="2017-03-24T18:18">6:17</time>
-                                </div>
-                            </td>
-                            <td className="spotify">
-                                <svg className="svg-inline--fa fa-spotify fa-w-16 composition-icon" aria-hidden="true"
-                                     data-prefix="fab" data-icon="spotify" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 496 512" data-fa-i2svg="">
-                                    <path fill="currentColor"
-                                          d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"></path>
-                                </svg>
-                                {/* <i class="fab fa-spotify composition-icon" aria-hidden="true"></i> */}
-                            </td>
-                            <td className="remove">
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="remove-icon">
-                                    <svg className="olymp-close-icon">
-                                        <use xlinkHref="assets/img/./icons.svg#olymp-close-icon"></use>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div className="ps__scrollbar-x-rail" style={{"left": "0px", "bottom": "0px"}}>
-                        <div className="ps__scrollbar-x" tabIndex="0" style={{"left": "0px", "width": "0px"}}></div>
-                    </div>
-                    <div className="ps__scrollbar-y-rail" style={{"top": "0px", "right": "0px"}}>
-                        <div className="ps__scrollbar-y" tabIndex="0" style={{"top": "0px", "height": "0px"}}></div>
-                    </div>
-                </div>
-
-                <span className="mejs-offscreen">Audio Player</span>
-                <div id="mep_0" className="mejs-container svg mejs-audio" tabIndex="0" role="application"
-                     aria-label="Audio Player" style={{"width": "440px", "height": "70px"}}>
-                    <div className="mejs-inner">
-                        <div className="mejs-mediaelement">
-                            <audio id="mediaplayer" data-showplaylist="true" src="mp3/Twice.mp3">
-                                <source src="mp3/Twice.mp3" title="Track 1" data-poster="track1.png" type="audio/mpeg"/>
-                                <source src="mp3/Twice.mp3" title="Track 2" data-poster="track2.png" type="audio/mpeg"/>
-                                <source src="mp3/Twice.mp3" title="Track 3" data-poster="track3.png" type="audio/mpeg"/>
-                                <source src="mp3/Twice.mp3" title="Track 4" data-poster="track4.png" type="audio/mpeg"/>
-                            </audio>
-                        </div>
-                        <div className="mejs-layers">
-                            <div className="mejs-poster mejs-layer"
-                                 style={{"display": "none", "width": "400px", "height": "30px"}}></div>
-                        </div>
-                        <div className="mejs-controls">
-                            <div
-                                className="mejs-button mejs-playlist-plugin-button mejs-prevtrack-button mejs-prevtrack">
-                                <button type="button" aria-controls="mep_0" title="Previous Track"></button>
-                            </div>
-                            <div className="mejs-button mejs-playpause-button mejs-play">
-                                <button type="button" aria-controls="mep_0" title="Play" aria-label="Play"></button>
-                            </div>
-                            <div
-                                className="mejs-button mejs-playlist-plugin-button mejs-nexttrack-button mejs-nexttrack">
-                                <button type="button" aria-controls="mep_0" title="Next Track"></button>
-                            </div>
-                            <div className="mejs-button mejs-loop-button mejs-loop-off">
-                                <button type="button" aria-controls="mep_0" title="Repeat On/Off"></button>
-                            </div>
-                            <div
-                                className="mejs-button mejs-playlist-plugin-button mejs-shuffle-button mejs-shuffle-off">
-                                <button type="button" aria-controls="mep_0" title="Shuffle On/Off"></button>
-                            </div>
-                            <div className="mejs-time mejs-currenttime-container" role="timer" aria-live="off"><span
-                                className="mejs-currenttime">00:00</span></div>
-                            <div className="mejs-time-rail" style={{"width": "1364.94px"}}><span
-                                className="mejs-time-total mejs-time-slider" style={{"width": "354.94px"}}
-                                aria-label="Time Slider" aria-valuemin="0" aria-valuemax="NaN" aria-valuenow="0"
-                                aria-valuetext="00:00" role="slider" tabIndex="0"><span className="mejs-time-buffering"
-                                                                                        style={{"display": "none"}}></span><span
-                                className="mejs-time-loaded" style={{"width": "29.7786px"}}></span><span
-                                className="mejs-time-current" style={{"width": "0px"}}></span><span
-                                className="mejs-time-handle" style={{"left": "-5px"}}></span><span
-                                className="mejs-time-float"><span className="mejs-time-float-current">00:00</span><span
-                                className="mejs-time-float-corner"></span></span></span></div>
-                            <div className="mejs-time mejs-duration-container"><span
-                                className="mejs-duration">03:06</span></div>
-                            <div className="mejs-button mejs-volume-button mejs-mute">
-                                <button type="button" aria-controls="mep_0" title="Mute" aria-label="Mute"></button>
-                            </div>
-                            <a href="javascript:void(0);" className="mejs-horizontal-volume-slider mejs-mute"
-                               aria-label="Volume Slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"
-                               aria-valuetext="80%" role="slider" tabIndex="0"><span className="mejs-offscreen">Use Up/Down Arrow keys to increase or decrease volume.</span>
-                                <div className="mejs-horizontal-volume-total"></div>
-                                <div className="mejs-horizontal-volume-current" style={{"width": "40px"}}></div>
-                                <div className="mejs-horizontal-volume-handle" style={{"left": "27px"}}></div>
-                            </a></div>
-                        <div className="mejs-clear"></div>
-                    </div>
-                </div>
-
-            </div>
-
-            {/* ... end Playlist Popup */}
-
-
-            <a className="back-to-top" href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                <img src="assets/img/./back-to-top.svg" alt="arrow" className="back-icon"/>
+                    marginLeft: "25%", color: "#fff"
+                }}>
+                    arrow_upward
+                </i>
             </a>
 
 
@@ -2957,9 +2494,9 @@ Yesterday
                         <span className="icon-status online"></span>
                         <h6 className="title">Chat</h6>
                         <div className="more">
-                            <svg className="olymp-three-dots-icon">
-                                <use xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                            </svg>
+                            <i class="material-icons">
+                                more_horiz
+                            </i>
                             <svg className="olymp-little-delete js-chat-open">
                                 <use xlinkHref="assets/img/./icons.svg#olymp-little-delete"></use>
                             </svg>
@@ -3038,47 +2575,47 @@ Yesterday
 
                                         <ul className="more-dropdown more-with-triangle triangle-bottom-right">
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a href="#">
                                                     <img src="assets/img/./icon-chat1.png" alt="icon"/>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a href="#">
                                                     <img src="assets/img/./icon-chat2.png" alt="icon"/>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a href="#">
                                                     <img src="assets/img/./icon-chat3.png" alt="icon"/>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a href="#">
                                                     <img src="assets/img/./icon-chat4.png" alt="icon"/>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a href="#">
                                                     <img src="assets/img/./icon-chat5.png" alt="icon"/>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a href="#">
                                                     <img src="assets/img/./icon-chat6.png" alt="icon"/>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a href="#">
                                                     <img src="assets/img/./icon-chat7.png" alt="icon"/>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a href="#">
                                                     <img src="assets/img/./icon-chat8.png" alt="icon"/>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a href="#">
                                                     <img src="assets/img/./icon-chat9.png" alt="icon"/>
                                                 </a>
                                             </li>
@@ -3185,38 +2722,17 @@ Yesterday
         </React.Fragment>
     );
 
-    // return (
-    //
-    //     <div>
-    //         {user.id &&
-    //         <div>
-    //             <p>Id: {user.id}</p>
-    //             <p>Username: {user.username}</p>
-    //             <p>{user.handle}</p>
-    //             <img src={user.avaUrl}/>
-    //
-    //          <Followers followers_count={user.followers_count} followed_count={user.following_count}
-    //                        userId={user.id}/>
-    //             <p>About_me: {user.aboutMe}</p>
-    //             {user.username === userContext.currentUser.username &&
-    //             <EditModal history={props.history}/>}
-    //             <Button variant='success' onClick={() => {
-    //                 props.history.push({
-    //                     pathname: '/chat',
-    //                     search: `?user=${user.username}`
-    //                 })
-    //             }}>Message</Button>
-    //
-    //             <p>Posts: </p>
-    //
-    //             <UserPosts userId={user.id} history={props.history}/>
-    //
-    //
-    //         </div>}
-    //     </div>
-    //
-    // );
 }
+
+let fetchLogOut = () => {
+
+
+    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentUser');
+    console.log('All must be deleted');
+    return ({message: 'Logout successful'});
+
+};
 
 export default function User(props) {
 

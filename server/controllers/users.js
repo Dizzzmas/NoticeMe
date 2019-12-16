@@ -31,12 +31,14 @@ module.exports = {
                     };
                     const token = jwt.sign(payload, 'cc6cd6b1fe55fd924d4a8e1b6bac018c');
 
-                    let final_user = Users.findByPk(updated_user.id, { include: [
-                    {model: Users, as: 'followed_by', through: {attributes: []}}, {
-                        model: Users,
-                        as: 'following',
-                        through: {attributes: []}
-                    }]});
+                    let final_user = Users.findByPk(updated_user.id, {
+                        include: [
+                            {model: Users, as: 'followed_by', through: {attributes: []}}, {
+                                model: Users,
+                                as: 'following',
+                                through: {attributes: []}
+                            }]
+                    });
 
                     return res.status(201).send({final_user, token});
                 }
@@ -62,12 +64,14 @@ module.exports = {
                     ava_url: `https://www.gravatar.com/avatar/${md5(utf8.encode(req.body.email.toLowerCase()))}?d=identicon`,
                 });
 
-            let final_user = await Users.findByPk(user.id,  { include: [
+            let final_user = await Users.findByPk(user.id, {
+                include: [
                     {model: Users, as: 'followed_by', through: {attributes: []}}, {
                         model: Users,
                         as: 'following',
                         through: {attributes: []}
-                    }]});
+                    }]
+            });
 
             const payload = {
                 user: user
@@ -299,7 +303,6 @@ module.exports = {
     },
     async authGoogleUser(accessToken, refreshToken, profile, done) {
         try {
-
             let existing_user = await Users
                 .findOne({
                     where: {

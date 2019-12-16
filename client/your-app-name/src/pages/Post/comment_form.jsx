@@ -79,7 +79,13 @@ export default function CommentForm(props) {
                     </div>
 
 
-                    <button
+                    <button style={{"letterSpacing": "0",
+
+"padding": "10px",
+
+"backgroundColor": "#3d5fbf",
+
+"border": "1px solid #3d5fbf"}}
                         type="submit"
                         className="btn btn-md-2 btn-primary"
                         disabled={isSubmitting}

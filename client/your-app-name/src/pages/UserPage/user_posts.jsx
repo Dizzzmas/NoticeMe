@@ -166,7 +166,7 @@ function UserPosts(props) {
                         {post.comments.length != post.commentsCount ?
                             <ViewMoreComments post_id={post.id} post={post} posts={posts}
                                               handlePostsUpdate={handlePostsUpdate}/>
-                            : <span>No More Comments</span>}
+                            : ''}
 
                         <CommentForm posts={posts} handlePostsUpdate={handlePostsUpdate} post_id={post.id}/>
 
@@ -183,7 +183,7 @@ function UserPosts(props) {
             <div>Loading...</div>
             }
             {!hasMore &&
-            <div>You did it! You reached the end!</div>
+            <div><p>No posts</p></div>
             }
         </React.Fragment>
     );

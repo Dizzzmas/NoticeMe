@@ -11,6 +11,7 @@ import PostPage from "../pages/Post";
 import Chat from "../pages/Chat";
 import WhoToFollow from "../pages/whoToFollow";
 import MyNavBar from "../pages/MyNavbar";
+import EditPage from "../pages/UserPage/edit_page";
 
 
 export default function Routes() {
@@ -25,6 +26,7 @@ export default function Routes() {
                 <Route path='/posts' component={Posts} isPrivate/>
                 <Route path='/chat' component={Chat} isPrivate/>
                 <Route path='/:username/posts/:postId' component={PostPage} isPrivate/>
+                <Route path='/:username/edit' component={EditPage} isPrivate/>
                 <Route path='/:username' component={User} isPrivate/>
 
 

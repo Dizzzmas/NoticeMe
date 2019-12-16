@@ -3,6 +3,7 @@ import PostFeed from "./post_feed";
 import {AuthContext} from "../../services/auth";
 import UserPosts from "../UserPage/user_posts";
 import PostForm from "../Post/post_form";
+import {Link} from "react-router-dom";
 
 
 export default function Posts(props) {
@@ -171,32 +172,22 @@ export default function Posts(props) {
 
                         <ul className="account-settings">
                             <li>
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                <Link to={`/${userContext.currentUser.username}`}>
 
-                                    <svg className="olymp-menu-icon">
-                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                             xlinkHref="assets/img/./icons.svg#olymp-menu-icon"></use>
-                                    </svg>
+                                    <i className="material-icons">
+                                        settings_applications
+                                    </i>
 
-                                    <span>Profile Settings</span>
-                                </a>
+                                    <span>Profile</span>
+                                </Link>
                             </li>
                             <li>
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                    <svg className="olymp-star-icon left-menu-icon" data-toggle="tooltip"
-                                         data-placement="right" data-original-title="FAV PAGE">
-                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                             xlinkHref="assets/img/./icons.svg#olymp-star-icon"></use>
-                                    </svg>
-
-                                    <span>Create Fav Page</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                <a onClick={() => {
+                                    fetchLogOut();
+                                    userContext.handleLogOut();
+                                }} href={'#'}>
                                     <svg className="olymp-logout-icon">
-                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                             xlinkHref="assets/img/./icons.svg#olymp-logout-icon"></use>
+                                        <use xlinkHref="assets/img/./icons.svg#olymp-logout-icon"></use>
                                     </svg>
 
                                     <span>Log Out</span>
@@ -1712,29 +1703,6 @@ export default function Posts(props) {
                                             </li>
                                         </ul>
 
-
-                                        <div className="ui-block-title ui-block-title-small">
-                                            <h6 className="title">About</h6>
-                                        </div>
-
-                                        <ul>
-                                            <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                    <span>Documentation</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                    <span>FAQs</span>
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
-                                                    <span>Support</span>
-                                                </a>
-                                            </li>
-                                        </ul>
                                         <div className="ps__scrollbar-x-rail" style={{"left": "0px", "bottom": "0px"}}>
                                             <div className="ps__scrollbar-x" tabIndex="0"
                                                  style={{"left": "0px", "width": "0px"}}></div>
@@ -1844,7 +1812,7 @@ export default function Posts(props) {
                             <ul className="notification-list friend-requests">
                                 <li>
                                     <div className="author-thumb">
-                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl} alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -1881,7 +1849,7 @@ export default function Posts(props) {
                                 </li>
                                 <li>
                                     <div className="author-thumb">
-                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl} alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -1918,7 +1886,7 @@ export default function Posts(props) {
                                 </li>
                                 <li className="accepted">
                                     <div className="author-thumb">
-                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl} alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         You and <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -1946,7 +1914,7 @@ export default function Posts(props) {
                                 </li>
                                 <li>
                                     <div className="author-thumb">
-                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl} alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -2010,7 +1978,7 @@ export default function Posts(props) {
                             <ul className="notification-list chat-message">
                                 <li className="message-unread">
                                     <div className="author-thumb">
-                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl} alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -2034,7 +2002,7 @@ export default function Posts(props) {
 
                                 <li>
                                     <div className="author-thumb">
-                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl} alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -2058,7 +2026,7 @@ export default function Posts(props) {
                                 </li>
                                 <li>
                                     <div className="author-thumb">
-                                        <img src={userContext.currentUser.avaUrl}  alt="author"/>
+                                        <img src={userContext.currentUser.avaUrl} alt="author"/>
                                     </div>
                                     <div className="notification-event">
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
@@ -2169,23 +2137,20 @@ export default function Posts(props) {
                     {/* Main Content */}
 
                     <div className="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+                        <div id="newsfeed-items-grid" style={{"position": "relative", "marginTop": "-30px"}}>
 
-                        <div className="ui-block">
 
                             {/* News Feed Form  */}
 
 
+                            {/* ... end News Feed Form  */}
 
-                            {/* ... end News Feed Form  */}            </div>
 
-                        <div className="ui-block" style={{"position": "relative", "left": "0px", "marginTop": "30px"}}>
+                            {/* Post */}
 
-                            <div id="newsfeed-items-grid" style={{"position": "relative", "marginTop": "30px"}}>
-                                {/* Post */}
+                            <PostFeed history={props.history}/>
 
-                                <PostFeed history={props.history}/>
-
-                                {/* ... end Comment Form  */}                </div>
+                            {/* ... end Comment Form  */}
 
 
                             {/* Post */}
@@ -2224,16 +2189,15 @@ export default function Posts(props) {
 
                                 <ul className="widget w-personal-info item-block">
                                     <li>
-                                        <span className="title" style={{"color": "#ff8400"}}>About Me:</span>
-                                        <span className="text">{userContext.currentUser.about_me}</span>
+                                        <span className="title" style={{"color": "#3d5fbf"}}>About Me:</span>
+                                        <span className="text">{userContext.currentUser.aboutMe}</span>
                                     </li>
                                     <li>
-                                        <span className="title" style={{"color": "#ff8400"}}>Favourite TV Shows:</span>
+                                        <span className="title" style={{"color": "#3d5fbf"}}>Favourite TV Shows:</span>
                                         <span className="text">Breaking Good, RedDevil, People of Interest, The Running Dead, Found,  American Guy.</span>
                                     </li>
                                     <li>
-                                    <span className="title"
-                                          style={{"color": "#ff8400"}}>Favourite Music Bands / Artists:</span>
+                                        <span className="title" style={{"color": "#3d5fbf"}}>Favourite Music Bands / Artists:</span>
                                         <span className="text">Iron Maid, DC/AC, Megablow, The Ill, Kung Fighters, System of a Revenge.</span>
                                     </li>
                                 </ul>
@@ -2247,23 +2211,25 @@ export default function Posts(props) {
                                        className="social-item bg-facebook">
                                         <svg className="svg-inline--fa fa-facebook-f fa-w-9" aria-hidden="true"
                                              data-prefix="fab" data-icon="facebook-f" role="img"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" data-fa-i2svg="">
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" data-fa-i2svg=""
+                                             style={{height: "30px", marginTop: "3px"}}>
                                             <path fill="currentColor"
                                                   d="M76.7 512V283H0v-91h76.7v-71.7C76.7 42.4 124.3 0 193.8 0c33.3 0 61.9 2.5 70.2 3.6V85h-48.2c-37.8 0-45.1 18-45.1 44.3V192H256l-11.7 91h-73.6v229"></path>
                                         </svg>
                                         {/* <i class="fab fa-facebook-f" aria-hidden="true"></i> */}
-                                        Facebook
+
                                     </a>
                                     <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                                        className="social-item bg-twitter">
                                         <svg className="svg-inline--fa fa-twitter fa-w-16" aria-hidden="true"
                                              data-prefix="fab" data-icon="twitter" role="img"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""
+                                             style={{height: "30px", marginTop: "3px"}}>
                                             <path fill="currentColor"
                                                   d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
                                         </svg>
                                         {/* <i class="fab fa-twitter" aria-hidden="true"></i> */}
-                                        Twitter
+
                                     </a>
 
                                 </div>
@@ -2287,10 +2253,10 @@ export default function Posts(props) {
                             <ul className="widget w-twitter">
                                 <li className="twitter-item">
                                     <div className="author-folder">
-                                        <img src="assets/img/./twitter-avatar1.png" alt="avatar"/>
+                                        <img src={userContext.currentUser.avaUrl} style={{width: "30px"}} alt="avatar"/>
                                         <div className="author">
                                             <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="author-name">{userContext.currentUser.username} {userContext.currentUser.verified}</a>
+                                               className="author-name">{userContext.currentUser.username}</a>
                                             <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                                                className="group">{userContext.currentUser.handle}</a>
                                         </div>
@@ -2300,17 +2266,17 @@ export default function Posts(props) {
                                         <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                                            className="link-post">#Daydream5K</a></p>
                                     <span className="post__date">
-							<time className="published" dateTime="2017-03-24T18:18">
-								2 hours ago
-							</time>
-						</span>
+<time className="published" dateTime="2017-03-24T18:18">
+2 hours ago
+</time>
+</span>
                                 </li>
                                 <li className="twitter-item">
                                     <div className="author-folder">
-                                        <img src="assets/img/./twitter-avatar1.png" alt="avatar"/>
+                                        <img src={userContext.currentUser.avaUrl} style={{width: "30px"}} alt="avatar"/>
                                         <div className="author">
                                             <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="author-name">{userContext.currentUser.username} {userContext.currentUser.verified}</a>
+                                               className="author-name">{userContext.currentUser.username}</a>
                                             <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                                                className="group">{userContext.currentUser.handle}</a>
                                         </div>
@@ -2319,29 +2285,29 @@ export default function Posts(props) {
                                         href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
                                         className="link-post">bytle/thbp53f</a></p>
                                     <span className="post__date">
-							<time className="published" dateTime="2017-03-24T18:18">
-								16 hours ago
-							</time>
-						</span>
+<time className="published" dateTime="2017-03-24T18:18">
+16 hours ago
+</time>
+</span>
                                 </li>
                                 <li className="twitter-item">
                                     <div className="author-folder">
-                                        <img src="assets/img/./twitter-avatar1.png" alt="avatar"/>
+                                        <img src={userContext.currentUser.avaUrl} style={{width: "30px"}} alt="avatar"/>
                                         <div className="author">
-                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                               className="author-name">{userContext.currentUser.username} {userContext.currentUser.verified}</a>
-                                            <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                            <a href="#"
+                                               className="author-name">{userContext.currentUser.username}</a>
+                                            <a href="#"
                                                className="group">{userContext.currentUser.handle}</a>
                                         </div>
                                     </div>
                                     <p>The Sunday is the annual agency camping trip and I still haven’t got a tent
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="link-post">#TheWild #Indoors</a></p>
                                     <span className="post__date">
-							<time className="published" dateTime="2017-03-24T18:18">
-								Yesterday
-							</time>
-						</span>
+<time className="published" dateTime="2017-03-24T18:18">
+Yesterday
+</time>
+</span>
                                 </li>
                             </ul>
 
@@ -2371,38 +2337,39 @@ export default function Posts(props) {
                             <ol className="widget w-playlist">
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist6.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
+                                                <use
+                                                    xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
                                             </svg>
                                         </a>
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">The Past Starts Slow...</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">System of a Revenge</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">3:22</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -2413,38 +2380,39 @@ export default function Posts(props) {
 
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist7.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
+                                                <use
+                                                    xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
                                             </svg>
                                         </a>
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">The Pretender</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">Kung Fighters</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">5:48</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -2454,38 +2422,39 @@ export default function Posts(props) {
                                 </li>
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist8.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
+                                                <use
+                                                    xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
                                             </svg>
                                         </a>
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">Blood Brothers</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">Iron Maid</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">3:06</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -2495,38 +2464,39 @@ export default function Posts(props) {
                                 </li>
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist9.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
+                                                <use
+                                                    xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
                                             </svg>
                                         </a>
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">Seven Nation Army</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">The Black Stripes</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">6:17</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -2536,38 +2506,39 @@ export default function Posts(props) {
                                 </li>
                                 <li className="js-open-popup" data-popup-target=".playlist-popup">
                                     <div className="playlist-thumb">
-                                        <img src="assets/img/./playlist10.jpg" alt="thumb-composition"/>
+                                        <img
+                                            src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474642/safe/playlist6_lmlvyo.jpg"
+                                            alt="thumb-composition"/>
                                         <div className="overlay"></div>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="play-icon">
                                             <svg className="olymp-music-play-icon-big">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
+                                                <use
+                                                    xlinkHref="assets/img/./icons-music.svg#olymp-music-play-icon-big"></use>
                                             </svg>
                                         </a>
                                     </div>
 
                                     <div className="composition">
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-name">Killer Queen</a>
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
+                                        <a href="#"
                                            className="composition-author">Archiduke</a>
                                     </div>
 
                                     <div className="composition-time">
                                         <time className="published" dateTime="2017-03-24T18:18">5:40</time>
                                         <div className="more">
-                                            <svg className="olymp-three-dots-icon">
-                                                <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                     xlinkHref="assets/img/./icons.svg#olymp-three-dots-icon"></use>
-                                            </svg>
+                                            <i class="material-icons">
+                                                more_horiz
+                                            </i>
                                             <ul className="more-dropdown">
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Song to Player</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">Add
+                                                    <a href="#">Add
                                                         Playlist to Player</a>
                                                 </li>
                                             </ul>
@@ -3648,13 +3619,18 @@ export default function Posts(props) {
 
                 </div>
             </div>
-            {/*<script src="assets/js/jquery.min.js"></script>*/}
-            {/*<script src="assets/bootstrap/js/bootstrap.min.js"></script>*/}
-            {/*<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>*/}
-            {/*<script src="assets/js/script.min.js"></script>*/}
-
         </React.Fragment>
 
 
     )
 }
+
+let fetchLogOut = () => {
+
+
+    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentUser');
+    console.log('All must be deleted');
+    return ({message: 'Logout successful'});
+
+};
