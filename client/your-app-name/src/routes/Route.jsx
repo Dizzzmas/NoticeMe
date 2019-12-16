@@ -17,8 +17,10 @@ export default function RouteWrapper({
         return <Redirect to='/'/>;
     }
 
-    if(signed && (rest.path.toString() === '/')){
-        return <Redirect to={`/${user.currentUser.username}`}/>;
+    if (rest.path) {
+        if (signed && (rest.path.toString() === '/')) {
+            return <Redirect to={`/${user.currentUser.username}`}/>;
+        }
     }
 
 

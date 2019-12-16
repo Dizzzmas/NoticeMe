@@ -5,6 +5,7 @@ import {useParams} from "react-router";
 import UserPosts from "./user_posts";
 import "../../assets/js/back-to-top"
 import {Link} from "react-router-dom";
+import UserSearch from "../MyNavbar/user_search";
 
 
 const usePrevious = current => {
@@ -114,7 +115,7 @@ const UserPage = (props) => {
 
         <React.Fragment key={username_from_path}>
 
-            <divf
+            <div
                 className="fixed-sidebar open">
                 <div
                     className="fixed-sidebar-left sidebar--small"
@@ -165,7 +166,7 @@ const UserPage = (props) => {
                 </div>
 
 
-            </divf>
+            </div>
 
 
             <div className="fixed-sidebar fixed-sidebar-responsive">
@@ -837,6 +838,7 @@ const UserPage = (props) => {
                                  style={{"top": "0px", "height": "709px"}}></div>
                         </div>
                     </div>
+
 
                     <div className="search-friend inline-items">
                         <form className="form-group is-empty">
@@ -1510,10 +1512,9 @@ const UserPage = (props) => {
                 </div>
 
                 <div className="header-content-wrapper">
-                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" className="link-find-friend">Find
-                        Friends</a>
-                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" className="link-find-friend">Find
-                        Friends</a>
+                    <Link to='/posts' className="link-find-friend">Feed</Link>
+                    <Link to='/chat' className="link-find-friend">Chat</Link>
+
 
                     <form className="search-bar w-search notification-list friend-requests">
 
@@ -1523,21 +1524,22 @@ const UserPage = (props) => {
                                     <use xlinkHref="assets/img/./icons.svg#olymp-magnifying-glass-icon"></use>
                                 </svg>
                             </button>
-                            <input className="form-control js-user-search selectized"
-                                   placeholder="Search here people or pages..." type="text" tabIndex="-1"
-                                   style={{"display": "none"}} value=""/>
-                            <div className="selectize-control form-control js-user-search multi">
-                                <div className="selectize-input items not-full has-options"><input type="text"
-                                                                                                   autoComplete="off"
-                                                                                                   tabIndex=""
-                                                                                                   placeholder="Search here people or pages..."
-                                                                                                   style={{"color": "#fff"}}/>
-                                </div>
-                                <div className="selectize-dropdown multi form-control js-user-search"
-                                     style={{"display": "none", "width": "500px", "top": "66px", "left": "0px"}}>
-                                    <div className="selectize-dropdown-content"></div>
-                                </div>
-                            </div>
+                            <UserSearch history={props.history}/>
+                            {/*<input className="form-control js-user-search selectized"*/}
+                            {/*       placeholder="Search here people or pages..." type="text" tabIndex="-1"*/}
+                            {/*       style={{"display": "none"}} value=""/>*/}
+                            {/*<div className="selectize-control form-control js-user-search multi">*/}
+                            {/*    <div className="selectize-input items not-full has-options"><input type="text"*/}
+                            {/*                                                                       autoComplete="off"*/}
+                            {/*                                                                       tabIndex=""*/}
+                            {/*                                                                       placeholder="Search here people or pages..."*/}
+                            {/*                                                                       style={{"color": "#fff"}}/>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="selectize-dropdown multi form-control js-user-search"*/}
+                            {/*         style={{"display": "none", "width": "500px", "top": "66px", "left": "0px"}}>*/}
+                            {/*        <div className="selectize-dropdown-content"></div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
 
                             <span className="material-input"></span></div>
                     </form>
@@ -1561,12 +1563,18 @@ const UserPage = (props) => {
                                         <ul className="account-settings">
                                             <li>
                                                 <Link to={`/${userContext.currentUser.username}`}>
+                                                    
+                                                    <span>Profile</span>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to={`/${userContext.currentUser.username}/edit`}>
 
                                                     <i className="material-icons">
                                                         settings_applications
                                                     </i>
 
-                                                    <span>Profile</span>
+                                                    <span>Edit Profile</span>
                                                 </Link>
                                             </li>
 
@@ -1583,7 +1591,6 @@ const UserPage = (props) => {
                                                 </a>
                                             </li>
                                         </ul>
-
 
 
                                         <div className="ps__scrollbar-x-rail" style={{"left": "0px", "bottom": "0px"}}>
@@ -1823,10 +1830,11 @@ const UserPage = (props) => {
                                     <div className="control-block-button">
 
 
-                                        <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                           className="btn btn-control bg-purple">
+                                        {user.id !== userContext.currentUser.id &&
+                                        <Link to={`/chat?user=${user.username}`}
+                                              className="btn btn-control bg-purple">
                                             <i className="material-icons" style={{color: "#fff"}}> mail </i>
-                                        </a>
+                                        </Link>}
 
                                         <div className="btn btn-control  more" style={{"backgroundColor": "#3d5fbf"}}>
 

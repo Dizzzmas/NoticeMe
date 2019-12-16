@@ -2223,20 +2223,6 @@ export default function EditPage(props) {
 
                                                 </div>
 
-                                                <div className="col col-lg-6 col-md-6 col-sm-12 col-12">
-                                                    <div className="form-group label-floating">
-                                                        <label className="control-label">Handle</label>
-                                                        <input className="form-control" placeholder="" type="text"
-                                                               value="{userContext.currentUser.handle}"/>
-                                                        <span className="material-input"></span></div>
-
-
-                                                    <div className="form-group label-floating is-empty">
-                                                        <label className="control-label">Phone Number</label>
-                                                        <input className="form-control" placeholder="" type="text"/>
-                                                        <span className="material-input"></span></div>
-                                                </div>
-
 
                                                 <div className="col col-lg-6 col-md-6 col-sm-12 col-12">
                                                     <div className="form-group label-floating">
@@ -2257,26 +2243,6 @@ export default function EditPage(props) {
                                                         />
                                                         <span className="material-input"></span></div>
 
-                                                    <div className="form-group label-floating is-select">
-                                                        <label className="control-label">Gender</label>
-                                                        <div className="btn-group bootstrap-select form-control">
-                                                            {/*                                         <button type="button" className="btn dropdown-toggle btn-secondary" data-toggle="dropdown" role="button" title="Male">
-                                                                                            <span className="filter-option pull-left">
-                                                                                                Male
-                                                                                            </span>&nbsp;
-                                                                                            <span className="bs-caret">
-                                                                                                <span className="caret">
-                                                                                                </span>
-                                                                                            </span>
-                                                                                        </button> */}
-
-                                                            <select className="selectpicker form-control"
-                                                                    tabIndex="-98">
-                                                                <option value="Male">Male</option>
-                                                                <option value="Female">Female</option>
-                                                                <option value="Female">Other</option>
-                                                            </select></div>
-                                                        <span className="material-input"></span></div>
 
                                                     <div className="col col-lg-6 col-md-6 col-sm-12 col-12">
                                                         <button className="btn btn-primary btn-lg full-width">Save all

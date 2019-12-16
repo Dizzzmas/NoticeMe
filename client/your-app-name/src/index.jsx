@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import $ from 'jquery'
-// import 'semantic-ui-css/semantic.min.css';
+ import 'semantic-ui-css/semantic.min.css';
 import './assets/css/styles.min.css';
- // import './assets/js/jquery.min'
- // import './assets/js/script.min'
+ import './assets/js/jquery.min'
+ import './assets/js/script.min'
 import './assets/js/back-to-top';
 
 

@@ -5,6 +5,7 @@ import {AuthContext} from "../../services/auth";
 import {NavLink} from "react-router-dom";
 import {GoogleLogin} from 'react-google-login';
 import {Alert} from "react-bootstrap";
+import axios from "axios";
 
 
 const SignInSchema = Yup.object().shape({
@@ -56,6 +57,10 @@ export default function SignIn(props) {
                 localStorage.setItem('jwt', payload.token);
                 user.handleSignIn(payload);
                 console.log('us', JSON.stringify(stored_user));
+
+                await axios
+                .post('/api/v1/chatkit/users', {userId: google_user.id, userName: google_user.username});
+
                 if (google_user.following < 3) {
                     props.history.push({
                         pathname: `/signIn/follow`

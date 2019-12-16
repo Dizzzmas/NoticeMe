@@ -162,7 +162,7 @@ function PostFeed(props) {
                         {post.comments.length != post.commentsCount ?
                             <ViewMoreComments post_id={post.id} post={post} posts={posts}
                                               handlePostsUpdate={handlePostsUpdate}/>
-                            : <span>No More Comments</span>}
+                            : ''}
 
                         <CommentForm posts={posts} handlePostsUpdate={handlePostsUpdate} post_id={post.id}/>
 

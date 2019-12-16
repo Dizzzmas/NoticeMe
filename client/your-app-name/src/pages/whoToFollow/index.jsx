@@ -126,18 +126,6 @@ const UserBody = (props) => {
     )
 
 
-    // return (
-    //     <React.Fragment>
-    //         <span>{props.user.username}</span>
-    //         <div>
-    //             {following ? <button onClick={() => {
-    //                 update_following();
-    //             }}>Unfollow</button> : <button onClick={() => {
-    //                 update_following();
-    //             }}>Follow</button>}
-    //         </div>
-    //     </React.Fragment>
-    // )
 };
 
 export default function WhoToFollow(props) {
@@ -204,7 +192,7 @@ export default function WhoToFollow(props) {
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary" type="submit" onClick={() => {
-                                    props.history.push(`/${userContext.currentUser.username}`);
+                                    props.history.push(`/posts`);
                                 }}>okay
                                 </button>
                             </div>

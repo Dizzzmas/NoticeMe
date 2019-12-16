@@ -1,8 +1,6 @@
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../services/auth";
-import {Link} from "react-router-dom";
-import PostModal from "../Post/post_modal";
 import UserSearch from "./user_search";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
@@ -89,7 +87,7 @@ export default function MyNavBar(props) {
                                     fontStyle: "normal"
                                 }}
                                 data-period="2000"
-                                data-rotate="[ &quot;cbt.&quot;, &quot;daddy.&quot;, &quot;cumslut.&quot;, &quot;cocksucker.&quot;, &quot;gay furry porn!&quot; ]">senpai.</span><br/>
+                                data-rotate="[ &quot;Dizzzmas.&quot;, &quot;FLAIN.&quot;, &quot;Kohai.&quot;, &quot;Ilyuha.&quot;, &quot;Depem0n.&quot; ]">senpai.</span><br/>
                             </h1>
                             <p
                                 className="lead text-right text-white-50 d-block float-right flex-column-reverse flex-grow-1 flex-shrink-1 align-items-baseline justify-content-xl-end align-items-xl-end"
@@ -121,55 +119,6 @@ export default function MyNavBar(props) {
             </div>
     )
 }
-// export default function MyNavBar(props) {
-//     const user = useContext(AuthContext);
-//
-//     return (
-//         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-//             <Navbar.Brand href="#home">NoticeMe</Navbar.Brand>
-//             <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
-//             <Navbar.Collapse id="responsive-navbar-nav">
-//                 <Nav className="mr-auto">
-//                     <Nav.Link href="/">Home</Nav.Link>
-//                     <Nav.Link href="/posts">Posts</Nav.Link>
-//                     {user.currentUser.role ?
-//                         <Nav.Link href="#users">Users</Nav.Link> : ''
-//                     }
-//                     <Nav.Link href="#explore">Explore</Nav.Link>
-//                     <Nav.Link href="#about">About</Nav.Link>
-//                     <Nav.Link href="/chat">Chat</Nav.Link>
-//
-//                     <UserSearch history={props.history}/>
-//                     <PostModal history={props.history}/>
-//                 </Nav>
-//
-//                 <Nav onSelect={selectedKey => {
-//                     if (selectedKey === 'logout') {
-//                         try {
-//                             fetchLogOut();
-//                             user.handleLogOut();
-//                         } catch (error) {
-//                             console.log("AAAAA", error);
-//                         }
-//                     }
-//                 }}>
-//                     {user.currentUser.signed ?
-//                         <React.Fragment>
-//                             <Nav.Link eventKey='logout' href="/signIn">
-//                                 LogOut
-//                             </Nav.Link>
-//                             <Link
-//                                 to={{pathname: `/${user.currentUser.username}`, user: user.currentUser}}>Profile</Link>
-//                         </React.Fragment>
-//                         : <Nav.Link href="/signIn">LogIn</Nav.Link>}
-//                 </Nav>
-//                 <p><b>{user.currentUser.username}</b></p>
-//             </Navbar.Collapse>
-//             <div><p><b></b></p></div>
-//         </Navbar>
-//
-//     )
-// }
 
 let fetchLogOut = () => {
 

@@ -6,7 +6,7 @@ import {AuthContext} from "../../services/auth";
 export default function UserSearch(props) {
     const [options, setOptions] = useState(
     );
-        let userContext = useContext(AuthContext);
+    let userContext = useContext(AuthContext);
 
     return (
 
@@ -15,6 +15,8 @@ export default function UserSearch(props) {
             placeholder="Enter username"
             search
             selection
+            className="form-control js-user-search selectized "
+            style={{"margin-top" : "15px"}}
             onChange={(e, data) => {
                 props.history.push('/');
                 setTimeout(() => {
@@ -47,7 +49,7 @@ export default function UserSearch(props) {
                 setOptions(Object.values(opts));
 
             }}
-                options={options}
-                />
-                )
-            }
+            options={options}
+        />
+    )
+}

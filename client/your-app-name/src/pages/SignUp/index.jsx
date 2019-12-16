@@ -253,10 +253,7 @@ let fetchSignUp = async (values) => {
 
 
             return payload;
-            // ASDDDDDDDddasddasasddasdas
 
-
-            //fkldsklfdlkfd
 
         } else {
             throw new Error(user_and_token.message.toString());

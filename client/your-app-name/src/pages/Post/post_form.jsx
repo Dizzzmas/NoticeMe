@@ -51,6 +51,8 @@ export default function PostForm(props) {
                         console.log('NEW POST: ', new_post);
                         new_posts.unshift(new_post);
                         props.handlePostsUpdate(new_posts);
+                        actions.resetForm();
+                        actions.setFieldValue('files', null);
                         actions.setSubmitting(false);
                     }
                 }
@@ -139,7 +141,7 @@ export default function PostForm(props) {
 
 
                         </div>
-                        < /Form>
+                        </Form>
                             )}
                         </Formik>
                     </div>

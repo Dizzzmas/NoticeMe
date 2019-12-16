@@ -4,6 +4,7 @@ import {AuthContext} from "../../services/auth";
 import UserPosts from "../UserPage/user_posts";
 import PostForm from "../Post/post_form";
 import {Link} from "react-router-dom";
+import UserSearch from "../MyNavbar/user_search";
 
 
 export default function Posts(props) {
@@ -18,30 +19,34 @@ export default function Posts(props) {
 
             {/*Fixed Sidebar Left */}
 
-            <div className="fixed-sidebar open">
-                <div className="fixed-sidebar-left sidebar--small" id="sidebar-left" style={{
-                    "WebkitTransform": "translateX(0%)",
-                    "transform": "translateX(0%)"
-                }}>
+            <div
+                className="fixed-sidebar open">
+                <div
+                    className="fixed-sidebar-left sidebar--small"
+                    id="sidebar-left"
+                    style={{"-webkit-transform": "translateX(0%)", "transform": "translateX(0 %)", marginTop: "-56%"}}>
 
-                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html" className="logo">
-                        <div className="img-wrap">
-                            <img src="assets/img/./logo.png" alt=""/>
+                    <a
+                        href="https://html.crumina.net/html-olympus/02-ProfilePage.html"
+                        className="logo">
+                        < div
+                            className="img-wrap">
+                            <img
+                                src="https://res.cloudinary.com/dv0smnf2u/image/upload/v1576474159/safe/logo_uwdarw.png"
+                                alt=""/>
                         </div>
                     </a>
+
 
                     <div className="mCustomScrollbar ps ps--theme_default ps--active-x" data-mcs-theme="dark"
                          data-ps-id="ec16cdd5-39b8-7f34-c5fe-226c4a5a2537">
                         <ul className="left-menu">
+
                             <li>
-                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#"
-                                   className="js-sidebar-open active">
-                                    <svg className="olymp-menu-icon left-menu-icon" data-toggle="tooltip"
-                                         data-placement="right" data-original-title="OPEN MENU"
-                                         aria-describedby="tooltip404315">
-                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                             xlinkHref="assets/img/./icons.svg#olymp-menu-icon"></use>
-                                    </svg>
+                                <a href="https://html.crumina.net/html-olympus/03-Newsfeed.html">
+                                    <i className="material-icons" style={{marginLeft: "-8px"}}>
+                                        menu_book
+                                    </i>
                                 </a>
                             </li>
                             <li>
@@ -174,11 +179,18 @@ export default function Posts(props) {
                             <li>
                                 <Link to={`/${userContext.currentUser.username}`}>
 
+
+                                    <span>Profile</span>
+                                </Link>
+                            </li>
+                             <li>
+                                <Link to={`/${userContext.currentUser.username}/edit`}>
+
                                     <i className="material-icons">
                                         settings_applications
                                     </i>
 
-                                    <span>Profile</span>
+                                    <span>Edit Profile</span>
                                 </Link>
                             </li>
                             <li>
@@ -1615,14 +1627,12 @@ export default function Posts(props) {
             <header className="header" id="site-header">
 
                 <div className="page-title">
-                    <h6>Profile Page</h6>
+                    <h6>Notice Me</h6>
                 </div>
 
                 <div className="header-content-wrapper">
-                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" className="link-find-friend">Find
-                        Friends</a>
-                    <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#" className="link-find-friend">Find
-                        Friends</a>
+                    <Link to='/posts' className="link-find-friend">Feed</Link>
+                    <Link to='/chat' className="link-find-friend">Chat</Link>
 
                     <form className="search-bar w-search notification-list friend-requests">
 
@@ -1633,21 +1643,23 @@ export default function Posts(props) {
                                          xlinkHref="assets/img/./icons.svg#olymp-magnifying-glass-icon"></use>
                                 </svg>
                             </button>
-                            <input className="form-control js-user-search selectized"
-                                   placeholder="Search here people or pages..." type="text" tabIndex="-1"
-                                   style={{"display": "none"}} value=""/>
-                            <div className="selectize-control form-control js-user-search multi">
-                                <div className="selectize-input items not-full has-options"><input type="text"
-                                                                                                   autoComplete="off"
-                                                                                                   tabIndex=""
-                                                                                                   placeholder="Search here people or pages..."
-                                                                                                   style={{"color": "#fff"}}/>
-                                </div>
-                                <div className="selectize-dropdown multi form-control js-user-search"
-                                     style={{"display": "none", "width": "500px", "top": "66px", "left": "0px"}}>
-                                    <div className="selectize-dropdown-content"></div>
-                                </div>
-                            </div>
+
+                            <UserSearch history={props.history}/>
+                            {/*<input className="form-control js-user-search selectized"*/}
+                            {/*       placeholder="Search here people or pages..." type="text" tabIndex="-1"*/}
+                            {/*       style={{"display": "none"}} value=""/>*/}
+                            {/*<div className="selectize-control form-control js-user-search multi">*/}
+                            {/*    <div className="selectize-input items not-full has-options"><input type="text"*/}
+                            {/*                                                                       autoComplete="off"*/}
+                            {/*                                                                       tabIndex=""*/}
+                            {/*                                                                       placeholder="Search here people or pages..."*/}
+                            {/*                                                                       style={{"color": "#fff"}}/>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="selectize-dropdown multi form-control js-user-search"*/}
+                            {/*         style={{"display": "none", "width": "500px", "top": "66px", "left": "0px"}}>*/}
+                            {/*        <div className="selectize-dropdown-content"></div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
 
                             <span className="material-input"></span></div>
                     </form>
@@ -1657,8 +1669,9 @@ export default function Posts(props) {
 
 
                         <div className="author-page author vcard inline-items more">
-                            <div className="author-thumb">
-                                <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"/>
+                            <div className="author-thumb" style={{"maxWidth": "40px", "overflow": "hidden"}}>
+                                <img alt="author" src={userContext.currentUser.avaUrl} className="avatar"
+                                     style={{"width": "100%"}}/>
                                 <span className="icon-status online"></span>
                                 <div className="more-dropdown more-with-triangle">
                                     <div className="mCustomScrollbar ps ps--theme_default" data-mcs-theme="dark"
@@ -1669,33 +1682,22 @@ export default function Posts(props) {
 
                                         <ul className="account-settings">
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/29-YourAccount-AccountSettings.html">
+                                                <Link to={`/${userContext.currentUser.username}`}>
 
-                                                    <svg className="olymp-menu-icon">
-                                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                             xlinkHref="assets/img/./icons.svg#olymp-menu-icon"></use>
-                                                    </svg>
+                                                    <i className="material-icons">
+                                                        settings_applications
+                                                    </i>
 
-                                                    <span>Profile Settings</span>
-                                                </a>
+                                                    <span>Profile</span>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="https://html.crumina.net/html-olympus/36-FavPage-SettingsAndCreatePopup.html">
-                                                    <svg className="olymp-star-icon left-menu-icon"
-                                                         data-toggle="tooltip" data-placement="right"
-                                                         data-original-title="FAV PAGE">
-                                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                             xlinkHref="assets/img/./icons.svg#olymp-star-icon"></use>
-                                                    </svg>
-
-                                                    <span>Create Fav Page</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://html.crumina.net/html-olympus/02-ProfilePage.html#">
+                                                <a onClick={() => {
+                                                    fetchLogOut();
+                                                    userContext.handleLogOut();
+                                                }} href={'#'}>
                                                     <svg className="olymp-logout-icon">
-                                                        <use xlinkHref="http://www.w3.org/1999/xlink"
-                                                             xlinkHref="assets/img/./icons.svg#olymp-logout-icon"></use>
+                                                        <use xlinkHref="assets/img/./icons.svg#olymp-logout-icon"></use>
                                                     </svg>
 
                                                     <span>Log Out</span>
